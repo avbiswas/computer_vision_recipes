@@ -29,8 +29,11 @@ python search.py "my code finally compiled after 6 hours of debugging" --ckpt ru
 
 ```bash
 python web/export_web.py                       # fine-tuned text encoder -> ONNX, template embeddings, slots, thumbnails
-python3 -m http.server 8000 -d web             # then open http://127.0.0.1:8000
+python web/serve.py                            # then open http://127.0.0.1:8000
 ```
+Text filling: one text box gets the full query, shortened (stopwords, then least CLIP-important words dropped) if it doesn't fit;
+templates with several boxes get one line per box from an LLM (`openai/gpt-6-luna` via OpenRouter, reasoning off,
+~$0.0001 per meme). `serve.py` makes that call so the `OPENROUTER_API_KEY` never reaches the page; without a key it falls back to keywords.
 Only the CLIP text encoder runs in the browser (254 MB fp32 ONNX; the int8 version is 64 MB but drifts to cosine ~0.96, so the demo uses fp32).
 Template image embeddings are precomputed. Search ~0.2 s, including leave-one-out word importance.
 

@@ -62,14 +62,45 @@ function wordImportance(vs, words, j) {
   return words.map((w, i) => ({ w, d: base - dotRow(vs[i + 1], j) }));
 }
 
-function fillSlots(query, slots, imp) {
-  if (!slots.length) return [];
+const FONT = (size) => `bold ${size}px Impact, "Arial Black", sans-serif`;
+const measureCtx = document.createElement("canvas").getContext("2d");
+
+// Largest font that fits the slot box; "readable" = fits without shrinking to tiny text.
+function fitText(ctx, text, s) {
+  const [x0, y0, x1, y1] = s.bbox, w = Math.max(1, x1 - x0), h = Math.max(1, y1 - y0);
+  let size = Math.max(10, Math.min(s.line_h * 1.2, h)), lines, fits;
+  for (;;) {
+    ctx.font = FONT(size);
+    lines = wrap(ctx, text.toUpperCase(), w);
+    fits = lines.every((l) => ctx.measureText(l).width <= w) && lines.length * size * 1.15 <= Math.max(h, s.line_h * 1.3);
+    if (fits || size <= 10) break;
+    size -= 2;
+  }
+  return { size, lines, readable: fits && size >= Math.max(12, 0.5 * s.line_h) };
+}
+
+// One box: the full query if it fits; else drop stopwords, then the least important words (CLIP leave-one-out).
+function shortenToFit(query, slot, imp) {
+  const words = query.split(/\s+/).filter(Boolean);
+  const keep = words.map((_, i) => i);
+  const isStop = (i) => STOP.has(words[i].toLowerCase().replace(/\W/g, ""));
+  const order = [...keep].sort((a, b) => (isStop(b) - isStop(a)) || ((imp[a]?.d ?? 0) - (imp[b]?.d ?? 0)));
+  for (const drop of [null, ...order]) {
+    if (drop !== null) keep.splice(keep.indexOf(drop), 1);
+    const text = keep.map((i) => words[i]).join(" ");
+    if (!keep.length || fitText(measureCtx, text, slot).readable) return text;
+  }
+  return query;
+}
+
+// Placeholder for multi-box templates until the LLM answers: main box = query, others = top keywords.
+function keywordFill(query, slots, imp) {
   const area = (s) => (s.bbox[2] - s.bbox[0]) * (s.bbox[3] - s.bbox[1]);
   const main = slots.reduce((m, s, i) => (area(s) > area(slots[m]) ? i : m), 0);
   const ranked = [...imp].sort((a, b) => b.d - a.d).map((x) => x.w.replace(/[.,!?]/g, ""))
     .filter((w) => w && !STOP.has(w.toLowerCase().replace(/\W/g, "")));
   let k = 0;
-  return slots.map((_, i) => (i === main ? query : ranked[k++] ?? ""));
+  return slots.map((s, i) => (i === main ? shortenToFit(query, s, imp) : ranked[k++] ?? ""));
 }
 
 function wrap(ctx, text, width) {
@@ -85,17 +116,10 @@ function draw(canvas, img, slots, texts) {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0);
   slots.forEach((s, i) => {
-    const t = (texts[i] || "").toUpperCase(); if (!t) return;
+    const t = texts[i] || ""; if (!t) return;
     const [x0, y0, x1, y1] = s.bbox, w = Math.max(1, x1 - x0), h = Math.max(1, y1 - y0);
-    let size = Math.max(10, Math.min(s.line_h * 1.2, h)), lines;
-    for (;;) {
-      ctx.font = `bold ${size}px Impact, "Arial Black", sans-serif`;
-      lines = wrap(ctx, t, w);
-      const fits = lines.every((l) => ctx.measureText(l).width <= w) && lines.length * size * 1.15 <= Math.max(h, s.line_h * 1.3);
-      if (fits || size <= 10) break;
-      size -= 2;
-    }
-    ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.lineJoin = "round";
+    const { size, lines } = fitText(ctx, t, s);
+    ctx.font = FONT(size); ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.lineJoin = "round";
     let y = y0 + (h - lines.length * size * 1.15) / 2;
     for (const l of lines) {
       if (!s.light) { ctx.lineWidth = Math.max(2, size / 7); ctx.strokeStyle = "#000"; ctx.strokeText(l, x0 + w / 2, y); }
@@ -105,31 +129,51 @@ function draw(canvas, img, slots, texts) {
   });
 }
 
+// Multi-box text from the LLM, via the local server (keeps the API key off the page).
+async function llmFill(query, file, slots) {
+  const r = await fetch("api/fill", { method: "POST", headers: { "Content-Type": "application/json" },
+                                      body: JSON.stringify({ query, file, slots }) });
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.status);
+  return j;
+}
+
 function card({ j, score }, query, imp) {
-  const m = meta[j], texts = fillSlots(query, m.slots, imp);
+  const m = meta[j];
+  // no detected text: one caption box across the top
+  const slots = m.slots.length ? m.slots : [{ bbox: [m.w * 0.05, m.h * 0.02, m.w * 0.95, m.h * 0.2], line_h: m.h * 0.08, light: false }];
+  const multi = slots.length > 1;
+  const texts = multi ? keywordFill(query, slots, imp) : [shortenToFit(query, slots[0], imp)];
   const el = document.createElement("div"); el.className = "card";
   const canvas = document.createElement("canvas"); canvas.width = m.w; canvas.height = m.h;
   const img = new Image(); img.src = `data/templates/${m.file}`;
-  const redraw = () => img.complete && draw(canvas, img, m.slots, texts);
+  const redraw = () => img.complete && draw(canvas, img, slots, texts);
   img.onload = redraw;
   el.append(canvas);
   const top = [...imp].filter((x) => x.d > 0 && !STOP.has(x.w.toLowerCase().replace(/\W/g, ""))).sort((a, b) => b.d - a.d).slice(0, 4);
-  el.insertAdjacentHTML("beforeend", `<div class="meta">match ${score.toFixed(3)} · ${m.slots.length} text slot(s)</div>
+  el.insertAdjacentHTML("beforeend", `<div class="meta">match ${score.toFixed(3)} · ${slots.length} text box(es) ·
+    <span class="how">${multi ? "LLM writing…" : texts[0] === query ? "full query" : "shortened to fit"}</span></div>
     <div class="chips">${top.map((x) => `<span>${x.w} +${x.d.toFixed(3)}</span>`).join("")}</div>`);
-  // no detected slots: offer a top caption
-  if (!m.slots.length) { m.slots = [{ bbox: [m.w * 0.05, 0, m.w * 0.95, m.h * 0.2], line_h: m.h * 0.08, light: false }]; texts.push(query); }
-  m.slots.forEach((_, i) => {
+  const inputs = slots.map((_, i) => {
     const row = document.createElement("div"); row.className = "slot";
-    row.innerHTML = `<label>slot ${i + 1}</label>`;
+    row.innerHTML = `<label>box ${i + 1}</label>`;
     const inp = document.createElement("input"); inp.value = texts[i];
-    inp.oninput = () => { texts[i] = inp.value; redraw(); };
+    inp.oninput = () => { texts[i] = inp.value; inp.dataset.edited = "1"; redraw(); };
     row.append(inp); el.append(row);
+    return inp;
   });
+  if (multi) {
+    const how = el.querySelector(".how");
+    llmFill(query, m.file, slots).then(({ texts: t, model }) => {
+      t.forEach((v, i) => { if (v && !inputs[i].dataset.edited) { texts[i] = v; inputs[i].value = v; } });
+      how.textContent = `written by ${model}`; redraw();
+    }).catch((err) => { how.textContent = `LLM unavailable (${err.message}), keywords shown`; });
+  }
   const row = document.createElement("div"); row.className = "row";
   const dl = document.createElement("button"); dl.textContent = "Download PNG";
   dl.onclick = () => { const a = document.createElement("a"); a.download = `meme_${m.file.replace(".webp", "")}.png`; a.href = canvas.toDataURL("image/png"); a.click(); };
   const clr = document.createElement("button"); clr.className = "ghost"; clr.textContent = "Clear text";
-  clr.onclick = () => { texts.fill(""); el.querySelectorAll(".slot input").forEach((i) => (i.value = "")); redraw(); };
+  clr.onclick = () => { texts.fill(""); inputs.forEach((i) => { i.value = ""; i.dataset.edited = "1"; }); redraw(); };
   row.append(dl, clr); el.append(row);
   return el;
 }
