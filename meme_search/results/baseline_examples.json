@@ -1,0 +1,4526 @@
+{
+ "ViT-B-16:openai": {
+  "title": [
+   {
+    "query": "He did it",
+    "target": "memes_d079np.png",
+    "rank": 16,
+    "top5": [
+     "memes_z62gp0.png",
+     "memes_z69x38.png",
+     "memes_yplvun.png",
+     "memes_ysg8hr.png",
+     "memes_zb4dgg.png"
+    ]
+   },
+   {
+    "query": "One tiny error",
+    "target": "memes_hg2c5y.png",
+    "rank": 62,
+    "top5": [
+     "memes_yowkm8.png",
+     "memes_zcgggw.png",
+     "memes_ywyom8.png",
+     "memes_ywpf60.png",
+     "memes_ytfdzm.png"
+    ]
+   },
+   {
+    "query": "I deserve it",
+    "target": "memes_k4xv8c.png",
+    "rank": 1,
+    "top5": [
+     "memes_k4xv8c.png",
+     "memes_yrwfen.png",
+     "memes_yortqo.png",
+     "memes_z17hn0.png",
+     "memes_yprfz2.png"
+    ]
+   },
+   {
+    "query": "Godspeed in this exam season, fellas.",
+    "target": "memes_txelte.png",
+    "rank": 7,
+    "top5": [
+     "memes_yplvun.png",
+     "memes_yt7wai.png",
+     "memes_ykxnyj.png",
+     "memes_yo3vck.png",
+     "memes_ywpf60.png"
+    ]
+   },
+   {
+    "query": "Sad but true",
+    "target": "memes_y7c81i.png",
+    "rank": 252,
+    "top5": [
+     "memes_yzu2rh.png",
+     "memes_ywd8d5.png",
+     "memes_zaxpo7.png",
+     "memes_z252ft.png",
+     "memes_ys8lta.png"
+    ]
+   },
+   {
+    "query": "Liechtenstein is so small, you can barely see it on a world map.",
+    "target": "memes_yf5nli.png",
+    "rank": 1,
+    "top5": [
+     "memes_yf5nli.png",
+     "memes_yy2sb1.png",
+     "memes_z18prx.png",
+     "memes_ysw9z4.png",
+     "memes_ylfcch.png"
+    ]
+   },
+   {
+    "query": "dead space was a blood bath and guess who was bathing",
+    "target": "memes_ygz5pr.png",
+    "rank": 44,
+    "top5": [
+     "memes_ytzf3n.png",
+     "memes_yvv3em.png",
+     "memes_ydqfb6.png",
+     "memes_yvokyj.png",
+     "memes_yxcco3.png"
+    ]
+   },
+   {
+    "query": "taylor swiftly goin up",
+    "target": "memes_yj86bz.png",
+    "rank": 2,
+    "top5": [
+     "memes_z1g3aw.png",
+     "memes_yj86bz.png",
+     "memes_zbxhj2.png",
+     "memes_z1zz3h.png",
+     "memes_z73nbe.png"
+    ]
+   },
+   {
+    "query": "Can confirm",
+    "target": "memes_ykj20m.png",
+    "rank": 340,
+    "top5": [
+     "memes_ysr39a.png",
+     "memes_zb7wfy.png",
+     "memes_yfqlss.png",
+     "memes_yxi6pj.png",
+     "memes_zbloqf.png"
+    ]
+   },
+   {
+    "query": "Turn off your cell phone",
+    "target": "memes_ymb0s4.png",
+    "rank": 161,
+    "top5": [
+     "memes_zanqw6.png",
+     "memes_ywt9hg.png",
+     "memes_z0hlf6.png",
+     "memes_ysg8hr.png",
+     "memes_yntmmh.png"
+    ]
+   },
+   {
+    "query": "The circus continues",
+    "target": "memes_yo0nj6.png",
+    "rank": 116,
+    "top5": [
+     "memes_ylt0k7.png",
+     "memes_n75nvu.png",
+     "memes_z62gp0.png",
+     "memes_z0ebhp.png",
+     "memes_yj9yqx.png"
+    ]
+   },
+   {
+    "query": "He will rule Germany, just watch.",
+    "target": "memes_yokh2n.png",
+    "rank": 278,
+    "top5": [
+     "memes_z1s45e.png",
+     "memes_za4e6s.png",
+     "memes_zacs4p.png",
+     "memes_yjh7fc.png",
+     "memes_yzs2xf.png"
+    ]
+   },
+   {
+    "query": "A tale as old as time",
+    "target": "memes_you9j5.png",
+    "rank": 325,
+    "top5": [
+     "memes_yv3rea.png",
+     "memes_z0kkfk.png",
+     "memes_n75nvu.png",
+     "memes_yvh154.png",
+     "memes_yp8i9b.png"
+    ]
+   },
+   {
+    "query": "you guys remember this",
+    "target": "memes_yp6joz.png",
+    "rank": 4,
+    "top5": [
+     "memes_zbkwhz.png",
+     "memes_ypr54k.png",
+     "memes_ywt9hg.png",
+     "memes_yp6joz.png",
+     "memes_z0kkfk.png"
+    ]
+   },
+   {
+    "query": "Cleaning with music",
+    "target": "memes_ypl98d.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypl98d.png",
+     "memes_zclvfj.png",
+     "memes_zb7wfy.png",
+     "memes_yp5dvz.png",
+     "memes_z23u3q.png"
+    ]
+   },
+   {
+    "query": "Election Day Madness",
+    "target": "memes_ypsbzq.png",
+    "rank": 170,
+    "top5": [
+     "memes_ypuy9q.png",
+     "memes_z1zz3h.png",
+     "memes_z6fhzu.png",
+     "memes_yxrbtv.png",
+     "memes_n75nvu.png"
+    ]
+   },
+   {
+    "query": "No I don't want your cookies",
+    "target": "memes_yrwfen.png",
+    "rank": 1,
+    "top5": [
+     "memes_yrwfen.png",
+     "memes_zao4tm.png",
+     "memes_yvepzv.png",
+     "memes_yxlapf.png",
+     "memes_yp1k57.png"
+    ]
+   },
+   {
+    "query": "I meant to do that",
+    "target": "memes_ysgw6o.png",
+    "rank": 274,
+    "top5": [
+     "memes_yrt7wo.png",
+     "memes_hv72fd.png",
+     "memes_zao4tm.png",
+     "memes_yo0qe2.png",
+     "memes_i5w6m3.png"
+    ]
+   },
+   {
+    "query": "Do I even exist?",
+    "target": "memes_ysr39a.png",
+    "rank": 3,
+    "top5": [
+     "memes_ypd9hc.png",
+     "memes_yooixo.png",
+     "memes_ysr39a.png",
+     "memes_z1srmt.png",
+     "memes_z7bvg5.png"
+    ]
+   },
+   {
+    "query": "It is possible to sleep",
+    "target": "memes_yt7wai.png",
+    "rank": 208,
+    "top5": [
+     "memes_yfqxgs.png",
+     "memes_ylomgx.png",
+     "memes_zamn76.png",
+     "memes_yy4lnf.png",
+     "memes_yudkj8.png"
+    ]
+   },
+   {
+    "query": "it's 11 o'clock",
+    "target": "memes_yu2v36.png",
+    "rank": 11,
+    "top5": [
+     "memes_yoat1h.png",
+     "memes_z16dfa.png",
+     "memes_yznjyc.png",
+     "memes_txelte.png",
+     "memes_z0n6nc.png"
+    ]
+   },
+   {
+    "query": "It aint much but its honest work",
+    "target": "memes_yvami9.png",
+    "rank": 414,
+    "top5": [
+     "memes_z17hn0.png",
+     "memes_yw3pc8.png",
+     "memes_k4xv8c.png",
+     "memes_zaooym.png",
+     "memes_z6m7p8.png"
+    ]
+   },
+   {
+    "query": "Damn, that sucks!",
+    "target": "memes_yvwfkf.png",
+    "rank": 49,
+    "top5": [
+     "memes_zanqw6.png",
+     "memes_ydqfb6.png",
+     "memes_z0prcv.png",
+     "memes_yrt7wo.png",
+     "memes_y64w09.png"
+    ]
+   },
+   {
+    "query": "i have no idea whats going on",
+    "target": "memes_ywen5e.png",
+    "rank": 22,
+    "top5": [
+     "memes_z12ws9.png",
+     "memes_z7bvg5.png",
+     "memes_k83rjb.png",
+     "memes_z73nbe.png",
+     "memes_yxt126.png"
+    ]
+   },
+   {
+    "query": "aight, bare minimum it is.",
+    "target": "memes_ywyom8.png",
+    "rank": 18,
+    "top5": [
+     "memes_k4xv8c.png",
+     "memes_ydzcc4.png",
+     "memes_yt7wai.png",
+     "memes_yu92on.png",
+     "memes_yplvun.png"
+    ]
+   },
+   {
+    "query": "Thank you for your service Spug",
+    "target": "memes_yxcco3.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxcco3.png",
+     "memes_yndonp.png",
+     "memes_ypr54k.png",
+     "memes_xl0aqb.png",
+     "memes_z0prcv.png"
+    ]
+   },
+   {
+    "query": "Im sure you cant guess what these are.",
+    "target": "memes_yxt126.png",
+    "rank": 106,
+    "top5": [
+     "memes_yp6joz.png",
+     "memes_zbq84u.png",
+     "memes_jht4yd.png",
+     "memes_zb7wfy.png",
+     "memes_yjhe9x.png"
+    ]
+   },
+   {
+    "query": "Space Karen",
+    "target": "memes_yzfsjy.png",
+    "rank": 71,
+    "top5": [
+     "memes_yony2r.png",
+     "memes_z73nbe.png",
+     "memes_ywu79h.png",
+     "memes_ypw964.png",
+     "memes_yxtxl8.png"
+    ]
+   },
+   {
+    "query": "loved the format",
+    "target": "memes_yzs2xf.png",
+    "rank": 480,
+    "top5": [
+     "memes_yub23t.png",
+     "memes_jht4yd.png",
+     "memes_z6wtmi.png",
+     "memes_yowkm8.png",
+     "memes_yvnr3b.png"
+    ]
+   },
+   {
+    "query": "well I'm embarrassed",
+    "target": "memes_z0bdeo.png",
+    "rank": 81,
+    "top5": [
+     "memes_z7bvg5.png",
+     "memes_zcx093.png",
+     "memes_z1srmt.png",
+     "memes_ysj3js.png",
+     "memes_ypkyhm.png"
+    ]
+   },
+   {
+    "query": "Gets me every year",
+    "target": "memes_z0meji.png",
+    "rank": 12,
+    "top5": [
+     "memes_yj672f.png",
+     "memes_yxb41m.png",
+     "memes_z67t9a.png",
+     "memes_yhni99.png",
+     "memes_zaawcu.png"
+    ]
+   },
+   {
+    "query": "Poor lil guy",
+    "target": "memes_z12uz8.png",
+    "rank": 51,
+    "top5": [
+     "memes_zaxxxq.png",
+     "memes_yzlm1n.png",
+     "memes_ut9mdn.png",
+     "memes_ydqfb6.png",
+     "memes_er70xq.png"
+    ]
+   },
+   {
+    "query": "I just dont get it",
+    "target": "memes_z1g3aw.png",
+    "rank": 250,
+    "top5": [
+     "memes_yvepzv.png",
+     "memes_z1aqff.png",
+     "memes_yo5a0c.png",
+     "memes_hv72fd.png",
+     "memes_z6e0bf.png"
+    ]
+   },
+   {
+    "query": "VIP's won't cover that, will they?",
+    "target": "memes_z1xuwb.png",
+    "rank": 43,
+    "top5": [
+     "memes_z7bvg5.png",
+     "memes_yuhrkr.png",
+     "memes_ydprr1.png",
+     "memes_yzs2xf.png",
+     "memes_sdmfth.png"
+    ]
+   },
+   {
+    "query": "wElL gOoD fOr YoU",
+    "target": "memes_z67t9a.png",
+    "rank": 432,
+    "top5": [
+     "memes_yvfqac.png",
+     "memes_hv72fd.png",
+     "memes_ye1nq4.png",
+     "memes_ykxnyj.png",
+     "memes_yoc2r3.png"
+    ]
+   },
+   {
+    "query": "can't wait for squid game season 2",
+    "target": "memes_z6lnua.png",
+    "rank": 78,
+    "top5": [
+     "memes_yp9sbi.png",
+     "memes_z22zk5.png",
+     "memes_z7adyc.png",
+     "memes_z0suct.png",
+     "memes_yj9yqx.png"
+    ]
+   },
+   {
+    "query": "Never say this word in front of Europeans",
+    "target": "memes_z7760c.png",
+    "rank": 2,
+    "top5": [
+     "memes_yy2sb1.png",
+     "memes_z7760c.png",
+     "memes_yprfb8.png",
+     "memes_ypo3im.png",
+     "memes_hv72fd.png"
+    ]
+   },
+   {
+    "query": "I guess now he can",
+    "target": "memes_za1tds.png",
+    "rank": 61,
+    "top5": [
+     "memes_z62gp0.png",
+     "memes_yoc2r3.png",
+     "memes_ysg8hr.png",
+     "memes_zaooym.png",
+     "memes_yv319v.png"
+    ]
+   },
+   {
+    "query": "This is 2022",
+    "target": "memes_zacs4p.png",
+    "rank": 440,
+    "top5": [
+     "memes_z19g85.png",
+     "memes_yvi7l0.png",
+     "memes_zan6ay.png",
+     "memes_fat6rn.png",
+     "memes_yzs2xf.png"
+    ]
+   },
+   {
+    "query": "Theres no way for him to recover from this",
+    "target": "memes_zaslro.png",
+    "rank": 120,
+    "top5": [
+     "memes_yhpvjk.png",
+     "memes_zb4dgg.png",
+     "memes_zaooym.png",
+     "memes_z62gp0.png",
+     "memes_yn6aom.png"
+    ]
+   },
+   {
+    "query": "Parents are the ultimate chads",
+    "target": "memes_zbj2ty.png",
+    "rank": 2,
+    "top5": [
+     "memes_zaljzp.png",
+     "memes_zbj2ty.png",
+     "memes_z6jkl9.png",
+     "memes_z0rhjf.png",
+     "memes_gxnnyn.png"
+    ]
+   },
+   {
+    "query": "Unfortunately, we were both introverted asf.",
+    "target": "memes_zbtqt2.png",
+    "rank": 17,
+    "top5": [
+     "memes_yu92on.png",
+     "memes_ywjf5m.png",
+     "memes_hmq8qx.png",
+     "memes_z7bvg5.png",
+     "memes_z1srmt.png"
+    ]
+   },
+   {
+    "query": "We just need some little help to stand",
+    "target": "memes_zcd4p8.png",
+    "rank": 133,
+    "top5": [
+     "memes_yzlm1n.png",
+     "memes_yndonp.png",
+     "memes_yw6l5p.png",
+     "memes_yw8a1a.png",
+     "memes_ym1khg.png"
+    ]
+   }
+  ],
+  "literal": [
+   {
+    "query": "A woman shows off her engagement ring which Thor approves of.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_yws1rr.png",
+     "memes_yx31gq.png",
+     "memes_ymb0s4.png",
+     "memes_z0ebhp.png"
+    ]
+   },
+   {
+    "query": "a white man on laptop smiling and Michael Jordan looking at laptop wearing a black hat crying",
+    "target": "memes_fjiz2r.png",
+    "rank": 1,
+    "top5": [
+     "memes_fjiz2r.png",
+     "memes_zaxpo7.png",
+     "memes_zap0cv.png",
+     "memes_zaz01v.png",
+     "memes_za84ao.png"
+    ]
+   },
+   {
+    "query": "the red and white colored landscape",
+    "target": "memes_i5w6m3.png",
+    "rank": 57,
+    "top5": [
+     "memes_s0hg28.png",
+     "memes_yskjvm.png",
+     "memes_zbmu89.png",
+     "memes_yp9sbi.png",
+     "memes_zao4tm.png"
+    ]
+   },
+   {
+    "query": "The sad man gets introduced to reddit and is now happy",
+    "target": "memes_ras71b.png",
+    "rank": 3,
+    "top5": [
+     "memes_za6lhz.png",
+     "memes_ysdr12.png",
+     "memes_ras71b.png",
+     "memes_yxcvkx.png",
+     "memes_z69x38.png"
+    ]
+   },
+   {
+    "query": "Oprah with her hands on her head has if she is trying to understand something.",
+    "target": "memes_xo7gvr.png",
+    "rank": 2,
+    "top5": [
+     "memes_yjhe9x.png",
+     "memes_xo7gvr.png",
+     "memes_ylfcch.png",
+     "memes_yje61b.png",
+     "memes_zcgggw.png"
+    ]
+   },
+   {
+    "query": "a man on a black suit is preaching",
+    "target": "memes_ydzcc4.png",
+    "rank": 2,
+    "top5": [
+     "memes_zaooym.png",
+     "memes_ydzcc4.png",
+     "memes_ys8lta.png",
+     "memes_yosc2g.png",
+     "memes_yn6aom.png"
+    ]
+   },
+   {
+    "query": "A skeleton is yelling with it's hand raised.",
+    "target": "memes_ygjgs3.png",
+    "rank": 8,
+    "top5": [
+     "memes_z1maqr.png",
+     "memes_ydt3cf.png",
+     "memes_j32ep7.png",
+     "memes_yjcvg8.png",
+     "memes_zbmu89.png"
+    ]
+   },
+   {
+    "query": "A group of people are screaming straight ahead.",
+    "target": "memes_yj4g31.png",
+    "rank": 2,
+    "top5": [
+     "memes_yrt7wo.png",
+     "memes_yj4g31.png",
+     "memes_ypd9hc.png",
+     "memes_ydzcc4.png",
+     "memes_yt5hq0.png"
+    ]
+   },
+   {
+    "query": "the fox with a female human body",
+    "target": "memes_yk0v7l.png",
+    "rank": 2,
+    "top5": [
+     "memes_yzwsdd.png",
+     "memes_yk0v7l.png",
+     "memes_zbxpwu.png",
+     "memes_yjh7fc.png",
+     "memes_zcgggw.png"
+    ]
+   },
+   {
+    "query": "Mike is talking next to his open locker.",
+    "target": "memes_ym8lt5.png",
+    "rank": 320,
+    "top5": [
+     "memes_z05k7b.png",
+     "memes_ywyaqu.png",
+     "memes_jht4yd.png",
+     "memes_yo43lj.png",
+     "memes_z6wtmi.png"
+    ]
+   },
+   {
+    "query": "Mr Incredible is bending his head in shame.",
+    "target": "memes_yo0nj6.png",
+    "rank": 43,
+    "top5": [
+     "memes_zcjkq1.png",
+     "memes_ywyom8.png",
+     "memes_rqql2k.png",
+     "memes_yufa3r.png",
+     "memes_yvokyj.png"
+    ]
+   },
+   {
+    "query": "Four people are standing together with different Elon Musk faces over them.",
+    "target": "memes_yom8hj.png",
+    "rank": 2,
+    "top5": [
+     "memes_ypi4vy.png",
+     "memes_yom8hj.png",
+     "memes_ys0vpt.png",
+     "memes_ytfdzm.png",
+     "memes_ytsrv2.png"
+    ]
+   },
+   {
+    "query": "A large crowd is gathered watching buildings in flames in background",
+    "target": "memes_yow4ym.png",
+    "rank": 1,
+    "top5": [
+     "memes_yow4ym.png",
+     "memes_yzsh2s.png",
+     "memes_zb0jl1.png",
+     "memes_zcj6cv.png",
+     "memes_yxafs1.png"
+    ]
+   },
+   {
+    "query": "A hand is pressing two buttons and a man approves below.",
+    "target": "memes_yp8daq.png",
+    "rank": 1,
+    "top5": [
+     "memes_yp8daq.png",
+     "memes_y7umfb.png",
+     "memes_yzqfsx.png",
+     "memes_yp0q5k.png",
+     "memes_z14qnp.png"
+    ]
+   },
+   {
+    "query": "A girl in a black mask is talking to a woman in a red suit with cartoon speech bubbles.",
+    "target": "memes_ypmdh1.png",
+    "rank": 2,
+    "top5": [
+     "memes_z6ahpl.png",
+     "memes_ypmdh1.png",
+     "memes_yxafs1.png",
+     "memes_zaa2kq.png",
+     "memes_z23new.png"
+    ]
+   },
+   {
+    "query": "A man's face is over a whiskey glass and a table covered in drugs.",
+    "target": "memes_ypu5z9.png",
+    "rank": 3,
+    "top5": [
+     "memes_zbusjn.png",
+     "memes_z0oo98.png",
+     "memes_ypu5z9.png",
+     "memes_z0tgf1.png",
+     "memes_zbnn65.png"
+    ]
+   },
+   {
+    "query": "The grey cat has yellow eyes, he is staring at something with an angry expression.",
+    "target": "memes_ys6wme.png",
+    "rank": 7,
+    "top5": [
+     "memes_yvc6x7.png",
+     "memes_swz82l.png",
+     "memes_z05k7b.png",
+     "memes_yxqcem.png",
+     "memes_ygz5pr.png"
+    ]
+   },
+   {
+    "query": "On the top Joey looks proud and on the bottom Joey is scared.",
+    "target": "memes_yskq0u.png",
+    "rank": 322,
+    "top5": [
+     "memes_yxqcem.png",
+     "memes_you9j5.png",
+     "memes_zbusjn.png",
+     "memes_z0oo98.png",
+     "memes_ytb2jz.png"
+    ]
+   },
+   {
+    "query": "A large man stares into an empty refrigerator.",
+    "target": "memes_ysz67q.png",
+    "rank": 1,
+    "top5": [
+     "memes_ysz67q.png",
+     "memes_yws1rr.png",
+     "memes_yp1k57.png",
+     "memes_yvokyj.png",
+     "memes_yhpvjk.png"
+    ]
+   },
+   {
+    "query": "a cartoon of a military figure with a skull for a face",
+    "target": "memes_ytk8ou.png",
+    "rank": 1,
+    "top5": [
+     "memes_ytk8ou.png",
+     "memes_z6m7p8.png",
+     "memes_zacs4p.png",
+     "memes_yp9q17.png",
+     "memes_ysnq3m.png"
+    ]
+   },
+   {
+    "query": "Two men are speaking to each other while the black man has a blue tick logo on his head.",
+    "target": "memes_yv319v.png",
+    "rank": 7,
+    "top5": [
+     "memes_sdmfth.png",
+     "memes_zbtdvp.png",
+     "memes_yfo8f0.png",
+     "memes_ydzcc4.png",
+     "memes_z67yjx.png"
+    ]
+   },
+   {
+    "query": "One chimp doesn't understand what the others think is funny.",
+    "target": "memes_yvslgu.png",
+    "rank": 2,
+    "top5": [
+     "memes_yxyyn2.png",
+     "memes_yvslgu.png",
+     "memes_ysvkr6.png",
+     "memes_z0cilh.png",
+     "memes_zcg8kx.png"
+    ]
+   },
+   {
+    "query": "A chocolate gorilla is slowly melting in milk until it becomes chocolate milk.",
+    "target": "memes_ywd9m2.png",
+    "rank": 3,
+    "top5": [
+     "memes_yj6wot.png",
+     "memes_yvepzv.png",
+     "memes_ywd9m2.png",
+     "memes_hg2c5y.png",
+     "memes_ysvkr6.png"
+    ]
+   },
+   {
+    "query": "There is a very scared character at the top, an angry and determined character at the bottom.",
+    "target": "memes_ywyom8.png",
+    "rank": 75,
+    "top5": [
+     "memes_z0oo98.png",
+     "memes_ysoc3s.png",
+     "memes_yxqcem.png",
+     "memes_z1maqr.png",
+     "memes_zc1dba.png"
+    ]
+   },
+   {
+    "query": "A bearded man is smiling over a black box.",
+    "target": "memes_yxcvkx.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxcvkx.png",
+     "memes_yhpvjk.png",
+     "memes_yfo8f0.png",
+     "memes_z9ve2g.png",
+     "memes_yrtnej.png"
+    ]
+   },
+   {
+    "query": "A man looks happy then he sees the size of the pizza slice.",
+    "target": "memes_yxw3jn.png",
+    "rank": 2,
+    "top5": [
+     "memes_zanrd4.png",
+     "memes_yxw3jn.png",
+     "memes_yortqo.png",
+     "memes_zbnn65.png",
+     "memes_yy3q4i.png"
+    ]
+   },
+   {
+    "query": "A car is completely filled with drinks and snacks.",
+    "target": "memes_yzilog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzilog.png",
+     "memes_z0tgf1.png",
+     "memes_ywra78.png",
+     "memes_yhni99.png",
+     "memes_yeoa3a.png"
+    ]
+   },
+   {
+    "query": "McDonald's is selling a ridiculous looking chicken sandwich.",
+    "target": "memes_yzwkxg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzwkxg.png",
+     "memes_yxinri.png",
+     "memes_zcjkq1.png",
+     "memes_yy3q4i.png",
+     "memes_zc91wp.png"
+    ]
+   },
+   {
+    "query": "a cartoon character that is purple wearing a hat that is calling it with his hands up",
+    "target": "memes_z0g4aa.png",
+    "rank": 36,
+    "top5": [
+     "memes_ysnq3m.png",
+     "memes_z1aqff.png",
+     "memes_ylz8f2.png",
+     "memes_z0hlf6.png",
+     "memes_ypr54k.png"
+    ]
+   },
+   {
+    "query": "3 different images of two cats doing a gun duel, one is black and one is grey",
+    "target": "memes_z0rhjf.png",
+    "rank": 36,
+    "top5": [
+     "memes_zctyu4.png",
+     "memes_ygz5pr.png",
+     "memes_yvc6x7.png",
+     "memes_zb4sls.png",
+     "memes_yxsdlw.png"
+    ]
+   },
+   {
+    "query": "Chris Pratt is so happy with his mouth open.",
+    "target": "memes_z18di9.png",
+    "rank": 1,
+    "top5": [
+     "memes_z18di9.png",
+     "memes_yjj6io.png",
+     "memes_z1g3aw.png",
+     "memes_ypt7wg.png",
+     "memes_k83rjb.png"
+    ]
+   },
+   {
+    "query": "A bunch of grapes are in a white background.",
+    "target": "memes_z1ps79.png",
+    "rank": 1,
+    "top5": [
+     "memes_z1ps79.png",
+     "memes_ypraz9.png",
+     "memes_ysnmo7.png",
+     "memes_yzqvf4.png",
+     "memes_s2l9le.png"
+    ]
+   },
+   {
+    "query": "A lighter on the floor has three american flags on it.",
+    "target": "memes_z5zgj0.png",
+    "rank": 1,
+    "top5": [
+     "memes_z5zgj0.png",
+     "memes_yow4ym.png",
+     "memes_f0oq4v.png",
+     "memes_yy2sb1.png",
+     "memes_yshq9o.png"
+    ]
+   },
+   {
+    "query": "A woman has puffed out her face in anger.",
+    "target": "memes_z6hqlo.png",
+    "rank": 2,
+    "top5": [
+     "memes_yj4g31.png",
+     "memes_z6hqlo.png",
+     "memes_w7le8j.png",
+     "memes_ys2fr4.png",
+     "memes_z6ahpl.png"
+    ]
+   },
+   {
+    "query": "top images of female with bangs. the second image image of an alien and the bottom image is a man's face that has glowing eyes",
+    "target": "memes_z73nbe.png",
+    "rank": 2,
+    "top5": [
+     "memes_kq9d2b.png",
+     "memes_z73nbe.png",
+     "memes_z0ebhp.png",
+     "memes_za84ao.png",
+     "memes_ywu79h.png"
+    ]
+   },
+   {
+    "query": "The left photo has a handsome man with chisseled features and the photo on the right is an animated version of him.",
+    "target": "memes_z9ve2g.png",
+    "rank": 1,
+    "top5": [
+     "memes_z9ve2g.png",
+     "memes_kq9d2b.png",
+     "memes_zbusjn.png",
+     "memes_z0gx82.png",
+     "memes_za84ao.png"
+    ]
+   },
+   {
+    "query": "Spongebob is wearing glasses and holding nerdy things.",
+    "target": "memes_zacs4p.png",
+    "rank": 3,
+    "top5": [
+     "memes_zb4vev.png",
+     "memes_z14qnp.png",
+     "memes_zacs4p.png",
+     "memes_ywyaqu.png",
+     "memes_yx31gq.png"
+    ]
+   },
+   {
+    "query": "Drake is unimpressed on top and happy on the bottom.",
+    "target": "memes_zatxqe.png",
+    "rank": 15,
+    "top5": [
+     "memes_z0i6y2.png",
+     "memes_z1g3aw.png",
+     "memes_yxqcem.png",
+     "memes_zaslro.png",
+     "memes_y8vtk9.png"
+    ]
+   },
+   {
+    "query": "top image is a black man in a tuxedo bringing pizza and the bottom image is a person with a blow torch in the room while the black man enters the room with a pizza boxes",
+    "target": "memes_zbl3se.png",
+    "rank": 3,
+    "top5": [
+     "memes_zanrd4.png",
+     "memes_za84ao.png",
+     "memes_zbl3se.png",
+     "memes_yxw3jn.png",
+     "memes_hmq8qx.png"
+    ]
+   },
+   {
+    "query": "An animal head with big eyes pasted on a muscular mans body",
+    "target": "memes_zbxpwu.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbxpwu.png",
+     "memes_yjh7fc.png",
+     "memes_yzwsdd.png",
+     "memes_uo20pj.png",
+     "memes_z0052j.png"
+    ]
+   },
+   {
+    "query": "This is a picture of a super hero from a movie.",
+    "target": "memes_zcjkq1.png",
+    "rank": 307,
+    "top5": [
+     "memes_ywu79h.png",
+     "memes_yvokyj.png",
+     "memes_yw6l5p.png",
+     "memes_rqql2k.png",
+     "memes_ywzwzd.png"
+    ]
+   }
+  ],
+  "meaning": [
+   {
+    "query": "Husband feels great after having their wife fall in love with him again after getting amnesia.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_zbtdvp.png",
+     "memes_y64w09.png",
+     "memes_zbnn65.png",
+     "memes_zbrpeo.png"
+    ]
+   },
+   {
+    "query": "Poster argues with another person about his intelligence.",
+    "target": "memes_hv72fd.png",
+    "rank": 4,
+    "top5": [
+     "memes_zcg8kx.png",
+     "memes_ras71b.png",
+     "memes_z9gguj.png",
+     "memes_hv72fd.png",
+     "memes_yosc2g.png"
+    ]
+   },
+   {
+    "query": "People think villains are superhuman but they are the normal people who create pop ups ads.",
+    "target": "memes_rqql2k.png",
+    "rank": 1,
+    "top5": [
+     "memes_rqql2k.png",
+     "memes_yp1al3.png",
+     "memes_yxcvkx.png",
+     "memes_ydprr1.png",
+     "memes_yzqvf4.png"
+    ]
+   },
+   {
+    "query": "The meme poster warns people who hate emojis on the reddit platform.",
+    "target": "memes_y3l6cq.png",
+    "rank": 1,
+    "top5": [
+     "memes_y3l6cq.png",
+     "memes_ysoc3s.png",
+     "memes_yp1al3.png",
+     "memes_ras71b.png",
+     "memes_y6e968.png"
+    ]
+   },
+   {
+    "query": "Meme poster trying to conveys that the reaction of facing old crush.",
+    "target": "memes_yfcmol.png",
+    "rank": 48,
+    "top5": [
+     "memes_ywzaju.png",
+     "memes_d079np.png",
+     "memes_yzoaao.png",
+     "memes_yoseaf.png",
+     "memes_yw9w7m.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey dog's taunt their owners while they are taking poops.",
+    "target": "memes_yhdsgi.png",
+    "rank": 2,
+    "top5": [
+     "memes_yjbj2d.png",
+     "memes_yhdsgi.png",
+     "memes_yndonp.png",
+     "memes_swz82l.png",
+     "memes_zc7hyt.png"
+    ]
+   },
+   {
+    "query": "The meme poster mocks Europeans for being bad at math but supreme at colonizing.",
+    "target": "memes_yjh7fc.png",
+    "rank": 2,
+    "top5": [
+     "memes_z67yjx.png",
+     "memes_yjh7fc.png",
+     "memes_yy2sb1.png",
+     "memes_z6e0bf.png",
+     "memes_ypt7wg.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that MrBeast doesn't have the most appealing thumbnails.",
+    "target": "memes_ylt0k7.png",
+    "rank": 1,
+    "top5": [
+     "memes_ylt0k7.png",
+     "memes_yhjzgl.png",
+     "memes_z0d6op.png",
+     "memes_z12ws9.png",
+     "memes_ywtewy.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they would rather lie about having games on their phone so the kid on the bus doesn't play on his phone.",
+    "target": "memes_ynq7te.png",
+    "rank": 1,
+    "top5": [
+     "memes_ynq7te.png",
+     "memes_zcj6cv.png",
+     "memes_zanqw6.png",
+     "memes_yp1al3.png",
+     "memes_yzu2rh.png"
+    ]
+   },
+   {
+    "query": "People are mocking the meme poster for being lazy and he denies it because he is lazy.",
+    "target": "memes_yojzqj.png",
+    "rank": 1,
+    "top5": [
+     "memes_yojzqj.png",
+     "memes_ysqoog.png",
+     "memes_yosc2g.png",
+     "memes_zanqxk.png",
+     "memes_yswdjj.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they hated Elon Musk for his personality before people hated him for his political beliefs.",
+    "target": "memes_yovsfk.png",
+    "rank": 29,
+    "top5": [
+     "memes_yosc2g.png",
+     "memes_ytfdzm.png",
+     "memes_ys0vpt.png",
+     "memes_ytgo5t.png",
+     "memes_ypi4vy.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that listening to a song while you're bummed out meant that you could decipher the song",
+    "target": "memes_yp7wwg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yp7wwg.png",
+     "memes_zb7wfy.png",
+     "memes_z0r0aq.png",
+     "memes_yswxgz.png",
+     "memes_yp1al3.png"
+    ]
+   },
+   {
+    "query": "Greta Thurnberg is trying to poke fun at the conservative commentator but she isn't having it.",
+    "target": "memes_ypmdh1.png",
+    "rank": 15,
+    "top5": [
+     "memes_yjkepd.png",
+     "memes_z0ebhp.png",
+     "memes_ypt7wg.png",
+     "memes_yooixo.png",
+     "memes_ypuy9q.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying the customer's facial expression when asked if they want a receipt",
+    "target": "memes_ypu8bg.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypu8bg.png",
+     "memes_ynlbir.png",
+     "memes_yj4g31.png",
+     "memes_z6hqlo.png",
+     "memes_iyv1uh.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that this is the expression they make after cancelling plans due to rain but it stops right after.",
+    "target": "memes_ys6wn6.png",
+    "rank": 1,
+    "top5": [
+     "memes_ys6wn6.png",
+     "memes_yve3an.png",
+     "memes_ysqoog.png",
+     "memes_zaxxxq.png",
+     "memes_ypltgu.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that Starbucks will try to sell you anything, even nasty stuff, and label it as a seasonal item,",
+    "target": "memes_ysnmo7.png",
+    "rank": 93,
+    "top5": [
+     "memes_yoseaf.png",
+     "memes_ypc2qd.png",
+     "memes_z67t9a.png",
+     "memes_yt69ju.png",
+     "memes_z5zgj0.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks weird reddit users are anxiously waiting for a meme like How do You Die",
+    "target": "memes_yt2eog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yt2eog.png",
+     "memes_ysdr12.png",
+     "memes_yvslgu.png",
+     "memes_yvnr3b.png",
+     "memes_ras71b.png"
+    ]
+   },
+   {
+    "query": "The meme poster isn't happy that, his friend is using his razor for shaving his balls.",
+    "target": "memes_ytzf3n.png",
+    "rank": 1,
+    "top5": [
+     "memes_ytzf3n.png",
+     "memes_y6e968.png",
+     "memes_yxsdlw.png",
+     "memes_yrtnej.png",
+     "memes_zclvfj.png"
+    ]
+   },
+   {
+    "query": "Meme poster says that he likes other popcorn than movie and microwave popcorns.",
+    "target": "memes_yva6ft.png",
+    "rank": 1,
+    "top5": [
+     "memes_yva6ft.png",
+     "memes_yxpkeb.png",
+     "memes_ysnmo7.png",
+     "memes_zcbyhq.png",
+     "memes_yvwfkf.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying that parents disapprove of how their crypto investor children plan to get their money back.",
+    "target": "memes_yvv3em.png",
+    "rank": 1,
+    "top5": [
+     "memes_yvv3em.png",
+     "memes_zc1dba.png",
+     "memes_ylz8f2.png",
+     "memes_ysptqu.png",
+     "memes_yom8hj.png"
+    ]
+   },
+   {
+    "query": "Meme poster runs out of time to receive advice.",
+    "target": "memes_ywd9m2.png",
+    "rank": 146,
+    "top5": [
+     "memes_y6e968.png",
+     "memes_ykxwyk.png",
+     "memes_yw9w7m.png",
+     "memes_yrtnej.png",
+     "memes_yub23t.png"
+    ]
+   },
+   {
+    "query": "The meme poster gets easily distracted by other images and forgets about the image he came to search for.",
+    "target": "memes_ywzaju.png",
+    "rank": 1,
+    "top5": [
+     "memes_ywzaju.png",
+     "memes_y6e968.png",
+     "memes_yw9w7m.png",
+     "memes_zcg8kx.png",
+     "memes_yjhe9x.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey the older astronaut tries to hurt the newer astronaut with the truth about their travels.",
+    "target": "memes_yxik1h.png",
+    "rank": 3,
+    "top5": [
+     "memes_y3l6cq.png",
+     "memes_yu0t86.png",
+     "memes_yxik1h.png",
+     "memes_yzs2xf.png",
+     "memes_yrt7wo.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their joy when the bathroom is warm when they go to have a poo.",
+    "target": "memes_yxwcfq.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxwcfq.png",
+     "memes_ytzf3n.png",
+     "memes_yj4g31.png",
+     "memes_y6e968.png",
+     "memes_gy6y78.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that their parents claim the trip will be 2 hours long but they bring an abundance of items that crowd the car.",
+    "target": "memes_yzilog.png",
+    "rank": 7,
+    "top5": [
+     "memes_z16dfa.png",
+     "memes_yrt7wo.png",
+     "memes_zcj6cv.png",
+     "memes_yoseaf.png",
+     "memes_ywra78.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their excitement regarding reaching a high karma level in the game, which allows them to appear almost godlike compared to other players.",
+    "target": "memes_yzsh2s.png",
+    "rank": 297,
+    "top5": [
+     "memes_yxrbtv.png",
+     "memes_ysdr12.png",
+     "memes_ysoc3s.png",
+     "memes_z69x38.png",
+     "memes_zanqxk.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks that British dentists are going to assault their patient's mouth.",
+    "target": "memes_z0c8u4.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0c8u4.png",
+     "memes_yjj6io.png",
+     "memes_z6m7p8.png",
+     "memes_z6hqlo.png",
+     "memes_ypraz9.png"
+    ]
+   },
+   {
+    "query": "Meme poster agrees that, he don't know what was the point of Nyan cat!",
+    "target": "memes_z0n6nc.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0n6nc.png",
+     "memes_y6e968.png",
+     "memes_y3l6cq.png",
+     "memes_ys6wme.png",
+     "memes_ysgv77.png"
+    ]
+   },
+   {
+    "query": "Meme poster feels disgusted for laughing at what they were previously.",
+    "target": "memes_z12ws9.png",
+    "rank": 194,
+    "top5": [
+     "memes_y6e968.png",
+     "memes_yoseaf.png",
+     "memes_yub23t.png",
+     "memes_z67yjx.png",
+     "memes_yw9w7m.png"
+    ]
+   },
+   {
+    "query": "Meme poster liked Twitter for a little bit before Elon screwed it up.",
+    "target": "memes_z1g6gr.png",
+    "rank": 14,
+    "top5": [
+     "memes_ytfdzm.png",
+     "memes_ys0vpt.png",
+     "memes_ygoqx2.png",
+     "memes_yooixo.png",
+     "memes_ytsrv2.png"
+    ]
+   },
+   {
+    "query": "Meme poster just wants to live and soulless corporations are trying to break into everywhere.",
+    "target": "memes_z1zz3h.png",
+    "rank": 7,
+    "top5": [
+     "memes_ypt7wg.png",
+     "memes_yswdjj.png",
+     "memes_yw9w7m.png",
+     "memes_rqql2k.png",
+     "memes_y3l6cq.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that trans people want to remind people how Christmas is spelled with the hrt they take.",
+    "target": "memes_z67yg7.png",
+    "rank": 1,
+    "top5": [
+     "memes_z67yg7.png",
+     "memes_ys2fr4.png",
+     "memes_z67t9a.png",
+     "memes_z0hc36.png",
+     "memes_z9kb3b.png"
+    ]
+   },
+   {
+    "query": "Meme poster wishes Walter White could be in the next season of Squid Games.",
+    "target": "memes_z6lnua.png",
+    "rank": 2,
+    "top5": [
+     "memes_z6etdk.png",
+     "memes_z6lnua.png",
+     "memes_yp9sbi.png",
+     "memes_z9gguj.png",
+     "memes_z0meji.png"
+    ]
+   },
+   {
+    "query": "Poster is surprised at number of restraints needed for a patricular person.",
+    "target": "memes_z73vkp.png",
+    "rank": 185,
+    "top5": [
+     "memes_z6hqlo.png",
+     "memes_yj4g31.png",
+     "memes_yoseaf.png",
+     "memes_zbnn65.png",
+     "memes_z0werw.png"
+    ]
+   },
+   {
+    "query": "The meme poster states the capability of AI developed image.",
+    "target": "memes_z9ve2g.png",
+    "rank": 21,
+    "top5": [
+     "memes_ywzaju.png",
+     "memes_ypw964.png",
+     "memes_zcg8kx.png",
+     "memes_ysqoog.png",
+     "memes_yhnk08.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that any one can identify as anything like a butter knife.",
+    "target": "memes_zaccd7.png",
+    "rank": 1,
+    "top5": [
+     "memes_zaccd7.png",
+     "memes_z0hc36.png",
+     "memes_zcg8kx.png",
+     "memes_y6e968.png",
+     "memes_z67yjx.png"
+    ]
+   },
+   {
+    "query": "The poster is making fun of the black man and saying they are going to tell their children in the future that he was Kanye.",
+    "target": "memes_zap0cv.png",
+    "rank": 1,
+    "top5": [
+     "memes_zap0cv.png",
+     "memes_zbqtij.png",
+     "memes_zaslro.png",
+     "memes_zazmu3.png",
+     "memes_zbxhj2.png"
+    ]
+   },
+   {
+    "query": "Meme poster finds most of the music they like from memes not real life.",
+    "target": "memes_zb7wfy.png",
+    "rank": 1,
+    "top5": [
+     "memes_zb7wfy.png",
+     "memes_yswxgz.png",
+     "memes_ypl98d.png",
+     "memes_yw9w7m.png",
+     "memes_yp5dvz.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they want a girl like jenna Ortega.",
+    "target": "memes_zbrpeo.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbrpeo.png",
+     "memes_s23t8o.png",
+     "memes_y6e968.png",
+     "memes_z7b3se.png",
+     "memes_kq9d2b.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that the girl gives out very confusing signals that may be interpreted as too many.",
+    "target": "memes_zc8w32.png",
+    "rank": 2,
+    "top5": [
+     "memes_zcgggw.png",
+     "memes_zc8w32.png",
+     "memes_y6e968.png",
+     "memes_z6hqlo.png",
+     "memes_ykxwyk.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that residents in Ohio needs odor eaters to survive the humidity to feel good.",
+    "target": "memes_zctyu4.png",
+    "rank": 1,
+    "top5": [
+     "memes_zctyu4.png",
+     "memes_zbkwhz.png",
+     "memes_z6fhzu.png",
+     "memes_z6hqlo.png",
+     "memes_yxqcem.png"
+    ]
+   }
+  ]
+ },
+ "ViT-B-16-SigLIP2:webli": {
+  "title": [
+   {
+    "query": "He did it",
+    "target": "memes_d079np.png",
+    "rank": 4,
+    "top5": [
+     "memes_yhpvjk.png",
+     "memes_z1hbsw.png",
+     "memes_yn6aom.png",
+     "memes_d079np.png",
+     "memes_yo0nj6.png"
+    ]
+   },
+   {
+    "query": "One tiny error",
+    "target": "memes_hg2c5y.png",
+    "rank": 322,
+    "top5": [
+     "memes_yooem9.png",
+     "memes_ypd9hc.png",
+     "memes_yvznwz.png",
+     "memes_ykxwyk.png",
+     "memes_zaccd7.png"
+    ]
+   },
+   {
+    "query": "I deserve it",
+    "target": "memes_k4xv8c.png",
+    "rank": 2,
+    "top5": [
+     "memes_yprfz2.png",
+     "memes_k4xv8c.png",
+     "memes_d079np.png",
+     "memes_yrtnej.png",
+     "memes_ynlbir.png"
+    ]
+   },
+   {
+    "query": "Godspeed in this exam season, fellas.",
+    "target": "memes_txelte.png",
+    "rank": 15,
+    "top5": [
+     "memes_yoiisf.png",
+     "memes_ym8eq9.png",
+     "memes_ykxnyj.png",
+     "memes_z0meji.png",
+     "memes_yvznwz.png"
+    ]
+   },
+   {
+    "query": "Sad but true",
+    "target": "memes_y7c81i.png",
+    "rank": 118,
+    "top5": [
+     "memes_yp7wwg.png",
+     "memes_yzoaao.png",
+     "memes_yen8l2.png",
+     "memes_yoo6y1.png",
+     "memes_hv72fd.png"
+    ]
+   },
+   {
+    "query": "Liechtenstein is so small, you can barely see it on a world map.",
+    "target": "memes_yf5nli.png",
+    "rank": 1,
+    "top5": [
+     "memes_yf5nli.png",
+     "memes_z1s45e.png",
+     "memes_yjh7fc.png",
+     "memes_s0hg28.png",
+     "memes_xs0fwg.png"
+    ]
+   },
+   {
+    "query": "dead space was a blood bath and guess who was bathing",
+    "target": "memes_ygz5pr.png",
+    "rank": 174,
+    "top5": [
+     "memes_ytzf3n.png",
+     "memes_zb0jl1.png",
+     "memes_zan6ay.png",
+     "memes_zbusjn.png",
+     "memes_ywd9m2.png"
+    ]
+   },
+   {
+    "query": "taylor swiftly goin up",
+    "target": "memes_yj86bz.png",
+    "rank": 1,
+    "top5": [
+     "memes_yj86bz.png",
+     "memes_z1g3aw.png",
+     "memes_z9kb3b.png",
+     "memes_yom8hj.png",
+     "memes_j3qvhf.png"
+    ]
+   },
+   {
+    "query": "Can confirm",
+    "target": "memes_ykj20m.png",
+    "rank": 243,
+    "top5": [
+     "memes_yhaglf.png",
+     "memes_ys2ioi.png",
+     "memes_hv72fd.png",
+     "memes_yplvun.png",
+     "memes_z22zk5.png"
+    ]
+   },
+   {
+    "query": "Turn off your cell phone",
+    "target": "memes_ymb0s4.png",
+    "rank": 6,
+    "top5": [
+     "memes_z0hlf6.png",
+     "memes_ywt9hg.png",
+     "memes_d2rm3s.png",
+     "memes_ypw964.png",
+     "memes_zanqw6.png"
+    ]
+   },
+   {
+    "query": "The circus continues",
+    "target": "memes_yo0nj6.png",
+    "rank": 70,
+    "top5": [
+     "memes_ylt0k7.png",
+     "memes_yzw2ig.png",
+     "memes_yw3pc8.png",
+     "memes_z6hqlo.png",
+     "memes_z0cilh.png"
+    ]
+   },
+   {
+    "query": "He will rule Germany, just watch.",
+    "target": "memes_yokh2n.png",
+    "rank": 9,
+    "top5": [
+     "memes_yf5nli.png",
+     "memes_ywra78.png",
+     "memes_zbqtij.png",
+     "memes_xs0fwg.png",
+     "memes_y64w09.png"
+    ]
+   },
+   {
+    "query": "A tale as old as time",
+    "target": "memes_you9j5.png",
+    "rank": 461,
+    "top5": [
+     "memes_yp78rs.png",
+     "memes_z0kkfk.png",
+     "memes_ysgot5.png",
+     "memes_yv3rea.png",
+     "memes_z0ebhp.png"
+    ]
+   },
+   {
+    "query": "you guys remember this",
+    "target": "memes_yp6joz.png",
+    "rank": 23,
+    "top5": [
+     "memes_ypr54k.png",
+     "memes_yub23t.png",
+     "memes_yo0nj6.png",
+     "memes_yxqpss.png",
+     "memes_ykj20m.png"
+    ]
+   },
+   {
+    "query": "Cleaning with music",
+    "target": "memes_ypl98d.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypl98d.png",
+     "memes_ymb0s4.png",
+     "memes_zclvfj.png",
+     "memes_ynvd6f.png",
+     "memes_z23u3q.png"
+    ]
+   },
+   {
+    "query": "Election Day Madness",
+    "target": "memes_ypsbzq.png",
+    "rank": 33,
+    "top5": [
+     "memes_ypuy9q.png",
+     "memes_d9gvok.png",
+     "memes_z6i5o6.png",
+     "memes_z792et.png",
+     "memes_yjkepd.png"
+    ]
+   },
+   {
+    "query": "No I don't want your cookies",
+    "target": "memes_yrwfen.png",
+    "rank": 2,
+    "top5": [
+     "memes_yhaglf.png",
+     "memes_yrwfen.png",
+     "memes_yoykbn.png",
+     "memes_hmv62q.png",
+     "memes_ypskw3.png"
+    ]
+   },
+   {
+    "query": "I meant to do that",
+    "target": "memes_ysgw6o.png",
+    "rank": 382,
+    "top5": [
+     "memes_y9pvfs.png",
+     "memes_z7bvg5.png",
+     "memes_yjhe9x.png",
+     "memes_ypsmjt.png",
+     "memes_z73nbe.png"
+    ]
+   },
+   {
+    "query": "Do I even exist?",
+    "target": "memes_ysr39a.png",
+    "rank": 2,
+    "top5": [
+     "memes_yooixo.png",
+     "memes_ysr39a.png",
+     "memes_z7bvg5.png",
+     "memes_z1srmt.png",
+     "memes_yjhe9x.png"
+    ]
+   },
+   {
+    "query": "It is possible to sleep",
+    "target": "memes_yt7wai.png",
+    "rank": 315,
+    "top5": [
+     "memes_yfqxgs.png",
+     "memes_yy4lnf.png",
+     "memes_yudkj8.png",
+     "memes_ylomgx.png",
+     "memes_yrvkzs.png"
+    ]
+   },
+   {
+    "query": "it's 11 o'clock",
+    "target": "memes_yu2v36.png",
+    "rank": 349,
+    "top5": [
+     "memes_z18prx.png",
+     "memes_yznjyc.png",
+     "memes_yw6l5p.png",
+     "memes_ylfcch.png",
+     "memes_ypltgu.png"
+    ]
+   },
+   {
+    "query": "It aint much but its honest work",
+    "target": "memes_yvami9.png",
+    "rank": 450,
+    "top5": [
+     "memes_z0rhjf.png",
+     "memes_ygoqx2.png",
+     "memes_yowkm8.png",
+     "memes_yosc2g.png",
+     "memes_yntmmh.png"
+    ]
+   },
+   {
+    "query": "Damn, that sucks!",
+    "target": "memes_yvwfkf.png",
+    "rank": 213,
+    "top5": [
+     "memes_yo0nj6.png",
+     "memes_yub23t.png",
+     "memes_z03w5m.png",
+     "memes_ydzcc4.png",
+     "memes_yp1al3.png"
+    ]
+   },
+   {
+    "query": "i have no idea whats going on",
+    "target": "memes_ywen5e.png",
+    "rank": 130,
+    "top5": [
+     "memes_z7bvg5.png",
+     "memes_zbmu89.png",
+     "memes_hmv62q.png",
+     "memes_zcrjnj.png",
+     "memes_yzi8x7.png"
+    ]
+   },
+   {
+    "query": "aight, bare minimum it is.",
+    "target": "memes_ywyom8.png",
+    "rank": 221,
+    "top5": [
+     "memes_ydzcc4.png",
+     "memes_yxrbtv.png",
+     "memes_z17hn0.png",
+     "memes_yuirix.png",
+     "memes_yoat1h.png"
+    ]
+   },
+   {
+    "query": "Thank you for your service Spug",
+    "target": "memes_yxcco3.png",
+    "rank": 13,
+    "top5": [
+     "memes_z6m7p8.png",
+     "memes_ypr54k.png",
+     "memes_z5zgj0.png",
+     "memes_yzwkxg.png",
+     "memes_yw16mt.png"
+    ]
+   },
+   {
+    "query": "Im sure you cant guess what these are.",
+    "target": "memes_yxt126.png",
+    "rank": 72,
+    "top5": [
+     "memes_zb6ax4.png",
+     "memes_z12ws9.png",
+     "memes_ynjt2x.png",
+     "memes_zbtqt2.png",
+     "memes_zbrpeo.png"
+    ]
+   },
+   {
+    "query": "Space Karen",
+    "target": "memes_yzfsjy.png",
+    "rank": 63,
+    "top5": [
+     "memes_yxtxl8.png",
+     "memes_yony2r.png",
+     "memes_ypw964.png",
+     "memes_ypmdh1.png",
+     "memes_ysgot5.png"
+    ]
+   },
+   {
+    "query": "loved the format",
+    "target": "memes_yzs2xf.png",
+    "rank": 343,
+    "top5": [
+     "memes_yub23t.png",
+     "memes_ysqoog.png",
+     "memes_yp8i9b.png",
+     "memes_yowkm8.png",
+     "memes_zb7wfy.png"
+    ]
+   },
+   {
+    "query": "well I'm embarrassed",
+    "target": "memes_z0bdeo.png",
+    "rank": 255,
+    "top5": [
+     "memes_z12ws9.png",
+     "memes_z1srmt.png",
+     "memes_hv72fd.png",
+     "memes_z165hn.png",
+     "memes_z23o10.png"
+    ]
+   },
+   {
+    "query": "Gets me every year",
+    "target": "memes_z0meji.png",
+    "rank": 49,
+    "top5": [
+     "memes_yj672f.png",
+     "memes_yvh154.png",
+     "memes_z1srmt.png",
+     "memes_z18prx.png",
+     "memes_yizkxn.png"
+    ]
+   },
+   {
+    "query": "Poor lil guy",
+    "target": "memes_z12uz8.png",
+    "rank": 79,
+    "top5": [
+     "memes_yzoaao.png",
+     "memes_yvv3em.png",
+     "memes_yzlm1n.png",
+     "memes_ysg8hr.png",
+     "memes_zaxxxq.png"
+    ]
+   },
+   {
+    "query": "I just dont get it",
+    "target": "memes_z1g3aw.png",
+    "rank": 27,
+    "top5": [
+     "memes_z03w5m.png",
+     "memes_ypsmjt.png",
+     "memes_yjhe9x.png",
+     "memes_z6cvcv.png",
+     "memes_yrtnej.png"
+    ]
+   },
+   {
+    "query": "VIP's won't cover that, will they?",
+    "target": "memes_z1xuwb.png",
+    "rank": 289,
+    "top5": [
+     "memes_zct4qv.png",
+     "memes_yntmmh.png",
+     "memes_yvo6q7.png",
+     "memes_z67yjx.png",
+     "memes_ykj20m.png"
+    ]
+   },
+   {
+    "query": "wElL gOoD fOr YoU",
+    "target": "memes_z67t9a.png",
+    "rank": 340,
+    "top5": [
+     "memes_ye1nq4.png",
+     "memes_zbnn65.png",
+     "memes_ys2ioi.png",
+     "memes_hv72fd.png",
+     "memes_z6ywrx.png"
+    ]
+   },
+   {
+    "query": "can't wait for squid game season 2",
+    "target": "memes_z6lnua.png",
+    "rank": 7,
+    "top5": [
+     "memes_z0meji.png",
+     "memes_z19g85.png",
+     "memes_yxrbtv.png",
+     "memes_xo7gvr.png",
+     "memes_yxlapf.png"
+    ]
+   },
+   {
+    "query": "Never say this word in front of Europeans",
+    "target": "memes_z7760c.png",
+    "rank": 1,
+    "top5": [
+     "memes_z7760c.png",
+     "memes_yy2sb1.png",
+     "memes_xs0fwg.png",
+     "memes_ypmdh1.png",
+     "memes_yprfb8.png"
+    ]
+   },
+   {
+    "query": "I guess now he can",
+    "target": "memes_za1tds.png",
+    "rank": 38,
+    "top5": [
+     "memes_z7bvg5.png",
+     "memes_z0n6nc.png",
+     "memes_yrtnej.png",
+     "memes_yws1rr.png",
+     "memes_yn6aom.png"
+    ]
+   },
+   {
+    "query": "This is 2022",
+    "target": "memes_zacs4p.png",
+    "rank": 390,
+    "top5": [
+     "memes_z19g85.png",
+     "memes_ypmkrl.png",
+     "memes_z0yvgv.png",
+     "memes_yvi7l0.png",
+     "memes_yxcvkx.png"
+    ]
+   },
+   {
+    "query": "Theres no way for him to recover from this",
+    "target": "memes_zaslro.png",
+    "rank": 244,
+    "top5": [
+     "memes_d079np.png",
+     "memes_z67yg7.png",
+     "memes_k4xv8c.png",
+     "memes_ykj20m.png",
+     "memes_z7bvg5.png"
+    ]
+   },
+   {
+    "query": "Parents are the ultimate chads",
+    "target": "memes_zbj2ty.png",
+    "rank": 2,
+    "top5": [
+     "memes_z16dfa.png",
+     "memes_zbj2ty.png",
+     "memes_yk6x7g.png",
+     "memes_z6jkl9.png",
+     "memes_zaxxxq.png"
+    ]
+   },
+   {
+    "query": "Unfortunately, we were both introverted asf.",
+    "target": "memes_zbtqt2.png",
+    "rank": 42,
+    "top5": [
+     "memes_hmq8qx.png",
+     "memes_yen8l2.png",
+     "memes_zbrpeo.png",
+     "memes_z1srmt.png",
+     "memes_yxqpss.png"
+    ]
+   },
+   {
+    "query": "We just need some little help to stand",
+    "target": "memes_zcd4p8.png",
+    "rank": 198,
+    "top5": [
+     "memes_zc91wp.png",
+     "memes_yswxgz.png",
+     "memes_ut9mdn.png",
+     "memes_ysnq3m.png",
+     "memes_ykj20m.png"
+    ]
+   }
+  ],
+  "literal": [
+   {
+    "query": "A woman shows off her engagement ring which Thor approves of.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_zazmu3.png",
+     "memes_yoqxkn.png",
+     "memes_yp2359.png",
+     "memes_yws1rr.png"
+    ]
+   },
+   {
+    "query": "a white man on laptop smiling and Michael Jordan looking at laptop wearing a black hat crying",
+    "target": "memes_fjiz2r.png",
+    "rank": 1,
+    "top5": [
+     "memes_fjiz2r.png",
+     "memes_z14qnp.png",
+     "memes_yojzqj.png",
+     "memes_z0meji.png",
+     "memes_za84ao.png"
+    ]
+   },
+   {
+    "query": "the red and white colored landscape",
+    "target": "memes_i5w6m3.png",
+    "rank": 9,
+    "top5": [
+     "memes_s0hg28.png",
+     "memes_yxqcem.png",
+     "memes_yzs2xf.png",
+     "memes_yskjvm.png",
+     "memes_yf5nli.png"
+    ]
+   },
+   {
+    "query": "The sad man gets introduced to reddit and is now happy",
+    "target": "memes_ras71b.png",
+    "rank": 1,
+    "top5": [
+     "memes_ras71b.png",
+     "memes_ysdr12.png",
+     "memes_za6lhz.png",
+     "memes_yvnr3b.png",
+     "memes_yprfz2.png"
+    ]
+   },
+   {
+    "query": "Oprah with her hands on her head has if she is trying to understand something.",
+    "target": "memes_xo7gvr.png",
+    "rank": 3,
+    "top5": [
+     "memes_ylfcch.png",
+     "memes_k83rjb.png",
+     "memes_xo7gvr.png",
+     "memes_z6i5o6.png",
+     "memes_ydzcc4.png"
+    ]
+   },
+   {
+    "query": "a man on a black suit is preaching",
+    "target": "memes_ydzcc4.png",
+    "rank": 5,
+    "top5": [
+     "memes_zc501y.png",
+     "memes_iyv1uh.png",
+     "memes_z9gguj.png",
+     "memes_yotsii.png",
+     "memes_ydzcc4.png"
+    ]
+   },
+   {
+    "query": "A skeleton is yelling with it's hand raised.",
+    "target": "memes_ygjgs3.png",
+    "rank": 2,
+    "top5": [
+     "memes_j32ep7.png",
+     "memes_ygjgs3.png",
+     "memes_z1maqr.png",
+     "memes_ydt3cf.png",
+     "memes_z252ft.png"
+    ]
+   },
+   {
+    "query": "A group of people are screaming straight ahead.",
+    "target": "memes_yj4g31.png",
+    "rank": 1,
+    "top5": [
+     "memes_yj4g31.png",
+     "memes_yzfsjy.png",
+     "memes_ysqoog.png",
+     "memes_yprfb8.png",
+     "memes_ypo3im.png"
+    ]
+   },
+   {
+    "query": "the fox with a female human body",
+    "target": "memes_yk0v7l.png",
+    "rank": 1,
+    "top5": [
+     "memes_yk0v7l.png",
+     "memes_zbxpwu.png",
+     "memes_yx4xxs.png",
+     "memes_z0yvgv.png",
+     "memes_d9gvok.png"
+    ]
+   },
+   {
+    "query": "Mike is talking next to his open locker.",
+    "target": "memes_ym8lt5.png",
+    "rank": 18,
+    "top5": [
+     "memes_zc91wp.png",
+     "memes_z18di9.png",
+     "memes_yxqpss.png",
+     "memes_zbusjn.png",
+     "memes_ysz67q.png"
+    ]
+   },
+   {
+    "query": "Mr Incredible is bending his head in shame.",
+    "target": "memes_yo0nj6.png",
+    "rank": 5,
+    "top5": [
+     "memes_txelte.png",
+     "memes_yt7wn1.png",
+     "memes_z7br01.png",
+     "memes_yvo6q7.png",
+     "memes_yo0nj6.png"
+    ]
+   },
+   {
+    "query": "Four people are standing together with different Elon Musk faces over them.",
+    "target": "memes_yom8hj.png",
+    "rank": 5,
+    "top5": [
+     "memes_yzfsjy.png",
+     "memes_ypi4vy.png",
+     "memes_z0ebhp.png",
+     "memes_ytsrv2.png",
+     "memes_yom8hj.png"
+    ]
+   },
+   {
+    "query": "A large crowd is gathered watching buildings in flames in background",
+    "target": "memes_yow4ym.png",
+    "rank": 1,
+    "top5": [
+     "memes_yow4ym.png",
+     "memes_ysgw6o.png",
+     "memes_ymb0s4.png",
+     "memes_zb0jl1.png",
+     "memes_w0c9z3.png"
+    ]
+   },
+   {
+    "query": "A hand is pressing two buttons and a man approves below.",
+    "target": "memes_yp8daq.png",
+    "rank": 2,
+    "top5": [
+     "memes_ywtewy.png",
+     "memes_yp8daq.png",
+     "memes_yprfz2.png",
+     "memes_za4e6s.png",
+     "memes_y7umfb.png"
+    ]
+   },
+   {
+    "query": "A girl in a black mask is talking to a woman in a red suit with cartoon speech bubbles.",
+    "target": "memes_ypmdh1.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypmdh1.png",
+     "memes_z23new.png",
+     "memes_yj86bz.png",
+     "memes_map6ds.png",
+     "memes_z6ahpl.png"
+    ]
+   },
+   {
+    "query": "A man's face is over a whiskey glass and a table covered in drugs.",
+    "target": "memes_ypu5z9.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypu5z9.png",
+     "memes_yhni99.png",
+     "memes_ywzaju.png",
+     "memes_z1xuwb.png",
+     "memes_yovsfk.png"
+    ]
+   },
+   {
+    "query": "The grey cat has yellow eyes, he is staring at something with an angry expression.",
+    "target": "memes_ys6wme.png",
+    "rank": 4,
+    "top5": [
+     "memes_yoykbn.png",
+     "memes_ut9mdn.png",
+     "memes_y6e968.png",
+     "memes_ys6wme.png",
+     "memes_z0rhjf.png"
+    ]
+   },
+   {
+    "query": "On the top Joey looks proud and on the bottom Joey is scared.",
+    "target": "memes_yskq0u.png",
+    "rank": 2,
+    "top5": [
+     "memes_zbusjn.png",
+     "memes_yskq0u.png",
+     "memes_yizkxn.png",
+     "memes_y8vtk9.png",
+     "memes_you9j5.png"
+    ]
+   },
+   {
+    "query": "A large man stares into an empty refrigerator.",
+    "target": "memes_ysz67q.png",
+    "rank": 1,
+    "top5": [
+     "memes_ysz67q.png",
+     "memes_zc91wp.png",
+     "memes_z1a9hz.png",
+     "memes_yggcka.png",
+     "memes_z6u1az.png"
+    ]
+   },
+   {
+    "query": "a cartoon of a military figure with a skull for a face",
+    "target": "memes_ytk8ou.png",
+    "rank": 1,
+    "top5": [
+     "memes_ytk8ou.png",
+     "memes_z6m7p8.png",
+     "memes_zcbyhq.png",
+     "memes_ykj20m.png",
+     "memes_zacs4p.png"
+    ]
+   },
+   {
+    "query": "Two men are speaking to each other while the black man has a blue tick logo on his head.",
+    "target": "memes_yv319v.png",
+    "rank": 1,
+    "top5": [
+     "memes_yv319v.png",
+     "memes_zap0cv.png",
+     "memes_ytzf3n.png",
+     "memes_z1edch.png",
+     "memes_ydprr1.png"
+    ]
+   },
+   {
+    "query": "One chimp doesn't understand what the others think is funny.",
+    "target": "memes_yvslgu.png",
+    "rank": 1,
+    "top5": [
+     "memes_yvslgu.png",
+     "memes_yxyyn2.png",
+     "memes_yw4evt.png",
+     "memes_ysvkr6.png",
+     "memes_ys6wme.png"
+    ]
+   },
+   {
+    "query": "A chocolate gorilla is slowly melting in milk until it becomes chocolate milk.",
+    "target": "memes_ywd9m2.png",
+    "rank": 2,
+    "top5": [
+     "memes_yj6wot.png",
+     "memes_ywd9m2.png",
+     "memes_ysvkr6.png",
+     "memes_yvepzv.png",
+     "memes_yvslgu.png"
+    ]
+   },
+   {
+    "query": "There is a very scared character at the top, an angry and determined character at the bottom.",
+    "target": "memes_ywyom8.png",
+    "rank": 8,
+    "top5": [
+     "memes_z0oo98.png",
+     "memes_yls72p.png",
+     "memes_yxqpss.png",
+     "memes_ylecth.png",
+     "memes_zcjkq1.png"
+    ]
+   },
+   {
+    "query": "A bearded man is smiling over a black box.",
+    "target": "memes_yxcvkx.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxcvkx.png",
+     "memes_yfo8f0.png",
+     "memes_yrtnej.png",
+     "memes_ypt7wg.png",
+     "memes_z08q54.png"
+    ]
+   },
+   {
+    "query": "A man looks happy then he sees the size of the pizza slice.",
+    "target": "memes_yxw3jn.png",
+    "rank": 3,
+    "top5": [
+     "memes_yortqo.png",
+     "memes_hmv62q.png",
+     "memes_yxw3jn.png",
+     "memes_yskq0u.png",
+     "memes_zc91wp.png"
+    ]
+   },
+   {
+    "query": "A car is completely filled with drinks and snacks.",
+    "target": "memes_yzilog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzilog.png",
+     "memes_z0tgf1.png",
+     "memes_yz9ap0.png",
+     "memes_yxk3b2.png",
+     "memes_yhni99.png"
+    ]
+   },
+   {
+    "query": "McDonald's is selling a ridiculous looking chicken sandwich.",
+    "target": "memes_yzwkxg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzwkxg.png",
+     "memes_yxinri.png",
+     "memes_ytk8ou.png",
+     "memes_yjkepd.png",
+     "memes_zc91wp.png"
+    ]
+   },
+   {
+    "query": "a cartoon character that is purple wearing a hat that is calling it with his hands up",
+    "target": "memes_z0g4aa.png",
+    "rank": 4,
+    "top5": [
+     "memes_z0hlf6.png",
+     "memes_yp1al3.png",
+     "memes_yooem9.png",
+     "memes_z0g4aa.png",
+     "memes_yxqpss.png"
+    ]
+   },
+   {
+    "query": "3 different images of two cats doing a gun duel, one is black and one is grey",
+    "target": "memes_z0rhjf.png",
+    "rank": 2,
+    "top5": [
+     "memes_ysz2ky.png",
+     "memes_z0rhjf.png",
+     "memes_zctyu4.png",
+     "memes_ye1nq4.png",
+     "memes_ygz5pr.png"
+    ]
+   },
+   {
+    "query": "Chris Pratt is so happy with his mouth open.",
+    "target": "memes_z18di9.png",
+    "rank": 3,
+    "top5": [
+     "memes_z1g3aw.png",
+     "memes_yzfsjy.png",
+     "memes_z18di9.png",
+     "memes_z0n6nc.png",
+     "memes_zc501y.png"
+    ]
+   },
+   {
+    "query": "A bunch of grapes are in a white background.",
+    "target": "memes_z1ps79.png",
+    "rank": 1,
+    "top5": [
+     "memes_z1ps79.png",
+     "memes_ye1nq4.png",
+     "memes_z6hedc.png",
+     "memes_yuirix.png",
+     "memes_yxi6pj.png"
+    ]
+   },
+   {
+    "query": "A lighter on the floor has three american flags on it.",
+    "target": "memes_z5zgj0.png",
+    "rank": 1,
+    "top5": [
+     "memes_z5zgj0.png",
+     "memes_f0oq4v.png",
+     "memes_ypr54k.png",
+     "memes_ywra78.png",
+     "memes_yszx5e.png"
+    ]
+   },
+   {
+    "query": "A woman has puffed out her face in anger.",
+    "target": "memes_z6hqlo.png",
+    "rank": 11,
+    "top5": [
+     "memes_z67t9a.png",
+     "memes_ysgot5.png",
+     "memes_xo7gvr.png",
+     "memes_yhdsgi.png",
+     "memes_yj4g31.png"
+    ]
+   },
+   {
+    "query": "top images of female with bangs. the second image image of an alien and the bottom image is a man's face that has glowing eyes",
+    "target": "memes_z73nbe.png",
+    "rank": 1,
+    "top5": [
+     "memes_z73nbe.png",
+     "memes_yj86bz.png",
+     "memes_kq9d2b.png",
+     "memes_yp2359.png",
+     "memes_w7le8j.png"
+    ]
+   },
+   {
+    "query": "The left photo has a handsome man with chisseled features and the photo on the right is an animated version of him.",
+    "target": "memes_z9ve2g.png",
+    "rank": 1,
+    "top5": [
+     "memes_z9ve2g.png",
+     "memes_zbusjn.png",
+     "memes_z0oo98.png",
+     "memes_s2l9le.png",
+     "memes_zcjkq1.png"
+    ]
+   },
+   {
+    "query": "Spongebob is wearing glasses and holding nerdy things.",
+    "target": "memes_zacs4p.png",
+    "rank": 1,
+    "top5": [
+     "memes_zacs4p.png",
+     "memes_ywyaqu.png",
+     "memes_zb4vev.png",
+     "memes_yo0qe2.png",
+     "memes_y9pvfs.png"
+    ]
+   },
+   {
+    "query": "Drake is unimpressed on top and happy on the bottom.",
+    "target": "memes_zatxqe.png",
+    "rank": 15,
+    "top5": [
+     "memes_z0i6y2.png",
+     "memes_z6wtmi.png",
+     "memes_z7bhls.png",
+     "memes_j3qvhf.png",
+     "memes_z6u1az.png"
+    ]
+   },
+   {
+    "query": "top image is a black man in a tuxedo bringing pizza and the bottom image is a person with a blow torch in the room while the black man enters the room with a pizza boxes",
+    "target": "memes_zbl3se.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbl3se.png",
+     "memes_ypiytx.png",
+     "memes_yzi8x7.png",
+     "memes_yzmch9.png",
+     "memes_yxw3jn.png"
+    ]
+   },
+   {
+    "query": "An animal head with big eyes pasted on a muscular mans body",
+    "target": "memes_zbxpwu.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbxpwu.png",
+     "memes_z9ve2g.png",
+     "memes_yrtnej.png",
+     "memes_z1230d.png",
+     "memes_yx4xxs.png"
+    ]
+   },
+   {
+    "query": "This is a picture of a super hero from a movie.",
+    "target": "memes_zcjkq1.png",
+    "rank": 240,
+    "top5": [
+     "memes_yj86bz.png",
+     "memes_yo5mps.png",
+     "memes_zcbyhq.png",
+     "memes_yfcmol.png",
+     "memes_yrugxm.png"
+    ]
+   }
+  ],
+  "meaning": [
+   {
+    "query": "Husband feels great after having their wife fall in love with him again after getting amnesia.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_zazmu3.png",
+     "memes_ynyqhg.png",
+     "memes_zbnn65.png",
+     "memes_j3qvhf.png"
+    ]
+   },
+   {
+    "query": "Poster argues with another person about his intelligence.",
+    "target": "memes_hv72fd.png",
+    "rank": 38,
+    "top5": [
+     "memes_ypw964.png",
+     "memes_z6ahpl.png",
+     "memes_z9gguj.png",
+     "memes_ytczsg.png",
+     "memes_ypt7wg.png"
+    ]
+   },
+   {
+    "query": "People think villains are superhuman but they are the normal people who create pop ups ads.",
+    "target": "memes_rqql2k.png",
+    "rank": 1,
+    "top5": [
+     "memes_rqql2k.png",
+     "memes_yp1al3.png",
+     "memes_yntmmh.png",
+     "memes_yo5mps.png",
+     "memes_ydprr1.png"
+    ]
+   },
+   {
+    "query": "The meme poster warns people who hate emojis on the reddit platform.",
+    "target": "memes_y3l6cq.png",
+    "rank": 78,
+    "top5": [
+     "memes_yo0qe2.png",
+     "memes_yokh2n.png",
+     "memes_yzfsjy.png",
+     "memes_yoo6y1.png",
+     "memes_zazmu3.png"
+    ]
+   },
+   {
+    "query": "Meme poster trying to conveys that the reaction of facing old crush.",
+    "target": "memes_yfcmol.png",
+    "rank": 1,
+    "top5": [
+     "memes_yfcmol.png",
+     "memes_yf5nli.png",
+     "memes_z03qi8.png",
+     "memes_iyv1uh.png",
+     "memes_ypmkrl.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey dog's taunt their owners while they are taking poops.",
+    "target": "memes_yhdsgi.png",
+    "rank": 2,
+    "top5": [
+     "memes_zc7hyt.png",
+     "memes_yhdsgi.png",
+     "memes_yo86kx.png",
+     "memes_ye0oip.png",
+     "memes_ys2ioi.png"
+    ]
+   },
+   {
+    "query": "The meme poster mocks Europeans for being bad at math but supreme at colonizing.",
+    "target": "memes_yjh7fc.png",
+    "rank": 1,
+    "top5": [
+     "memes_yjh7fc.png",
+     "memes_yy2sb1.png",
+     "memes_yf5nli.png",
+     "memes_yosc2g.png",
+     "memes_fat6rn.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that MrBeast doesn't have the most appealing thumbnails.",
+    "target": "memes_ylt0k7.png",
+    "rank": 120,
+    "top5": [
+     "memes_yrtnej.png",
+     "memes_z12ws9.png",
+     "memes_yhjzgl.png",
+     "memes_j3qvhf.png",
+     "memes_ypmkrl.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they would rather lie about having games on their phone so the kid on the bus doesn't play on his phone.",
+    "target": "memes_ynq7te.png",
+    "rank": 1,
+    "top5": [
+     "memes_ynq7te.png",
+     "memes_ypkyhm.png",
+     "memes_yoduon.png",
+     "memes_zcj6cv.png",
+     "memes_z0meji.png"
+    ]
+   },
+   {
+    "query": "People are mocking the meme poster for being lazy and he denies it because he is lazy.",
+    "target": "memes_yojzqj.png",
+    "rank": 3,
+    "top5": [
+     "memes_yoykbn.png",
+     "memes_k4xv8c.png",
+     "memes_yojzqj.png",
+     "memes_ysg8hr.png",
+     "memes_zazmu3.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they hated Elon Musk for his personality before people hated him for his political beliefs.",
+    "target": "memes_yovsfk.png",
+    "rank": 2,
+    "top5": [
+     "memes_yzfsjy.png",
+     "memes_yovsfk.png",
+     "memes_ytsrv2.png",
+     "memes_yosc2g.png",
+     "memes_ypi4vy.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that listening to a song while you're bummed out meant that you could decipher the song",
+    "target": "memes_yp7wwg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yp7wwg.png",
+     "memes_z0r0aq.png",
+     "memes_zb7wfy.png",
+     "memes_i8tn53.png",
+     "memes_yvo6q7.png"
+    ]
+   },
+   {
+    "query": "Greta Thurnberg is trying to poke fun at the conservative commentator but she isn't having it.",
+    "target": "memes_ypmdh1.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypmdh1.png",
+     "memes_d9gvok.png",
+     "memes_yjkepd.png",
+     "memes_ypmkrl.png",
+     "memes_zazmu3.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying the customer's facial expression when asked if they want a receipt",
+    "target": "memes_ypu8bg.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypu8bg.png",
+     "memes_ynlbir.png",
+     "memes_yprfz2.png",
+     "memes_zc91wp.png",
+     "memes_ypr54k.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that this is the expression they make after cancelling plans due to rain but it stops right after.",
+    "target": "memes_ys6wn6.png",
+    "rank": 1,
+    "top5": [
+     "memes_ys6wn6.png",
+     "memes_yvo6q7.png",
+     "memes_z0meji.png",
+     "memes_yp7wwg.png",
+     "memes_yggcka.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that Starbucks will try to sell you anything, even nasty stuff, and label it as a seasonal item,",
+    "target": "memes_ysnmo7.png",
+    "rank": 2,
+    "top5": [
+     "memes_zc91wp.png",
+     "memes_ysnmo7.png",
+     "memes_z67t9a.png",
+     "memes_ydprr1.png",
+     "memes_ypr54k.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks weird reddit users are anxiously waiting for a meme like How do You Die",
+    "target": "memes_yt2eog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yt2eog.png",
+     "memes_yvslgu.png",
+     "memes_ywtewy.png",
+     "memes_ypmkrl.png",
+     "memes_zb4vev.png"
+    ]
+   },
+   {
+    "query": "The meme poster isn't happy that, his friend is using his razor for shaving his balls.",
+    "target": "memes_ytzf3n.png",
+    "rank": 1,
+    "top5": [
+     "memes_ytzf3n.png",
+     "memes_ys2ioi.png",
+     "memes_z1edch.png",
+     "memes_ywzcf5.png",
+     "memes_yvo6q7.png"
+    ]
+   },
+   {
+    "query": "Meme poster says that he likes other popcorn than movie and microwave popcorns.",
+    "target": "memes_yva6ft.png",
+    "rank": 1,
+    "top5": [
+     "memes_yva6ft.png",
+     "memes_yxpkeb.png",
+     "memes_yxlapf.png",
+     "memes_ysnmo7.png",
+     "memes_k83rjb.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying that parents disapprove of how their crypto investor children plan to get their money back.",
+    "target": "memes_yvv3em.png",
+    "rank": 1,
+    "top5": [
+     "memes_yvv3em.png",
+     "memes_yosc2g.png",
+     "memes_ypmkrl.png",
+     "memes_ytsrv2.png",
+     "memes_ydprr1.png"
+    ]
+   },
+   {
+    "query": "Meme poster runs out of time to receive advice.",
+    "target": "memes_ywd9m2.png",
+    "rank": 405,
+    "top5": [
+     "memes_yprfz2.png",
+     "memes_ynlbir.png",
+     "memes_ypsbzq.png",
+     "memes_yvo6q7.png",
+     "memes_zb4vev.png"
+    ]
+   },
+   {
+    "query": "The meme poster gets easily distracted by other images and forgets about the image he came to search for.",
+    "target": "memes_ywzaju.png",
+    "rank": 1,
+    "top5": [
+     "memes_ywzaju.png",
+     "memes_j3qvhf.png",
+     "memes_yf5nli.png",
+     "memes_ypr54k.png",
+     "memes_ywtewy.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey the older astronaut tries to hurt the newer astronaut with the truth about their travels.",
+    "target": "memes_yxik1h.png",
+    "rank": 88,
+    "top5": [
+     "memes_y3l6cq.png",
+     "memes_ywylpr.png",
+     "memes_yzs2xf.png",
+     "memes_yxrbtv.png",
+     "memes_yu0t86.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their joy when the bathroom is warm when they go to have a poo.",
+    "target": "memes_yxwcfq.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxwcfq.png",
+     "memes_ys2ioi.png",
+     "memes_z1edch.png",
+     "memes_z17hn0.png",
+     "memes_z0meji.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that their parents claim the trip will be 2 hours long but they bring an abundance of items that crowd the car.",
+    "target": "memes_yzilog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzilog.png",
+     "memes_yeoa3a.png",
+     "memes_z0tgf1.png",
+     "memes_z16dfa.png",
+     "memes_ysklsa.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their excitement regarding reaching a high karma level in the game, which allows them to appear almost godlike compared to other players.",
+    "target": "memes_yzsh2s.png",
+    "rank": 16,
+    "top5": [
+     "memes_z0meji.png",
+     "memes_z7adyc.png",
+     "memes_yfw632.png",
+     "memes_z0d6op.png",
+     "memes_zct4qv.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks that British dentists are going to assault their patient's mouth.",
+    "target": "memes_z0c8u4.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0c8u4.png",
+     "memes_yjj6io.png",
+     "memes_z6hqlo.png",
+     "memes_y64w09.png",
+     "memes_yzw2ig.png"
+    ]
+   },
+   {
+    "query": "Meme poster agrees that, he don't know what was the point of Nyan cat!",
+    "target": "memes_z0n6nc.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0n6nc.png",
+     "memes_zc7hyt.png",
+     "memes_zbmu89.png",
+     "memes_yoykbn.png",
+     "memes_zc501y.png"
+    ]
+   },
+   {
+    "query": "Meme poster feels disgusted for laughing at what they were previously.",
+    "target": "memes_z12ws9.png",
+    "rank": 12,
+    "top5": [
+     "memes_yzfsjy.png",
+     "memes_ypmkrl.png",
+     "memes_yvslgu.png",
+     "memes_k83rjb.png",
+     "memes_ypo3im.png"
+    ]
+   },
+   {
+    "query": "Meme poster liked Twitter for a little bit before Elon screwed it up.",
+    "target": "memes_z1g6gr.png",
+    "rank": 5,
+    "top5": [
+     "memes_yzfsjy.png",
+     "memes_ytsrv2.png",
+     "memes_i8tn53.png",
+     "memes_yvnr3b.png",
+     "memes_z1g6gr.png"
+    ]
+   },
+   {
+    "query": "Meme poster just wants to live and soulless corporations are trying to break into everywhere.",
+    "target": "memes_z1zz3h.png",
+    "rank": 2,
+    "top5": [
+     "memes_yzfsjy.png",
+     "memes_z1zz3h.png",
+     "memes_yzi8x7.png",
+     "memes_yt7wn1.png",
+     "memes_yooixo.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that trans people want to remind people how Christmas is spelled with the hrt they take.",
+    "target": "memes_z67yg7.png",
+    "rank": 1,
+    "top5": [
+     "memes_z67yg7.png",
+     "memes_z67t9a.png",
+     "memes_z9kb3b.png",
+     "memes_z0hc36.png",
+     "memes_yzfsjy.png"
+    ]
+   },
+   {
+    "query": "Meme poster wishes Walter White could be in the next season of Squid Games.",
+    "target": "memes_z6lnua.png",
+    "rank": 1,
+    "top5": [
+     "memes_z6lnua.png",
+     "memes_z6etdk.png",
+     "memes_ytczsg.png",
+     "memes_z0meji.png",
+     "memes_ytcg2z.png"
+    ]
+   },
+   {
+    "query": "Poster is surprised at number of restraints needed for a patricular person.",
+    "target": "memes_z73vkp.png",
+    "rank": 5,
+    "top5": [
+     "memes_map6ds.png",
+     "memes_ys2ioi.png",
+     "memes_yo43lj.png",
+     "memes_yp78rs.png",
+     "memes_z73vkp.png"
+    ]
+   },
+   {
+    "query": "The meme poster states the capability of AI developed image.",
+    "target": "memes_z9ve2g.png",
+    "rank": 274,
+    "top5": [
+     "memes_ypw964.png",
+     "memes_yfw632.png",
+     "memes_yprfz2.png",
+     "memes_yhjzgl.png",
+     "memes_i5w6m3.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that any one can identify as anything like a butter knife.",
+    "target": "memes_zaccd7.png",
+    "rank": 2,
+    "top5": [
+     "memes_yvo6q7.png",
+     "memes_zaccd7.png",
+     "memes_yub23t.png",
+     "memes_yooem9.png",
+     "memes_yswdjj.png"
+    ]
+   },
+   {
+    "query": "The poster is making fun of the black man and saying they are going to tell their children in the future that he was Kanye.",
+    "target": "memes_zap0cv.png",
+    "rank": 1,
+    "top5": [
+     "memes_zap0cv.png",
+     "memes_yhpvjk.png",
+     "memes_zazmu3.png",
+     "memes_za788f.png",
+     "memes_z0i6y2.png"
+    ]
+   },
+   {
+    "query": "Meme poster finds most of the music they like from memes not real life.",
+    "target": "memes_zb7wfy.png",
+    "rank": 4,
+    "top5": [
+     "memes_ypmkrl.png",
+     "memes_ypl98d.png",
+     "memes_yp7wwg.png",
+     "memes_zb7wfy.png",
+     "memes_z23u3q.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they want a girl like jenna Ortega.",
+    "target": "memes_zbrpeo.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbrpeo.png",
+     "memes_ypmkrl.png",
+     "memes_ywzaju.png",
+     "memes_z7b3se.png",
+     "memes_zazmu3.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that the girl gives out very confusing signals that may be interpreted as too many.",
+    "target": "memes_zc8w32.png",
+    "rank": 30,
+    "top5": [
+     "memes_ypmkrl.png",
+     "memes_zcgggw.png",
+     "memes_kq9d2b.png",
+     "memes_ywzaju.png",
+     "memes_ynlbir.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that residents in Ohio needs odor eaters to survive the humidity to feel good.",
+    "target": "memes_zctyu4.png",
+    "rank": 1,
+    "top5": [
+     "memes_zctyu4.png",
+     "memes_zclvfj.png",
+     "memes_ymb0s4.png",
+     "memes_yswdjj.png",
+     "memes_ypmkrl.png"
+    ]
+   }
+  ]
+ },
+ "ViT-L-14:openai": {
+  "title": [
+   {
+    "query": "He did it",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_ysg8hr.png",
+     "memes_yoc2r3.png",
+     "memes_zanqw6.png",
+     "memes_z6lnua.png"
+    ]
+   },
+   {
+    "query": "One tiny error",
+    "target": "memes_hg2c5y.png",
+    "rank": 150,
+    "top5": [
+     "memes_ywyom8.png",
+     "memes_ywpf60.png",
+     "memes_ynjt2x.png",
+     "memes_zct4qv.png",
+     "memes_yowkm8.png"
+    ]
+   },
+   {
+    "query": "I deserve it",
+    "target": "memes_k4xv8c.png",
+    "rank": 1,
+    "top5": [
+     "memes_k4xv8c.png",
+     "memes_yortqo.png",
+     "memes_ykxnyj.png",
+     "memes_ysz2ky.png",
+     "memes_ysvkr6.png"
+    ]
+   },
+   {
+    "query": "Godspeed in this exam season, fellas.",
+    "target": "memes_txelte.png",
+    "rank": 9,
+    "top5": [
+     "memes_ypkyhm.png",
+     "memes_yfqxgs.png",
+     "memes_ykxnyj.png",
+     "memes_yplvun.png",
+     "memes_xo7gvr.png"
+    ]
+   },
+   {
+    "query": "Sad but true",
+    "target": "memes_y7c81i.png",
+    "rank": 324,
+    "top5": [
+     "memes_yzu2rh.png",
+     "memes_yppqtz.png",
+     "memes_zc68n0.png",
+     "memes_kq9d2b.png",
+     "memes_zbmu89.png"
+    ]
+   },
+   {
+    "query": "Liechtenstein is so small, you can barely see it on a world map.",
+    "target": "memes_yf5nli.png",
+    "rank": 1,
+    "top5": [
+     "memes_yf5nli.png",
+     "memes_yy2sb1.png",
+     "memes_xs0fwg.png",
+     "memes_yxik1h.png",
+     "memes_yj9yqx.png"
+    ]
+   },
+   {
+    "query": "dead space was a blood bath and guess who was bathing",
+    "target": "memes_ygz5pr.png",
+    "rank": 12,
+    "top5": [
+     "memes_yxi6pj.png",
+     "memes_zb0jl1.png",
+     "memes_ydqfb6.png",
+     "memes_z7adyc.png",
+     "memes_y3af7s.png"
+    ]
+   },
+   {
+    "query": "taylor swiftly goin up",
+    "target": "memes_yj86bz.png",
+    "rank": 1,
+    "top5": [
+     "memes_yj86bz.png",
+     "memes_z1g3aw.png",
+     "memes_zaslro.png",
+     "memes_zb4dgg.png",
+     "memes_zap0cv.png"
+    ]
+   },
+   {
+    "query": "Can confirm",
+    "target": "memes_ykj20m.png",
+    "rank": 433,
+    "top5": [
+     "memes_z18di9.png",
+     "memes_yh390f.png",
+     "memes_kq9d2b.png",
+     "memes_z16dfa.png",
+     "memes_yxwcfq.png"
+    ]
+   },
+   {
+    "query": "Turn off your cell phone",
+    "target": "memes_ymb0s4.png",
+    "rank": 196,
+    "top5": [
+     "memes_zanqw6.png",
+     "memes_ywt9hg.png",
+     "memes_yntmmh.png",
+     "memes_yoo6y1.png",
+     "memes_d2rm3s.png"
+    ]
+   },
+   {
+    "query": "The circus continues",
+    "target": "memes_yo0nj6.png",
+    "rank": 294,
+    "top5": [
+     "memes_zc1dba.png",
+     "memes_d9gvok.png",
+     "memes_hmq8qx.png",
+     "memes_yww24b.png",
+     "memes_yxrbtv.png"
+    ]
+   },
+   {
+    "query": "He will rule Germany, just watch.",
+    "target": "memes_yokh2n.png",
+    "rank": 461,
+    "top5": [
+     "memes_ywra78.png",
+     "memes_yzj23p.png",
+     "memes_y64w09.png",
+     "memes_z1s45e.png",
+     "memes_za788f.png"
+    ]
+   },
+   {
+    "query": "A tale as old as time",
+    "target": "memes_you9j5.png",
+    "rank": 324,
+    "top5": [
+     "memes_yp0q5k.png",
+     "memes_yjj2oi.png",
+     "memes_ydxecs.png",
+     "memes_ym3n1o.png",
+     "memes_yswxgz.png"
+    ]
+   },
+   {
+    "query": "you guys remember this",
+    "target": "memes_yp6joz.png",
+    "rank": 4,
+    "top5": [
+     "memes_zbkwhz.png",
+     "memes_ypr54k.png",
+     "memes_it6820.png",
+     "memes_yp6joz.png",
+     "memes_ywt9hg.png"
+    ]
+   },
+   {
+    "query": "Cleaning with music",
+    "target": "memes_ypl98d.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypl98d.png",
+     "memes_z23u3q.png",
+     "memes_z16dfa.png",
+     "memes_yp7wwg.png",
+     "memes_ywjf5m.png"
+    ]
+   },
+   {
+    "query": "Election Day Madness",
+    "target": "memes_ypsbzq.png",
+    "rank": 386,
+    "top5": [
+     "memes_ypuy9q.png",
+     "memes_f0oq4v.png",
+     "memes_ypskw3.png",
+     "memes_z6i5o6.png",
+     "memes_ysw9z4.png"
+    ]
+   },
+   {
+    "query": "No I don't want your cookies",
+    "target": "memes_yrwfen.png",
+    "rank": 1,
+    "top5": [
+     "memes_yrwfen.png",
+     "memes_yxlapf.png",
+     "memes_ypskw3.png",
+     "memes_hmv62q.png",
+     "memes_z1i9cq.png"
+    ]
+   },
+   {
+    "query": "I meant to do that",
+    "target": "memes_ysgw6o.png",
+    "rank": 335,
+    "top5": [
+     "memes_ywpf60.png",
+     "memes_zatxqe.png",
+     "memes_ys6wn6.png",
+     "memes_yoykbn.png",
+     "memes_ypd9hc.png"
+    ]
+   },
+   {
+    "query": "Do I even exist?",
+    "target": "memes_ysr39a.png",
+    "rank": 4,
+    "top5": [
+     "memes_yppqtz.png",
+     "memes_z7bvg5.png",
+     "memes_z1srmt.png",
+     "memes_ysr39a.png",
+     "memes_yrtnej.png"
+    ]
+   },
+   {
+    "query": "It is possible to sleep",
+    "target": "memes_yt7wai.png",
+    "rank": 165,
+    "top5": [
+     "memes_yy4lnf.png",
+     "memes_yfqxgs.png",
+     "memes_zamn76.png",
+     "memes_yrvkzs.png",
+     "memes_f0oq4v.png"
+    ]
+   },
+   {
+    "query": "it's 11 o'clock",
+    "target": "memes_yu2v36.png",
+    "rank": 4,
+    "top5": [
+     "memes_z16dfa.png",
+     "memes_yls72p.png",
+     "memes_yfqxgs.png",
+     "memes_yu2v36.png",
+     "memes_ylecth.png"
+    ]
+   },
+   {
+    "query": "It aint much but its honest work",
+    "target": "memes_yvami9.png",
+    "rank": 352,
+    "top5": [
+     "memes_z17hn0.png",
+     "memes_yxq7yp.png",
+     "memes_ywyom8.png",
+     "memes_yvg4xx.png",
+     "memes_k4xv8c.png"
+    ]
+   },
+   {
+    "query": "Damn, that sucks!",
+    "target": "memes_yvwfkf.png",
+    "rank": 98,
+    "top5": [
+     "memes_yfcmol.png",
+     "memes_ys6wn6.png",
+     "memes_y64w09.png",
+     "memes_yw2woq.png",
+     "memes_yhni99.png"
+    ]
+   },
+   {
+    "query": "i have no idea whats going on",
+    "target": "memes_ywen5e.png",
+    "rank": 18,
+    "top5": [
+     "memes_y3af7s.png",
+     "memes_z7bvg5.png",
+     "memes_z12ws9.png",
+     "memes_yj6wot.png",
+     "memes_yoduon.png"
+    ]
+   },
+   {
+    "query": "aight, bare minimum it is.",
+    "target": "memes_ywyom8.png",
+    "rank": 4,
+    "top5": [
+     "memes_yplvun.png",
+     "memes_k4xv8c.png",
+     "memes_z16dfa.png",
+     "memes_ywyom8.png",
+     "memes_zbmu89.png"
+    ]
+   },
+   {
+    "query": "Thank you for your service Spug",
+    "target": "memes_yxcco3.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxcco3.png",
+     "memes_ypr54k.png",
+     "memes_xl0aqb.png",
+     "memes_yhdsgi.png",
+     "memes_yg8igr.png"
+    ]
+   },
+   {
+    "query": "Im sure you cant guess what these are.",
+    "target": "memes_yxt126.png",
+    "rank": 131,
+    "top5": [
+     "memes_yva6ft.png",
+     "memes_yxinri.png",
+     "memes_zb7wfy.png",
+     "memes_ywu79h.png",
+     "memes_z16dfa.png"
+    ]
+   },
+   {
+    "query": "Space Karen",
+    "target": "memes_yzfsjy.png",
+    "rank": 19,
+    "top5": [
+     "memes_yony2r.png",
+     "memes_z73nbe.png",
+     "memes_yxik1h.png",
+     "memes_y3l6cq.png",
+     "memes_ypw964.png"
+    ]
+   },
+   {
+    "query": "loved the format",
+    "target": "memes_yzs2xf.png",
+    "rank": 186,
+    "top5": [
+     "memes_yowkm8.png",
+     "memes_yvslgu.png",
+     "memes_yuhrkr.png",
+     "memes_yub23t.png",
+     "memes_z06dv3.png"
+    ]
+   },
+   {
+    "query": "well I'm embarrassed",
+    "target": "memes_z0bdeo.png",
+    "rank": 465,
+    "top5": [
+     "memes_yo0qe2.png",
+     "memes_yfcmol.png",
+     "memes_yj4g31.png",
+     "memes_z7bvg5.png",
+     "memes_z1srmt.png"
+    ]
+   },
+   {
+    "query": "Gets me every year",
+    "target": "memes_z0meji.png",
+    "rank": 14,
+    "top5": [
+     "memes_yhni99.png",
+     "memes_yj672f.png",
+     "memes_z67t9a.png",
+     "memes_yu92on.png",
+     "memes_yxb41m.png"
+    ]
+   },
+   {
+    "query": "Poor lil guy",
+    "target": "memes_z12uz8.png",
+    "rank": 9,
+    "top5": [
+     "memes_yx9smj.png",
+     "memes_ut9mdn.png",
+     "memes_ye1nq4.png",
+     "memes_ypltgu.png",
+     "memes_zaxxxq.png"
+    ]
+   },
+   {
+    "query": "I just dont get it",
+    "target": "memes_z1g3aw.png",
+    "rank": 98,
+    "top5": [
+     "memes_yj672f.png",
+     "memes_ras71b.png",
+     "memes_zcx093.png",
+     "memes_z67t9a.png",
+     "memes_yz9ap0.png"
+    ]
+   },
+   {
+    "query": "VIP's won't cover that, will they?",
+    "target": "memes_z1xuwb.png",
+    "rank": 70,
+    "top5": [
+     "memes_z7bvg5.png",
+     "memes_z71b21.png",
+     "memes_yskq0u.png",
+     "memes_yj672f.png",
+     "memes_ypsmjt.png"
+    ]
+   },
+   {
+    "query": "wElL gOoD fOr YoU",
+    "target": "memes_z67t9a.png",
+    "rank": 48,
+    "top5": [
+     "memes_yx35kp.png",
+     "memes_z9p2gf.png",
+     "memes_y64w09.png",
+     "memes_yxk3b2.png",
+     "memes_ynyqhg.png"
+    ]
+   },
+   {
+    "query": "can't wait for squid game season 2",
+    "target": "memes_z6lnua.png",
+    "rank": 136,
+    "top5": [
+     "memes_zcr82o.png",
+     "memes_z19g85.png",
+     "memes_z22zk5.png",
+     "memes_ypsvxt.png",
+     "memes_zb4vev.png"
+    ]
+   },
+   {
+    "query": "Never say this word in front of Europeans",
+    "target": "memes_z7760c.png",
+    "rank": 5,
+    "top5": [
+     "memes_xs0fwg.png",
+     "memes_yzj23p.png",
+     "memes_z06dv3.png",
+     "memes_ypo3im.png",
+     "memes_z7760c.png"
+    ]
+   },
+   {
+    "query": "I guess now he can",
+    "target": "memes_za1tds.png",
+    "rank": 44,
+    "top5": [
+     "memes_hv72fd.png",
+     "memes_yx35kp.png",
+     "memes_yoc2r3.png",
+     "memes_zbloqf.png",
+     "memes_ysg8hr.png"
+    ]
+   },
+   {
+    "query": "This is 2022",
+    "target": "memes_zacs4p.png",
+    "rank": 193,
+    "top5": [
+     "memes_z19g85.png",
+     "memes_yvi7l0.png",
+     "memes_yzs2xf.png",
+     "memes_z1s45e.png",
+     "memes_ys2ioi.png"
+    ]
+   },
+   {
+    "query": "Theres no way for him to recover from this",
+    "target": "memes_zaslro.png",
+    "rank": 170,
+    "top5": [
+     "memes_hv72fd.png",
+     "memes_zb4dgg.png",
+     "memes_yoc2r3.png",
+     "memes_zcd4p8.png",
+     "memes_ysjp32.png"
+    ]
+   },
+   {
+    "query": "Parents are the ultimate chads",
+    "target": "memes_zbj2ty.png",
+    "rank": 2,
+    "top5": [
+     "memes_zaljzp.png",
+     "memes_zbj2ty.png",
+     "memes_z6jkl9.png",
+     "memes_z0rhjf.png",
+     "memes_yxi6pj.png"
+    ]
+   },
+   {
+    "query": "Unfortunately, we were both introverted asf.",
+    "target": "memes_zbtqt2.png",
+    "rank": 17,
+    "top5": [
+     "memes_hmq8qx.png",
+     "memes_yu92on.png",
+     "memes_yovsfk.png",
+     "memes_z1srmt.png",
+     "memes_yxb41m.png"
+    ]
+   },
+   {
+    "query": "We just need some little help to stand",
+    "target": "memes_zcd4p8.png",
+    "rank": 190,
+    "top5": [
+     "memes_yszx5e.png",
+     "memes_z73vkp.png",
+     "memes_y3l6cq.png",
+     "memes_yzlm1n.png",
+     "memes_zc91wp.png"
+    ]
+   }
+  ],
+  "literal": [
+   {
+    "query": "A woman shows off her engagement ring which Thor approves of.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_z14qnp.png",
+     "memes_zc1b5p.png",
+     "memes_yhdsgi.png",
+     "memes_yws1rr.png"
+    ]
+   },
+   {
+    "query": "a white man on laptop smiling and Michael Jordan looking at laptop wearing a black hat crying",
+    "target": "memes_fjiz2r.png",
+    "rank": 1,
+    "top5": [
+     "memes_fjiz2r.png",
+     "memes_zaz01v.png",
+     "memes_yg8igr.png",
+     "memes_zaxpo7.png",
+     "memes_ynl36y.png"
+    ]
+   },
+   {
+    "query": "the red and white colored landscape",
+    "target": "memes_i5w6m3.png",
+    "rank": 218,
+    "top5": [
+     "memes_s0hg28.png",
+     "memes_ypraz9.png",
+     "memes_ywtewy.png",
+     "memes_yzsh2s.png",
+     "memes_ytb2jz.png"
+    ]
+   },
+   {
+    "query": "The sad man gets introduced to reddit and is now happy",
+    "target": "memes_ras71b.png",
+    "rank": 2,
+    "top5": [
+     "memes_za6lhz.png",
+     "memes_ras71b.png",
+     "memes_ys0vpt.png",
+     "memes_zbmu89.png",
+     "memes_z69x38.png"
+    ]
+   },
+   {
+    "query": "Oprah with her hands on her head has if she is trying to understand something.",
+    "target": "memes_xo7gvr.png",
+    "rank": 2,
+    "top5": [
+     "memes_ylfcch.png",
+     "memes_xo7gvr.png",
+     "memes_z0gx82.png",
+     "memes_zcrjnj.png",
+     "memes_yj672f.png"
+    ]
+   },
+   {
+    "query": "a man on a black suit is preaching",
+    "target": "memes_ydzcc4.png",
+    "rank": 13,
+    "top5": [
+     "memes_zc501y.png",
+     "memes_zaooym.png",
+     "memes_yn6aom.png",
+     "memes_ypsbzq.png",
+     "memes_yvv3em.png"
+    ]
+   },
+   {
+    "query": "A skeleton is yelling with it's hand raised.",
+    "target": "memes_ygjgs3.png",
+    "rank": 5,
+    "top5": [
+     "memes_ydt3cf.png",
+     "memes_j32ep7.png",
+     "memes_z1maqr.png",
+     "memes_z252ft.png",
+     "memes_ygjgs3.png"
+    ]
+   },
+   {
+    "query": "A group of people are screaming straight ahead.",
+    "target": "memes_yj4g31.png",
+    "rank": 8,
+    "top5": [
+     "memes_yprfb8.png",
+     "memes_zc8w32.png",
+     "memes_ypd9hc.png",
+     "memes_hg2c5y.png",
+     "memes_yh390f.png"
+    ]
+   },
+   {
+    "query": "the fox with a female human body",
+    "target": "memes_yk0v7l.png",
+    "rank": 1,
+    "top5": [
+     "memes_yk0v7l.png",
+     "memes_yjkepd.png",
+     "memes_z0yvgv.png",
+     "memes_ye0oip.png",
+     "memes_ypmdh1.png"
+    ]
+   },
+   {
+    "query": "Mike is talking next to his open locker.",
+    "target": "memes_ym8lt5.png",
+    "rank": 23,
+    "top5": [
+     "memes_yzi8x7.png",
+     "memes_yxcvkx.png",
+     "memes_yx35kp.png",
+     "memes_yo43lj.png",
+     "memes_zaa2kq.png"
+    ]
+   },
+   {
+    "query": "Mr Incredible is bending his head in shame.",
+    "target": "memes_yo0nj6.png",
+    "rank": 54,
+    "top5": [
+     "memes_z62gp0.png",
+     "memes_ypltgu.png",
+     "memes_ykxwyk.png",
+     "memes_z1aqff.png",
+     "memes_yu0t86.png"
+    ]
+   },
+   {
+    "query": "Four people are standing together with different Elon Musk faces over them.",
+    "target": "memes_yom8hj.png",
+    "rank": 10,
+    "top5": [
+     "memes_ypi4vy.png",
+     "memes_ytfdzm.png",
+     "memes_yzfsjy.png",
+     "memes_ys0vpt.png",
+     "memes_yo0nj6.png"
+    ]
+   },
+   {
+    "query": "A large crowd is gathered watching buildings in flames in background",
+    "target": "memes_yow4ym.png",
+    "rank": 1,
+    "top5": [
+     "memes_yow4ym.png",
+     "memes_yzsh2s.png",
+     "memes_ymb0s4.png",
+     "memes_ysgw6o.png",
+     "memes_w0c9z3.png"
+    ]
+   },
+   {
+    "query": "A hand is pressing two buttons and a man approves below.",
+    "target": "memes_yp8daq.png",
+    "rank": 1,
+    "top5": [
+     "memes_yp8daq.png",
+     "memes_ywtewy.png",
+     "memes_z6wtmi.png",
+     "memes_yp78rs.png",
+     "memes_y7umfb.png"
+    ]
+   },
+   {
+    "query": "A girl in a black mask is talking to a woman in a red suit with cartoon speech bubbles.",
+    "target": "memes_ypmdh1.png",
+    "rank": 10,
+    "top5": [
+     "memes_z6ahpl.png",
+     "memes_ysvkr6.png",
+     "memes_yvv3em.png",
+     "memes_zcbyhq.png",
+     "memes_yxafs1.png"
+    ]
+   },
+   {
+    "query": "A man's face is over a whiskey glass and a table covered in drugs.",
+    "target": "memes_ypu5z9.png",
+    "rank": 222,
+    "top5": [
+     "memes_z0tgf1.png",
+     "memes_ytcg2z.png",
+     "memes_ytczsg.png",
+     "memes_ynjt2x.png",
+     "memes_ypsbzq.png"
+    ]
+   },
+   {
+    "query": "The grey cat has yellow eyes, he is staring at something with an angry expression.",
+    "target": "memes_ys6wme.png",
+    "rank": 18,
+    "top5": [
+     "memes_ut9mdn.png",
+     "memes_zctyu4.png",
+     "memes_z0n6nc.png",
+     "memes_yvc6x7.png",
+     "memes_ygz5pr.png"
+    ]
+   },
+   {
+    "query": "On the top Joey looks proud and on the bottom Joey is scared.",
+    "target": "memes_yskq0u.png",
+    "rank": 22,
+    "top5": [
+     "memes_zbusjn.png",
+     "memes_z0oo98.png",
+     "memes_zblgck.png",
+     "memes_you9j5.png",
+     "memes_yizkxn.png"
+    ]
+   },
+   {
+    "query": "A large man stares into an empty refrigerator.",
+    "target": "memes_ysz67q.png",
+    "rank": 1,
+    "top5": [
+     "memes_ysz67q.png",
+     "memes_z1a9hz.png",
+     "memes_z7br01.png",
+     "memes_yfo8f0.png",
+     "memes_ynjt2x.png"
+    ]
+   },
+   {
+    "query": "a cartoon of a military figure with a skull for a face",
+    "target": "memes_ytk8ou.png",
+    "rank": 2,
+    "top5": [
+     "memes_z6m7p8.png",
+     "memes_ytk8ou.png",
+     "memes_yv3rea.png",
+     "memes_yx35kp.png",
+     "memes_ylz8f2.png"
+    ]
+   },
+   {
+    "query": "Two men are speaking to each other while the black man has a blue tick logo on his head.",
+    "target": "memes_yv319v.png",
+    "rank": 1,
+    "top5": [
+     "memes_yv319v.png",
+     "memes_ydzcc4.png",
+     "memes_yxpkeb.png",
+     "memes_zaa2kq.png",
+     "memes_zazmu3.png"
+    ]
+   },
+   {
+    "query": "One chimp doesn't understand what the others think is funny.",
+    "target": "memes_yvslgu.png",
+    "rank": 1,
+    "top5": [
+     "memes_yvslgu.png",
+     "memes_yw4evt.png",
+     "memes_yxyyn2.png",
+     "memes_ypi4vy.png",
+     "memes_yntmmh.png"
+    ]
+   },
+   {
+    "query": "A chocolate gorilla is slowly melting in milk until it becomes chocolate milk.",
+    "target": "memes_ywd9m2.png",
+    "rank": 2,
+    "top5": [
+     "memes_yvepzv.png",
+     "memes_ywd9m2.png",
+     "memes_yj6wot.png",
+     "memes_ysvkr6.png",
+     "memes_yzw2ig.png"
+    ]
+   },
+   {
+    "query": "There is a very scared character at the top, an angry and determined character at the bottom.",
+    "target": "memes_ywyom8.png",
+    "rank": 2,
+    "top5": [
+     "memes_z69x38.png",
+     "memes_ywyom8.png",
+     "memes_yzsh2s.png",
+     "memes_yi9z94.png",
+     "memes_zc1dba.png"
+    ]
+   },
+   {
+    "query": "A bearded man is smiling over a black box.",
+    "target": "memes_yxcvkx.png",
+    "rank": 3,
+    "top5": [
+     "memes_yfo8f0.png",
+     "memes_yx35kp.png",
+     "memes_yxcvkx.png",
+     "memes_yhpvjk.png",
+     "memes_d079np.png"
+    ]
+   },
+   {
+    "query": "A man looks happy then he sees the size of the pizza slice.",
+    "target": "memes_yxw3jn.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxw3jn.png",
+     "memes_z7bhls.png",
+     "memes_ywtewy.png",
+     "memes_yortqo.png",
+     "memes_yoc2r3.png"
+    ]
+   },
+   {
+    "query": "A car is completely filled with drinks and snacks.",
+    "target": "memes_yzilog.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzilog.png",
+     "memes_z0tgf1.png",
+     "memes_ywra78.png",
+     "memes_yxk3b2.png",
+     "memes_zakrpv.png"
+    ]
+   },
+   {
+    "query": "McDonald's is selling a ridiculous looking chicken sandwich.",
+    "target": "memes_yzwkxg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yzwkxg.png",
+     "memes_yxinri.png",
+     "memes_zcjkq1.png",
+     "memes_yotsii.png",
+     "memes_yzilog.png"
+    ]
+   },
+   {
+    "query": "a cartoon character that is purple wearing a hat that is calling it with his hands up",
+    "target": "memes_z0g4aa.png",
+    "rank": 29,
+    "top5": [
+     "memes_z1230d.png",
+     "memes_yw8a1a.png",
+     "memes_ykj20m.png",
+     "memes_z0hlf6.png",
+     "memes_ysnq3m.png"
+    ]
+   },
+   {
+    "query": "3 different images of two cats doing a gun duel, one is black and one is grey",
+    "target": "memes_z0rhjf.png",
+    "rank": 40,
+    "top5": [
+     "memes_zctyu4.png",
+     "memes_ygz5pr.png",
+     "memes_za84ao.png",
+     "memes_ypiytx.png",
+     "memes_yp9sbi.png"
+    ]
+   },
+   {
+    "query": "Chris Pratt is so happy with his mouth open.",
+    "target": "memes_z18di9.png",
+    "rank": 2,
+    "top5": [
+     "memes_zcx093.png",
+     "memes_z18di9.png",
+     "memes_z1g3aw.png",
+     "memes_yfcmol.png",
+     "memes_z0n6nc.png"
+    ]
+   },
+   {
+    "query": "A bunch of grapes are in a white background.",
+    "target": "memes_z1ps79.png",
+    "rank": 1,
+    "top5": [
+     "memes_z1ps79.png",
+     "memes_ypraz9.png",
+     "memes_yw8a1a.png",
+     "memes_z5zgj0.png",
+     "memes_s0hg28.png"
+    ]
+   },
+   {
+    "query": "A lighter on the floor has three american flags on it.",
+    "target": "memes_z5zgj0.png",
+    "rank": 1,
+    "top5": [
+     "memes_z5zgj0.png",
+     "memes_yow4ym.png",
+     "memes_f0oq4v.png",
+     "memes_yvg4xx.png",
+     "memes_yy2sb1.png"
+    ]
+   },
+   {
+    "query": "A woman has puffed out her face in anger.",
+    "target": "memes_z6hqlo.png",
+    "rank": 1,
+    "top5": [
+     "memes_z6hqlo.png",
+     "memes_hv72fd.png",
+     "memes_yzsh2s.png",
+     "memes_yfo8f0.png",
+     "memes_ysgw6o.png"
+    ]
+   },
+   {
+    "query": "top images of female with bangs. the second image image of an alien and the bottom image is a man's face that has glowing eyes",
+    "target": "memes_z73nbe.png",
+    "rank": 2,
+    "top5": [
+     "memes_kq9d2b.png",
+     "memes_z73nbe.png",
+     "memes_ypi4vy.png",
+     "memes_zc4931.png",
+     "memes_yzsh2s.png"
+    ]
+   },
+   {
+    "query": "The left photo has a handsome man with chisseled features and the photo on the right is an animated version of him.",
+    "target": "memes_z9ve2g.png",
+    "rank": 1,
+    "top5": [
+     "memes_z9ve2g.png",
+     "memes_ypi4vy.png",
+     "memes_s2l9le.png",
+     "memes_ykj20m.png",
+     "memes_swz82l.png"
+    ]
+   },
+   {
+    "query": "Spongebob is wearing glasses and holding nerdy things.",
+    "target": "memes_zacs4p.png",
+    "rank": 1,
+    "top5": [
+     "memes_zacs4p.png",
+     "memes_zb4vev.png",
+     "memes_z14qnp.png",
+     "memes_z23u3q.png",
+     "memes_y9pvfs.png"
+    ]
+   },
+   {
+    "query": "Drake is unimpressed on top and happy on the bottom.",
+    "target": "memes_zatxqe.png",
+    "rank": 18,
+    "top5": [
+     "memes_j3qvhf.png",
+     "memes_z0i6y2.png",
+     "memes_z6u1az.png",
+     "memes_z0gx82.png",
+     "memes_ypi4vy.png"
+    ]
+   },
+   {
+    "query": "top image is a black man in a tuxedo bringing pizza and the bottom image is a person with a blow torch in the room while the black man enters the room with a pizza boxes",
+    "target": "memes_zbl3se.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbl3se.png",
+     "memes_zanrd4.png",
+     "memes_za84ao.png",
+     "memes_z7bnhx.png",
+     "memes_yzi8x7.png"
+    ]
+   },
+   {
+    "query": "An animal head with big eyes pasted on a muscular mans body",
+    "target": "memes_zbxpwu.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbxpwu.png",
+     "memes_yzwsdd.png",
+     "memes_ynjt2x.png",
+     "memes_uo20pj.png",
+     "memes_z03w5m.png"
+    ]
+   },
+   {
+    "query": "This is a picture of a super hero from a movie.",
+    "target": "memes_zcjkq1.png",
+    "rank": 197,
+    "top5": [
+     "memes_ywu79h.png",
+     "memes_yn6aom.png",
+     "memes_ywzwzd.png",
+     "memes_zb0jl1.png",
+     "memes_ylt0k7.png"
+    ]
+   }
+  ],
+  "meaning": [
+   {
+    "query": "Husband feels great after having their wife fall in love with him again after getting amnesia.",
+    "target": "memes_d079np.png",
+    "rank": 1,
+    "top5": [
+     "memes_d079np.png",
+     "memes_z0gx82.png",
+     "memes_ynyqhg.png",
+     "memes_zazmu3.png",
+     "memes_yp78rs.png"
+    ]
+   },
+   {
+    "query": "Poster argues with another person about his intelligence.",
+    "target": "memes_hv72fd.png",
+    "rank": 3,
+    "top5": [
+     "memes_zcg8kx.png",
+     "memes_z6e0bf.png",
+     "memes_hv72fd.png",
+     "memes_yosc2g.png",
+     "memes_yszx5e.png"
+    ]
+   },
+   {
+    "query": "People think villains are superhuman but they are the normal people who create pop ups ads.",
+    "target": "memes_rqql2k.png",
+    "rank": 1,
+    "top5": [
+     "memes_rqql2k.png",
+     "memes_yzsh2s.png",
+     "memes_zc1dba.png",
+     "memes_z0gtdq.png",
+     "memes_yp1k57.png"
+    ]
+   },
+   {
+    "query": "The meme poster warns people who hate emojis on the reddit platform.",
+    "target": "memes_y3l6cq.png",
+    "rank": 1,
+    "top5": [
+     "memes_y3l6cq.png",
+     "memes_yoo6y1.png",
+     "memes_yo0qe2.png",
+     "memes_zc7hyt.png",
+     "memes_yi9z94.png"
+    ]
+   },
+   {
+    "query": "Meme poster trying to conveys that the reaction of facing old crush.",
+    "target": "memes_yfcmol.png",
+    "rank": 2,
+    "top5": [
+     "memes_za9ixy.png",
+     "memes_yfcmol.png",
+     "memes_iyv1uh.png",
+     "memes_yshq9o.png",
+     "memes_yggcka.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey dog's taunt their owners while they are taking poops.",
+    "target": "memes_yhdsgi.png",
+    "rank": 1,
+    "top5": [
+     "memes_yhdsgi.png",
+     "memes_ys2ioi.png",
+     "memes_swz82l.png",
+     "memes_yndonp.png",
+     "memes_zc7hyt.png"
+    ]
+   },
+   {
+    "query": "The meme poster mocks Europeans for being bad at math but supreme at colonizing.",
+    "target": "memes_yjh7fc.png",
+    "rank": 1,
+    "top5": [
+     "memes_yjh7fc.png",
+     "memes_yy2sb1.png",
+     "memes_z6e0bf.png",
+     "memes_w7le8j.png",
+     "memes_ypo3im.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that MrBeast doesn't have the most appealing thumbnails.",
+    "target": "memes_ylt0k7.png",
+    "rank": 1,
+    "top5": [
+     "memes_ylt0k7.png",
+     "memes_zc7hyt.png",
+     "memes_ywtewy.png",
+     "memes_z12ws9.png",
+     "memes_yta9ji.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they would rather lie about having games on their phone so the kid on the bus doesn't play on his phone.",
+    "target": "memes_ynq7te.png",
+    "rank": 1,
+    "top5": [
+     "memes_ynq7te.png",
+     "memes_zcj6cv.png",
+     "memes_yzu2rh.png",
+     "memes_ynl36y.png",
+     "memes_z7adyc.png"
+    ]
+   },
+   {
+    "query": "People are mocking the meme poster for being lazy and he denies it because he is lazy.",
+    "target": "memes_yojzqj.png",
+    "rank": 1,
+    "top5": [
+     "memes_yojzqj.png",
+     "memes_ylt0k7.png",
+     "memes_ysqoog.png",
+     "memes_z6u1az.png",
+     "memes_yx35kp.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they hated Elon Musk for his personality before people hated him for his political beliefs.",
+    "target": "memes_yovsfk.png",
+    "rank": 10,
+    "top5": [
+     "memes_yosc2g.png",
+     "memes_ypi4vy.png",
+     "memes_ygoqx2.png",
+     "memes_yzfsjy.png",
+     "memes_ytfdzm.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that listening to a song while you're bummed out meant that you could decipher the song",
+    "target": "memes_yp7wwg.png",
+    "rank": 1,
+    "top5": [
+     "memes_yp7wwg.png",
+     "memes_yzm0ld.png",
+     "memes_za6lhz.png",
+     "memes_zb7wfy.png",
+     "memes_yhnk08.png"
+    ]
+   },
+   {
+    "query": "Greta Thurnberg is trying to poke fun at the conservative commentator but she isn't having it.",
+    "target": "memes_ypmdh1.png",
+    "rank": 10,
+    "top5": [
+     "memes_d9gvok.png",
+     "memes_z6wtmi.png",
+     "memes_yjkepd.png",
+     "memes_zc501y.png",
+     "memes_ysw9z4.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying the customer's facial expression when asked if they want a receipt",
+    "target": "memes_ypu8bg.png",
+    "rank": 1,
+    "top5": [
+     "memes_ypu8bg.png",
+     "memes_ynlbir.png",
+     "memes_z6hqlo.png",
+     "memes_yhnk08.png",
+     "memes_y6e968.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that this is the expression they make after cancelling plans due to rain but it stops right after.",
+    "target": "memes_ys6wn6.png",
+    "rank": 1,
+    "top5": [
+     "memes_ys6wn6.png",
+     "memes_yw2woq.png",
+     "memes_z0gx82.png",
+     "memes_z6hqlo.png",
+     "memes_iyv1uh.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that Starbucks will try to sell you anything, even nasty stuff, and label it as a seasonal item,",
+    "target": "memes_ysnmo7.png",
+    "rank": 44,
+    "top5": [
+     "memes_zc91wp.png",
+     "memes_yxb41m.png",
+     "memes_z67t9a.png",
+     "memes_yi9z94.png",
+     "memes_yp5dvz.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks weird reddit users are anxiously waiting for a meme like How do You Die",
+    "target": "memes_yt2eog.png",
+    "rank": 3,
+    "top5": [
+     "memes_yvnr3b.png",
+     "memes_it6820.png",
+     "memes_yt2eog.png",
+     "memes_yp0mmw.png",
+     "memes_z0yvgv.png"
+    ]
+   },
+   {
+    "query": "The meme poster isn't happy that, his friend is using his razor for shaving his balls.",
+    "target": "memes_ytzf3n.png",
+    "rank": 1,
+    "top5": [
+     "memes_ytzf3n.png",
+     "memes_yswdjj.png",
+     "memes_yp1al3.png",
+     "memes_z7br01.png",
+     "memes_yp0q5k.png"
+    ]
+   },
+   {
+    "query": "Meme poster says that he likes other popcorn than movie and microwave popcorns.",
+    "target": "memes_yva6ft.png",
+    "rank": 1,
+    "top5": [
+     "memes_yva6ft.png",
+     "memes_ysnmo7.png",
+     "memes_ypll9e.png",
+     "memes_ysklsa.png",
+     "memes_z03w5m.png"
+    ]
+   },
+   {
+    "query": "Meme poster is conveying that parents disapprove of how their crypto investor children plan to get their money back.",
+    "target": "memes_yvv3em.png",
+    "rank": 1,
+    "top5": [
+     "memes_yvv3em.png",
+     "memes_yosc2g.png",
+     "memes_yizkxn.png",
+     "memes_map6ds.png",
+     "memes_ypmkrl.png"
+    ]
+   },
+   {
+    "query": "Meme poster runs out of time to receive advice.",
+    "target": "memes_ywd9m2.png",
+    "rank": 171,
+    "top5": [
+     "memes_yhnk08.png",
+     "memes_yw9w7m.png",
+     "memes_y6e968.png",
+     "memes_ykxwyk.png",
+     "memes_yve3an.png"
+    ]
+   },
+   {
+    "query": "The meme poster gets easily distracted by other images and forgets about the image he came to search for.",
+    "target": "memes_ywzaju.png",
+    "rank": 1,
+    "top5": [
+     "memes_ywzaju.png",
+     "memes_ywtewy.png",
+     "memes_y6e968.png",
+     "memes_yhnk08.png",
+     "memes_yoduon.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey the older astronaut tries to hurt the newer astronaut with the truth about their travels.",
+    "target": "memes_yxik1h.png",
+    "rank": 10,
+    "top5": [
+     "memes_y3l6cq.png",
+     "memes_yu0t86.png",
+     "memes_ypi4vy.png",
+     "memes_yxyyn2.png",
+     "memes_z5zgj0.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their joy when the bathroom is warm when they go to have a poo.",
+    "target": "memes_yxwcfq.png",
+    "rank": 1,
+    "top5": [
+     "memes_yxwcfq.png",
+     "memes_gy6y78.png",
+     "memes_yp0q5k.png",
+     "memes_ys2ioi.png",
+     "memes_z1edch.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that their parents claim the trip will be 2 hours long but they bring an abundance of items that crowd the car.",
+    "target": "memes_yzilog.png",
+    "rank": 3,
+    "top5": [
+     "memes_zc1dba.png",
+     "memes_z16dfa.png",
+     "memes_yzilog.png",
+     "memes_zamn76.png",
+     "memes_z0tgf1.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey their excitement regarding reaching a high karma level in the game, which allows them to appear almost godlike compared to other players.",
+    "target": "memes_yzsh2s.png",
+    "rank": 124,
+    "top5": [
+     "memes_yfw632.png",
+     "memes_ysoc3s.png",
+     "memes_z69x38.png",
+     "memes_zbmu89.png",
+     "memes_z7adyc.png"
+    ]
+   },
+   {
+    "query": "Meme poster thinks that British dentists are going to assault their patient's mouth.",
+    "target": "memes_z0c8u4.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0c8u4.png",
+     "memes_yjj6io.png",
+     "memes_yswdjj.png",
+     "memes_yvo6q7.png",
+     "memes_z6m7p8.png"
+    ]
+   },
+   {
+    "query": "Meme poster agrees that, he don't know what was the point of Nyan cat!",
+    "target": "memes_z0n6nc.png",
+    "rank": 1,
+    "top5": [
+     "memes_z0n6nc.png",
+     "memes_zao4tm.png",
+     "memes_yhnk08.png",
+     "memes_ylt0k7.png",
+     "memes_z1hugu.png"
+    ]
+   },
+   {
+    "query": "Meme poster feels disgusted for laughing at what they were previously.",
+    "target": "memes_z12ws9.png",
+    "rank": 46,
+    "top5": [
+     "memes_y6e968.png",
+     "memes_ynl36y.png",
+     "memes_yozod1.png",
+     "memes_yub23t.png",
+     "memes_yhnk08.png"
+    ]
+   },
+   {
+    "query": "Meme poster liked Twitter for a little bit before Elon screwed it up.",
+    "target": "memes_z1g6gr.png",
+    "rank": 6,
+    "top5": [
+     "memes_ygoqx2.png",
+     "memes_yom8hj.png",
+     "memes_ys0vpt.png",
+     "memes_yosc2g.png",
+     "memes_ytfdzm.png"
+    ]
+   },
+   {
+    "query": "Meme poster just wants to live and soulless corporations are trying to break into everywhere.",
+    "target": "memes_z1zz3h.png",
+    "rank": 1,
+    "top5": [
+     "memes_z1zz3h.png",
+     "memes_yi9z94.png",
+     "memes_yzmch9.png",
+     "memes_yy42lw.png",
+     "memes_yhnk08.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that trans people want to remind people how Christmas is spelled with the hrt they take.",
+    "target": "memes_z67yg7.png",
+    "rank": 1,
+    "top5": [
+     "memes_z67yg7.png",
+     "memes_yj672f.png",
+     "memes_z0hc36.png",
+     "memes_z67t9a.png",
+     "memes_z5zufc.png"
+    ]
+   },
+   {
+    "query": "Meme poster wishes Walter White could be in the next season of Squid Games.",
+    "target": "memes_z6lnua.png",
+    "rank": 2,
+    "top5": [
+     "memes_z9gguj.png",
+     "memes_z6lnua.png",
+     "memes_z6etdk.png",
+     "memes_ypiytx.png",
+     "memes_ynl36y.png"
+    ]
+   },
+   {
+    "query": "Poster is surprised at number of restraints needed for a patricular person.",
+    "target": "memes_z73vkp.png",
+    "rank": 3,
+    "top5": [
+     "memes_zbnc6c.png",
+     "memes_z6hqlo.png",
+     "memes_z73vkp.png",
+     "memes_iyv1uh.png",
+     "memes_za84ao.png"
+    ]
+   },
+   {
+    "query": "The meme poster states the capability of AI developed image.",
+    "target": "memes_z9ve2g.png",
+    "rank": 430,
+    "top5": [
+     "memes_yhnk08.png",
+     "memes_yowkm8.png",
+     "memes_ypraz9.png",
+     "memes_ypiytx.png",
+     "memes_yvnr3b.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that any one can identify as anything like a butter knife.",
+    "target": "memes_zaccd7.png",
+    "rank": 1,
+    "top5": [
+     "memes_zaccd7.png",
+     "memes_yhnk08.png",
+     "memes_kds715.png",
+     "memes_yvo6q7.png",
+     "memes_z1uhl2.png"
+    ]
+   },
+   {
+    "query": "The poster is making fun of the black man and saying they are going to tell their children in the future that he was Kanye.",
+    "target": "memes_zap0cv.png",
+    "rank": 1,
+    "top5": [
+     "memes_zap0cv.png",
+     "memes_zbqtij.png",
+     "memes_zb4dgg.png",
+     "memes_za1tds.png",
+     "memes_za84ao.png"
+    ]
+   },
+   {
+    "query": "Meme poster finds most of the music they like from memes not real life.",
+    "target": "memes_zb7wfy.png",
+    "rank": 2,
+    "top5": [
+     "memes_yswxgz.png",
+     "memes_zb7wfy.png",
+     "memes_yhnk08.png",
+     "memes_yw9w7m.png",
+     "memes_za6lhz.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that they want a girl like jenna Ortega.",
+    "target": "memes_zbrpeo.png",
+    "rank": 1,
+    "top5": [
+     "memes_zbrpeo.png",
+     "memes_yhnk08.png",
+     "memes_y6e968.png",
+     "memes_map6ds.png",
+     "memes_zcu3cp.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that the girl gives out very confusing signals that may be interpreted as too many.",
+    "target": "memes_zc8w32.png",
+    "rank": 1,
+    "top5": [
+     "memes_zc8w32.png",
+     "memes_ypmkrl.png",
+     "memes_ysgw6o.png",
+     "memes_y6e968.png",
+     "memes_yhnk08.png"
+    ]
+   },
+   {
+    "query": "Meme poster is trying to convey that residents in Ohio needs odor eaters to survive the humidity to feel good.",
+    "target": "memes_zctyu4.png",
+    "rank": 1,
+    "top5": [
+     "memes_zctyu4.png",
+     "memes_zclvfj.png",
+     "memes_yxcvkx.png",
+     "memes_ypltgu.png",
+     "memes_yp0q5k.png"
+    ]
+   }
+  ]
+ }
+}

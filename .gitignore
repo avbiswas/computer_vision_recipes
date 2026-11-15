@@ -1,0 +1,78 @@
+# ---------- OS / editor ----------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ---------- internal / planning ----------
+.claude/
+*.html
+cv_speedrun_top10.md
+survey.md
+project_shortlist.md
+
+# ---------- secrets ----------
+.env
+.env.*
+*.pem
+*.key
+*.p12
+credentials*
+secrets*
+.netrc
+.hf/
+.huggingface/
+
+# ---------- python / tooling ----------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.uvcache/
+.ipynb_checkpoints/
+.pytest_cache/
+*.egg-info/
+
+# ---------- datasets & raw media ----------
+raw/
+data/
+cache/
+labels/
+samples/
+*.npy
+*.npz
+*.jsonl
+*.zip
+*.tar
+*.tar.gz
+*.pdf
+
+# ---------- models, checkpoints, training output ----------
+models/
+runs/
+out/
+logs/
+demo_*/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+*.log
+
+# ---------- rendered media (previews, videos) ----------
+*.mp4
+*.mov
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.webp
+
+# ---------- third-party code (cloned separately) ----------
+third_party/
+
+# ---------- results with local paths ----------
+pdf_parser/results/eval.json
