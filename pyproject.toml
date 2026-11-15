@@ -14,11 +14,11 @@ dependencies = [
 [tool.uv]
 package = false
 
-# Linux (cloud GPU): CUDA 13 wheels. macOS: regular PyPI wheels (MPS).
+# Linux (cloud GPU): CUDA 12.8 wheels (work with NVIDIA driver >= 570). macOS: regular PyPI wheels (MPS).
 [tool.uv.sources]
-torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux'" }]
+torch = [{ index = "pytorch-cu128", marker = "sys_platform == 'linux'" }]
 
 [[tool.uv.index]]
-name = "pytorch-cu130"
-url = "https://download.pytorch.org/whl/cu130"
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
 explicit = true

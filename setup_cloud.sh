@@ -35,7 +35,7 @@ if [[ "$TERM" == "xterm-ghostty" ]]; then
 fi
 
 # 4. Check the GPU and driver
-# The locked torch wheel is built for CUDA 13, which needs NVIDIA driver >= 580.
+# The locked torch wheel is built for CUDA 12.8, which needs NVIDIA driver >= 570.
 echo "🖥️  GPU / driver:"
 if ! command -v nvidia-smi &> /dev/null; then
     echo "❌ nvidia-smi not found: no NVIDIA driver on this machine."
@@ -50,7 +50,7 @@ uv sync
 # 6. Make sure torch can actually use the GPU (otherwise training silently falls back to CPU)
 uv run python -c "
 import torch
-assert torch.cuda.is_available(), 'CUDA not visible to torch. The cu13 wheel needs NVIDIA driver >= 580; check the driver version above.'
+assert torch.cuda.is_available(), 'CUDA not visible to torch. The cu128 wheel needs NVIDIA driver >= 570; check the driver version above.'
 print('✅ torch', torch.__version__, '| CUDA', torch.version.cuda, '|', torch.cuda.get_device_name(0))
 "
 
