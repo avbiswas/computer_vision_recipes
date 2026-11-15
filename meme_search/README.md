@@ -25,6 +25,15 @@ python train_clip.py --epochs 10 --out runs/clip_b16
 python search.py "my code finally compiled after 6 hours of debugging" --ckpt runs/clip_b16/best.pt
 ```
 
+## Browser demo (transformers.js)
+
+```bash
+python web/export_web.py                       # fine-tuned text encoder -> ONNX, template embeddings, slots, thumbnails
+python3 -m http.server 8000 -d web             # then open http://127.0.0.1:8000
+```
+Only the CLIP text encoder runs in the browser (254 MB fp32 ONNX; the int8 version is 64 MB but drifts to cosine ~0.96, so the demo uses fp32).
+Template image embeddings are precomputed. Search ~0.2 s, including leave-one-out word importance.
+
 ## Results (ViT-B-16, 559 test memes, text→image Recall@10)
 
 | | meaning | title | literal |
