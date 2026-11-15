@@ -1,0 +1,12 @@
+# Tennis tracking (tested with Python 3.10, macOS / Apple Silicon MPS; CUDA and CPU also work)
+torch>=2.4
+torchvision>=0.19
+numpy>=2.0
+opencv-python-headless>=4.9
+scipy>=1.11          # TennisCourtDetector homography
+sympy>=1.12          # TennisCourtDetector line refinement
+matplotlib           # imported by TennisCourtDetector utils
+transformers>=4.45   # Grounding DINO (player auto-labels)
+pillow
+tqdm
+gdown                # downloads the dataset + court model from Google Drive

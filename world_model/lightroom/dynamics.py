@@ -43,30 +43,38 @@ class STBlock(nn.Module):
 
 
 class WorldModel(nn.Module):
-    def __init__(self, K=4, d=256, layers=6, heads=8):
+    def __init__(self, K=4, d=256, layers=6, heads=8, anchor=False):
         super().__init__()
-        self.K = K
+        self.K, self.use_anchor = K, anchor
         self.tok = nn.Embedding(N_CODES + 1, d)
         self.pos = nn.Parameter(torch.randn(TOKENS, d) * 0.02)      # where in the 16x16 grid
         self.frame = nn.Parameter(torch.randn(K + 1, d) * 0.02)     # which frame in the window
         self.act = nn.Embedding(N_ACTIONS + 1, d)
+        if anchor:  # an extra "reference" frame from the start of the episode (boxes never move)
+            self.anchor_emb = nn.Parameter(torch.randn(1, d) * 0.02)
         self.blocks = nn.Sequential(*[STBlock(d, heads) for _ in range(layers)])
         self.norm = nn.LayerNorm(d)
         self.head = nn.Linear(d, N_CODES)
 
-    def forward(self, ctx, actions, target):
+    def forward(self, ctx, actions, target, anchor=None):
         """
         ctx:     (B, K, 256)  code ids of the K past frames (oldest first)
         actions: (B, K)       actions[:, j] moves frame j -> frame j+1 (last one -> target)
         target:  (B, 256)     code ids of the next frame, with MASK where unknown
+        anchor:  (B, 256)     optional: code ids of an earlier real frame (if use_anchor)
         returns logits (B, 256, N_CODES) for the next frame
         """
         B, K, _ = ctx.shape
         seq = torch.cat([ctx, target[:, None]], 1)                         # (B, K+1, 256)
         none = torch.full((B, 1), NO_ACTION, device=ctx.device, dtype=actions.dtype)
         frame_actions = torch.cat([none, actions], 1)                      # (B, K+1)
-        x = (self.tok(seq) + self.pos + self.frame[:, None]
-             + self.act(frame_actions)[:, :, None])                        # (B, K+1, 256, d)
+        frame_emb = self.frame
+        if self.use_anchor:                                                # prepend the anchor frame
+            seq = torch.cat([anchor[:, None], seq], 1)
+            frame_actions = torch.cat([none, frame_actions], 1)
+            frame_emb = torch.cat([self.anchor_emb, frame_emb], 0)
+        x = (self.tok(seq) + self.pos + frame_emb[:, None]
+             + self.act(frame_actions)[:, :, None])                        # (B, frames, 256, d)
         x = self.blocks(x)                                                 # (B, K+1, 256, d)
         return self.head(self.norm(x[:, -1]))                              # next frame only
 
@@ -92,13 +100,13 @@ def corrupt_context(ctx, max_p=0.1):
 
 
 @torch.no_grad()
-def predict_next(model, ctx, actions, passes=1, temperature=1.0):
+def predict_next(model, ctx, actions, passes=1, temperature=1.0, anchor=None):
     """Fill in the next frame. passes=1: every token in one shot (argmax if temperature=0).
     passes>1: MaskGIT - commit the most confident tokens each pass, re-predict the rest."""
     B = ctx.shape[0]
     target = torch.full((B, TOKENS), MASK, device=ctx.device, dtype=ctx.dtype)
     for i in range(passes):
-        logits = model(ctx, actions, target).float()
+        logits = model(ctx, actions, target, anchor).float()
         if temperature > 0:
             probs = F.softmax(logits / temperature, -1)
             guess = torch.multinomial(probs.flatten(0, 1), 1).view(B, TOKENS)
@@ -115,3 +123,16 @@ def predict_next(model, ctx, actions, passes=1, temperature=1.0):
         hide = conf.argsort(1)[:, :n_still_hidden]                 # least confident stay hidden
         target = guess.scatter(1, hide, MASK)
     return target
+
+
+def load_resized(model, state):
+    """Load weights from a model with a different context length K (or without an anchor):
+    the old frame embeddings fill the newest slots, older slots copy the oldest one."""
+    old, new = state["frame"], model.frame.data
+    if old.shape != new.shape:
+        n = min(len(old), len(new))
+        resized = old[:1].repeat(len(new), 1)
+        resized[-n:] = old[-n:]
+        state = {**state, "frame": resized}
+    missing, unexpected = model.load_state_dict(state, strict=False)
+    return missing

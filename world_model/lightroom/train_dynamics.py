@@ -4,14 +4,24 @@ real recorded frames; the model never sees its own predictions during training).
 usage: python train_dynamics.py --K 4 --steps 12000 --out runs/dyn_k4
 """
 import argparse
+import contextlib
 import os
 import time
 import numpy as np
 import torch
 import torch.nn.functional as F
-from dynamics import WorldModel, mask_target, corrupt_context, predict_next
+from dynamics import WorldModel, mask_target, corrupt_context, predict_next, load_resized
 from vqvae import VQVAE, DEVICE
 from progress import ProgressDreams
+
+# On NVIDIA GPUs: TF32 matmuls + bf16 autocast (roughly 2-3x faster, same results in practice)
+if DEVICE == "cuda":
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.backends.cudnn.allow_tf32 = True
+
+
+def amp():
+    return torch.autocast("cuda", dtype=torch.bfloat16) if DEVICE == "cuda" else contextlib.nullcontext()
 
 
 def main():
@@ -33,11 +43,13 @@ def main():
     ap.add_argument("--self_max", type=int, default=3, help="max self-predicted context frames")
     ap.add_argument("--noise", type=float, default=0.1, help="max fraction of context tokens randomised")
     ap.add_argument("--init", default=None, help="start from these weights with a fresh LR schedule")
+    ap.add_argument("--anchor", action="store_true", help="add an earlier real frame as a fixed reference")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
 
-    tokens = torch.from_numpy(np.load(f"{a.cache}/tokens.npy").astype(np.int64))  # (N, T+1, 256)
-    actions = torch.from_numpy(np.load(f"{a.cache}/actions.npy").astype(np.int64))  # (N, T)
+    data_dev = DEVICE if DEVICE == "cuda" else "cpu"  # on a big GPU, keep all tokens in GPU memory
+    tokens = torch.from_numpy(np.load(f"{a.cache}/tokens.npy").astype(np.int64)).to(data_dev)  # (N, T+1, 256)
+    actions = torch.from_numpy(np.load(f"{a.cache}/actions.npy").astype(np.int64)).to(data_dev)  # (N, T)
     N, T1, _ = tokens.shape
     n_train = int(N * 0.95)  # same held-out episodes as the VQ-VAE
     g = torch.Generator().manual_seed(0)
@@ -45,11 +57,14 @@ def main():
     def batch(lo, hi, B, R=0):
         """K real context frames + target. With R > 0 the window is R frames longer and the
         caller rolls the model forward R steps, so the last R context frames are its own."""
-        ep = torch.randint(lo, hi, (B,), generator=g)
-        t = torch.randint(0, T1 - a.K - R, (B,), generator=g)     # window start
-        idx = t[:, None] + torch.arange(a.K + R + 1)
+        ep = torch.randint(lo, hi, (B,), generator=g).to(data_dev)
+        t = torch.randint(0, T1 - a.K - R, (B,), generator=g).to(data_dev)  # window start
+        idx = t[:, None] + torch.arange(a.K + R + 1, device=data_dev)
         seq = tokens[ep[:, None], idx].to(DEVICE)                   # (B, K+R+1, 256)
         act = actions[ep[:, None], idx[:, :-1]].to(DEVICE)          # (B, K+R)
+        # anchor: a random earlier real frame (at or before the window start)
+        a_idx = (torch.rand(B, generator=g).to(data_dev) * (t + 1)).long()
+        batch.anchor = tokens[ep, a_idx].to(DEVICE) if a.anchor else None
         return seq, act
 
     @torch.no_grad()
@@ -59,19 +74,21 @@ def main():
         ctx = seq[:, :a.K]
         model.eval()
         for r in range(R):
-            pred = predict_next(model, ctx, act[:, r:r + a.K], passes=1, temperature=0)
+            with amp():
+                pred = predict_next(model, ctx, act[:, r:r + a.K], passes=1, temperature=0,
+                                    anchor=batch.anchor)
             ctx = torch.cat([ctx[:, 1:], pred[:, None]], 1)
         model.train()
         return ctx, act[:, R:R + a.K], seq[:, a.K + R]
 
-    model = WorldModel(K=a.K, d=a.d, layers=a.layers).to(DEVICE)
+    model = WorldModel(K=a.K, d=a.d, layers=a.layers, anchor=a.anchor).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=a.lr, betas=(0.9, 0.95), weight_decay=0.05)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, a.lr, total_steps=a.steps, pct_start=0.03)
     print(f"world model params: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}M  "
           f"K={a.K} on {DEVICE}", flush=True)
     if a.init:
-        model.load_state_dict(torch.load(a.init, map_location=DEVICE)["model"])
-        print(f"initialised from {a.init}", flush=True)
+        missing = load_resized(model, torch.load(a.init, map_location=DEVICE)["model"])
+        print(f"initialised from {a.init}  (new params: {missing})", flush=True)
     ckpt, first = f"{a.out}/world_model.pt", 1
     if os.path.exists(ckpt):  # resume after a crash / restart
         ck = torch.load(ckpt, map_location=DEVICE)
@@ -94,7 +111,8 @@ def main():
         else:
             ctx, act, tgt = seq[:, :a.K], act, seq[:, a.K]
         inp, hidden = mask_target(tgt)
-        logits = model(corrupt_context(ctx, a.noise), act, inp)
+        with amp():
+            logits = model(corrupt_context(ctx, a.noise), act, inp, batch.anchor).float()
         per_token = F.cross_entropy(logits[hidden], tgt[hidden], reduction="none")
         weight = 1 + a.change_w * (tgt != ctx[:, -1])[hidden].float()  # moving parts count more
         loss = (weight * per_token).sum() / weight.sum()
@@ -109,7 +127,7 @@ def main():
                 seq, act = batch(n_train, N, 64)
                 ctx, tgt = seq[:, :a.K], seq[:, a.K]
                 full = torch.full_like(tgt, 512)
-                pred = model(ctx, act, full).argmax(-1)
+                pred = model(ctx, act, full, batch.anchor).argmax(-1)
                 acc = (pred == tgt).float().mean().item()
                 copy = (ctx[:, -1] == tgt).float().mean().item()  # baseline: "nothing changes"
             model.train()

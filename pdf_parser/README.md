@@ -1,4 +1,4 @@
-# PDF → clean data (CV speedrun, Medium)
+# PDF → clean data
 
 Layout detector (YOLO11) + reading order + Granite-Docling 258M VLM for tables, formulas and scanned pages → markdown + JSON + layout overlay.
 
@@ -38,6 +38,6 @@ Full table: results/eval.md. Val mAP was still rising each epoch (0.36 → 0.58)
 
 ## Next
 - Train longer or on more shards (title/picture gap).
-- Use the baseline in the pipeline for the video's "final" result.
+- Use the baseline detector as the default in the pipeline.
 - LoRA the VLM on table crops.
 - Add Voxel51 later: embeddings of failures, auto-label checks.

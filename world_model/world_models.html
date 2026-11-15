@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>World Models / Neural Computer — Project Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#0f1115;--card:#171a21;--ink:#e8e6e1;--mute:#9aa0aa;--line:#2a2f3a;--acc:#f2b84b;--acc2:#6cc3ff;--good:#7fd18b;--bad:#ff7a6b}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif}
+  main{max-width:1080px;margin:0 auto;padding:48px 24px 96px}
+  h1{font-size:2.2rem;margin:0 0 6px;letter-spacing:-.02em}
+  h2{font-size:1.5rem;margin:56px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+  h3{font-size:1.1rem;margin:22px 0 6px}
+  p,li{color:#d6d4cf}
+  .sub{color:var(--mute);margin:0 0 24px}
+  code,.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:.88em}
+  code{background:#222733;padding:1px 6px;border-radius:4px}
+  nav a{color:var(--acc2);margin-right:18px;text-decoration:none}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.93rem}
+  th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+  th{color:var(--mute);font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .card h3{margin:10px 0 4px}
+  .card p{margin:6px 0;font-size:.93rem}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+  .tag{font-size:.75rem;padding:2px 8px;border-radius:99px;background:#232836;color:var(--mute)}
+  .d1{color:#7fd18b}.d2{color:#c9d36b}.d3{color:#f2b84b}.d4{color:#ff9a5b}.d5{color:#ff6b6b}
+  .pick{outline:2px solid var(--acc)}
+  svg.mock{width:100%;height:auto;display:block;border-radius:8px;background:#0b0d11}
+  .callout{background:#1b2030;border-left:3px solid var(--acc2);padding:12px 16px;border-radius:6px;margin:14px 0}
+  .flow{width:100%;height:auto;margin:10px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>World Models &amp; Neural Computers</h1>
+<p class="sub">CV Speedrun, project 4 (insane slot): notes, contracts and environment shortlist. Budget: an M2 Max plus about 4–12 rented GPU-hours.</p>
+<nav><a href="#what">1 · What</a><a href="#contract">2 · Contracts</a><a href="#projects">3 · Projects</a></nav>
+
+<!-- ============ 1 ============ -->
+<h2 id="what">1 · What is a world model?</h2>
+<p>A <b>world model</b> learns how an environment changes in response to an action: <span class="mono">p(next state | past states, action)</span>. Once trained, you can <i>run</i> it: send it actions, and it produces the next frames as if a real game engine, simulator or computer were running. A <b>neural computer</b> is the same idea applied to a user interface: the network takes the place of the OS and renders every pixel after every click.</p>
+
+<h3>How is it different from video diffusion / generative models?</h3>
+<table>
+<tr><th></th><th>Image / video generator</th><th>World model</th></tr>
+<tr><td>Conditioning</td><td>Text prompt or a first frame, given once</td><td><b>An action at every step</b> (keys, mouse, joystick)</td></tr>
+<tr><td>Generation</td><td>Whole clip at once (bidirectional attention across time)</td><td><b>Autoregressive</b>, one frame at a time, causal (it can't see the future)</td></tr>
+<tr><td>Interactivity</td><td>Watch it</td><td>Play it in a closed loop, in real time</td></tr>
+<tr><td>What it must learn</td><td>Plausible appearance and motion</td><td>Cause and effect: what <i>this action</i> does, plus persistent state</td></tr>
+<tr><td>Main failure</td><td>Artifacts, morphing</td><td><b>Drift</b>: small errors build up over a long rollout, and objects get forgotten when they're off-screen</td></tr>
+<tr><td>Used for</td><td>Content</td><td>Agent training ("dreaming"), planning, simulators, neural game engines</td></tr>
+</table>
+<div class="callout">In one line: a video model answers "what would a clip of X look like?", while a world model answers "if I press LEFT <i>now</i>, what happens next?" Many recent world models are video diffusion models made causal and conditioned on actions, so the architectures overlap. What differs is the contract.</div>
+
+<h3>Architecture families</h3>
+<table>
+<tr><th>Family</th><th>How it works</th><th>Examples</th><th>Fit for us</th></tr>
+<tr><td><b>VAE + RNN</b></td><td>A VAE compresses each frame to <i>z</i>; an MDN-RNN predicts <i>z<sub>t+1</sub></i> from (<i>z<sub>t</sub></i>, <i>a<sub>t</sub></i>, <i>h<sub>t</sub></i>)</td><td>Ha &amp; Schmidhuber "World Models" (2018)</td><td>Simplest baseline; blurry</td></tr>
+<tr><td><b>Latent state-space (RSSM)</b></td><td>A deterministic recurrent state plus a stochastic latent, trained with reconstruction and KL losses</td><td>Dreamer v1–v3, PlaNet</td><td>Good for RL; less visually impressive</td></tr>
+<tr><td><b>VQ tokens + transformer</b></td><td>A VQ-VAE turns each frame into a grid of discrete tokens; a causal transformer predicts the next frame's tokens, conditioned on action tokens</td><td>IRIS, Genie (latent actions), GAIA-1, Oasis</td><td><b>Main candidate</b>: sharp, easy to sample, explainable</td></tr>
+<tr><td><b>Action-conditioned diffusion</b></td><td>Denoise the next frame (or its latent), conditioned on the last <i>k</i> frames and the action; noise is added to the context frames during training to fight drift</td><td>DIAMOND, GameNGen, Oasis, Genie 2/3, NeuralOS</td><td>Sharpest results; slower to sample; stretch goal</td></tr>
+<tr><td><b>Neural OS hybrid</b></td><td>An RNN tracks the UI state (open windows, etc.); a diffusion renderer draws the screen; the cursor position is given as an explicit input</td><td>NeuralOS (2025)</td><td>Template for the "neural computer" variant</td></tr>
+</table>
+
+<svg class="flow" viewBox="0 0 980 170" font-family="Menlo,monospace" font-size="13">
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" fill="#9aa0aa"/></marker></defs>
+  <g fill="#171a21" stroke="#2a2f3a">
+    <rect x="10" y="50" width="120" height="60" rx="8"/><rect x="180" y="50" width="130" height="60" rx="8"/>
+    <rect x="370" y="30" width="220" height="100" rx="8" stroke="#f2b84b"/><rect x="650" y="50" width="130" height="60" rx="8"/><rect x="840" y="50" width="120" height="60" rx="8"/>
+  </g>
+  <g fill="#e8e6e1" text-anchor="middle">
+    <text x="70" y="78">frames</text><text x="70" y="96" fill="#9aa0aa">x₁…xₜ</text>
+    <text x="245" y="78">encoder</text><text x="245" y="96" fill="#9aa0aa">VAE / VQ</text>
+    <text x="480" y="70">dynamics</text><text x="480" y="90" fill="#9aa0aa">transformer / diffusion</text><text x="480" y="110" fill="#9aa0aa">causal over time</text>
+    <text x="715" y="78">decoder</text><text x="715" y="96" fill="#9aa0aa">ẑₜ₊₁ → x̂ₜ₊₁</text>
+    <text x="900" y="78">next frame</text><text x="900" y="96" fill="#9aa0aa">x̂ₜ₊₁</text>
+    <text x="480" y="160" fill="#6cc3ff">action aₜ (key / click / mouse xy)</text>
+  </g>
+  <g stroke="#9aa0aa" fill="none" marker-end="url(#ar)">
+    <path d="M130,80 H178"/><path d="M310,80 H368"/><path d="M590,80 H648"/><path d="M780,80 H838"/><path d="M480,145 V133" stroke="#6cc3ff"/>
+    <path d="M900,112 V140 Q900,150 890,150 H600" stroke-dasharray="4 4"/>
+  </g>
+  <text x="760" y="166" fill="#9aa0aa" font-size="11">at inference, the prediction is fed back in</text>
+</svg>
+
+<!-- ============ 2 ============ -->
+<h2 id="contract">2 · Training and inference contracts</h2>
+<div class="two">
+<div class="card">
+<h3>Training (teacher forcing)</h3>
+<p><b>Data:</b> trajectories <code>(x₁,a₁, x₂,a₂, …, x_T)</code> recorded from our own environment by a scripted or random agent (plus some human play for "interesting" coverage).</p>
+<p><b>Stage A, tokenizer:</b> input <code>x_t</code> (e.g. 64×64 or 128×128 RGB) → <code>z_t</code> (e.g. 8×8 or 16×16 grid of codebook IDs, codebook size 512). Loss: reconstruction + perceptual + commitment.</p>
+<p><b>Stage B, dynamics:</b> input = the <b>ground-truth</b> past <code>z_{t-k..t}</code> + actions <code>a_{t-k..t}</code> → predict <code>z_{t+1}</code>. Loss: cross-entropy over tokens (transformer) or denoising MSE (diffusion).</p>
+<p><b>Anti-drift tricks:</b> corrupt the context with noise or token dropout; scheduled sampling (sometimes feed the model its own predictions); a longer context window.</p>
+</div>
+<div class="card">
+<h3>Inference (closed loop)</h3>
+<p><b>Start:</b> a few real frames (or one), encoded to <code>z</code>.</p>
+<p><b>Each tick:</b> read the user's action <code>a_t</code> → dynamics predicts <code>ẑ_{t+1}</code> (sample tokens / run N denoising steps) → decode to pixels → display → <b>append the prediction to the context</b> → repeat.</p>
+<p><b>No access</b> to the real environment, game code or state. Only pixels and actions.</p>
+<p><b>Target:</b> ≥10 fps on the M2 Max at 64–128 px; sliding context window of k = 8–32 frames.</p>
+<p><b>Evaluation:</b> per-step PSNR/SSIM vs the real env with the same action sequence; rollout length before divergence; task probes (does the calculator show the right sum?).</p>
+</div>
+</div>
+<table>
+<tr><th>Contract</th><th>Input</th><th>Output</th><th>Ground truth available?</th></tr>
+<tr><td>Tokenizer train</td><td>frame <code>x_t</code></td><td>reconstruction <code>x̂_t</code></td><td>yes</td></tr>
+<tr><td>Dynamics train</td><td>real <code>z_{≤t}</code>, <code>a_{≤t}</code></td><td>logits / noise for <code>z_{t+1}</code></td><td>yes (teacher forcing)</td></tr>
+<tr><td>Inference</td><td>own past predictions <code>ẑ_{≤t}</code>, live <code>a_t</code></td><td>next frame</td><td>no, this mismatch is where drift comes from</td></tr>
+<tr><td>Neural computer variant</td><td>+ cursor (x,y), click/key events, optional text tokens</td><td>full screen</td><td>same</td></tr>
+</table>
+
+<!-- ============ 3 ============ -->
+<h2 id="projects">3 · Environment shortlist</h2>
+<p>Difficulty: <span class="d1">●</span> easy → <span class="d5">●●●●●</span> insane. Time = build env + record + train + demo, assuming one person. GPU-hours are rough guesses to check in a dry run. ★ = recommended.</p>
+
+<table>
+<tr><th>#</th><th>Environment</th><th>Difficulty</th><th>Calendar time</th><th>GPU-hours</th><th>What it tests</th></tr>
+<tr><td>1★</td><td>Neural calculator</td><td class="d2">●●</td><td>3–4 days</td><td>1–3</td><td>discrete logic, digit rendering</td></tr>
+<tr><td>2★</td><td>Dreamed desktop</td><td class="d5">●●●●●</td><td>8–12 days</td><td>8–15</td><td>persistent UI state, cursor control</td></tr>
+<tr><td>3</td><td>Neural terminal</td><td class="d4">●●●●</td><td>6–9 days</td><td>5–10</td><td>text rendering, long-range state</td></tr>
+<tr><td>4</td><td>Neural paint + undo</td><td class="d3">●●●</td><td>4–6 days</td><td>3–6</td><td>accumulating state, memory</td></tr>
+<tr><td>5</td><td>Tilting marble table</td><td class="d2">●●</td><td>3–5 days</td><td>2–4</td><td>momentum, physics from pixels</td></tr>
+<tr><td>6</td><td>Lamp &amp; shadows</td><td class="d3">●●●</td><td>4–6 days</td><td>3–6</td><td>geometry, light</td></tr>
+<tr><td>7</td><td>Gravity-flip rooms</td><td class="d2">●●</td><td>3–5 days</td><td>2–4</td><td>hidden mode switch</td></tr>
+<tr><td>8</td><td>Forgetful maze</td><td class="d4">●●●●</td><td>5–8 days</td><td>4–8</td><td>off-screen persistence (failure as content)</td></tr>
+<tr><td>9</td><td>Top-down tennis</td><td class="d2">●●</td><td>3–5 days</td><td>2–4</td><td>ball physics, callback to the hard project</td></tr>
+<tr><td>10</td><td>Falling-sand sandbox</td><td class="d3">●●●</td><td>4–6 days</td><td>3–6</td><td>local rules, emergent behaviour</td></tr>
+<tr><td>11</td><td>Neural aquarium</td><td class="d3">●●●</td><td>4–6 days</td><td>3–6</td><td>stochastic agents, multimodal futures</td></tr>
+<tr><td>12</td><td>Neural step-sequencer</td><td class="d3">●●●</td><td>5–7 days</td><td>3–6</td><td>timing, periodic state, UI toggles</td></tr>
+</table>
+
+<div class="grid">
+
+<!-- 1 calculator -->
+<div class="card pick">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace">
+  <rect x="80" y="12" width="140" height="176" rx="10" fill="#1d2230" stroke="#3a4152"/>
+  <rect x="92" y="24" width="116" height="34" rx="4" fill="#9fc49a"/>
+  <text x="200" y="49" text-anchor="end" font-size="20" fill="#1b2a1a">7+5=12</text>
+  <g font-size="13" fill="#e8e6e1" text-anchor="middle">
+    <g fill="#2c3344"><rect x="92" y="66" width="26" height="22" rx="3"/><rect x="122" y="66" width="26" height="22" rx="3"/><rect x="152" y="66" width="26" height="22" rx="3"/><rect x="182" y="66" width="26" height="22" rx="3" fill="#a5672b"/>
+    <rect x="92" y="94" width="26" height="22" rx="3"/><rect x="122" y="94" width="26" height="22" rx="3"/><rect x="152" y="94" width="26" height="22" rx="3"/><rect x="182" y="94" width="26" height="22" rx="3" fill="#a5672b"/>
+    <rect x="92" y="122" width="26" height="22" rx="3"/><rect x="122" y="122" width="26" height="22" rx="3"/><rect x="152" y="122" width="26" height="22" rx="3"/><rect x="182" y="122" width="26" height="22" rx="3" fill="#a5672b"/>
+    <rect x="92" y="150" width="56" height="22" rx="3"/><rect x="152" y="150" width="26" height="22" rx="3"/><rect x="182" y="150" width="26" height="22" rx="3" fill="#4b8a52"/></g>
+    <text x="105" y="81">7</text><text x="135" y="81">8</text><text x="165" y="81">9</text><text x="195" y="81">÷</text>
+    <text x="105" y="109">4</text><text x="135" y="109">5</text><text x="165" y="109">6</text><text x="195" y="109">×</text>
+    <text x="105" y="137">1</text><text x="135" y="137">2</text><text x="165" y="137">3</text><text x="195" y="137">−</text>
+    <text x="120" y="165">0</text><text x="165" y="165">+</text><text x="195" y="165">=</text>
+  </g>
+  <path d="M190 158 l0 14 l4 -4 l4 7 l3 -1 l-4 -7 l5 0z" fill="#fff" stroke="#000" stroke-width=".8"/>
+  <text x="10" y="194" font-size="10" fill="#6cc3ff">input: click (x,y)</text>
+</svg>
+<h3>1 · Neural calculator ★</h3>
+<div class="tags"><span class="tag d2">●● easy-medium</span><span class="tag">3–4 days</span><span class="tag">1–3 GPU-h</span></div>
+<p>Click buttons; the network draws the display. No arithmetic code at inference. Shot: it's right on simple sums, then <i>confidently wrong</i> on 3-digit ones.</p>
+<p class="mono" style="color:var(--mute)">64×64 · VQ 8×8 · ~20M param transformer</p>
+</div>
+
+<!-- 2 desktop -->
+<div class="card pick">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="9">
+  <rect width="300" height="200" fill="#2b5876"/>
+  <g fill="#e8e6e1"><rect x="14" y="14" width="22" height="18" rx="2" fill="#f2b84b"/><text x="10" y="44">files</text>
+  <rect x="14" y="56" width="22" height="18" rx="2" fill="#7fd18b"/><text x="12" y="86">paint</text>
+  <rect x="14" y="98" width="22" height="18" rx="2" fill="#1d1f24"/><text x="8" y="128">term</text></g>
+  <rect x="70" y="30" width="150" height="100" fill="#e9e7e1" stroke="#111"/>
+  <rect x="70" y="30" width="150" height="14" fill="#3a5fa8"/><text x="76" y="40" fill="#fff">files</text>
+  <rect x="206" y="32" width="11" height="10" fill="#d9534f"/>
+  <g fill="#333"><rect x="82" y="54" width="18" height="14" fill="#f2b84b"/><rect x="112" y="54" width="18" height="14" fill="#f2b84b"/><rect x="142" y="54" width="18" height="14" fill="#c8c8c8"/></g>
+  <rect x="120" y="90" width="140" height="80" fill="#e9e7e1" stroke="#111" opacity=".93"/>
+  <rect x="120" y="90" width="140" height="14" fill="#5a7f3f"/><text x="126" y="100" fill="#fff">paint</text>
+  <path d="M140 140 q20 -25 40 0 t40 0" stroke="#d9534f" stroke-width="3" fill="none"/>
+  <rect y="186" width="300" height="14" fill="#141821"/><text x="6" y="196" fill="#aaa">▣ start   12:00</text>
+  <path d="M168 34 l0 14 l4 -4 l4 7 l3 -1 l-4 -7 l5 0z" fill="#fff" stroke="#000" stroke-width=".8"/>
+</svg>
+<h3>2 · Dreamed desktop ★</h3>
+<div class="tags"><span class="tag d5">●●●●● insane</span><span class="tag">8–12 days</span><span class="tag">8–15 GPU-h</span></div>
+<p>A toy OS with icons, draggable windows, close buttons. Mouse in, screen out. Shot: drag a window off-screen and it comes back as something else.</p>
+<p class="mono" style="color:var(--mute)">128×128 · cursor as explicit input · diffusion or VQ+transformer</p>
+</div>
+
+<!-- 3 terminal -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="11">
+  <rect x="10" y="10" width="280" height="180" rx="6" fill="#0a0c0a" stroke="#2a2f3a"/>
+  <g fill="#7fd18b">
+    <text x="20" y="32">$ ls</text>
+    <text x="20" y="48" fill="#cfd8cf">notes.txt  cat.png  secret/</text>
+    <text x="20" y="66">$ cat notes.txt</text>
+    <text x="20" y="82" fill="#cfd8cf">buy milk</text>
+    <text x="20" y="100">$ ls secret</text>
+    <text x="20" y="116" fill="#ff9a5b">plan_b.txt  d̶r̶e̶a̶m̶.exe</text>
+    <text x="20" y="134">$ █</text>
+  </g>
+  <text x="150" y="178" fill="#ff7a6b" font-size="9" text-anchor="middle">← hallucinated files never existed</text>
+</svg>
+<h3>3 · Neural terminal</h3>
+<div class="tags"><span class="tag d4">●●●● hard</span><span class="tag">6–9 days</span><span class="tag">5–10 GPU-h</span></div>
+<p>A toy shell with 5 made-up files; every pixel is generated. Shot: typing a command it never saw → invented files.</p>
+<p class="mono" style="color:var(--mute)">keystroke actions · text rendering is the hard part</p>
+</div>
+
+<!-- 4 paint -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="10">
+  <rect x="10" y="10" width="280" height="24" fill="#1d2230"/>
+  <circle cx="26" cy="22" r="7" fill="#d9534f"/><circle cx="46" cy="22" r="7" fill="#6cc3ff"/><circle cx="66" cy="22" r="7" fill="#f2b84b"/>
+  <rect x="226" y="14" width="56" height="16" rx="3" fill="#2c3344"/><text x="236" y="26" fill="#e8e6e1">↶ undo</text>
+  <rect x="10" y="38" width="280" height="152" fill="#f4f1ea"/>
+  <path d="M30 150 C70 60 120 170 160 90" stroke="#6cc3ff" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M150 160 C190 110 230 170 270 70" stroke="#d9534f" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="2 8" opacity=".55"/>
+  <text x="180" y="185" fill="#a33" font-size="9">red stroke being undone…</text>
+</svg>
+<h3>4 · Neural paint + undo</h3>
+<div class="tags"><span class="tag d3">●●● medium-hard</span><span class="tag">4–6 days</span><span class="tag">3–6 GPU-h</span></div>
+<p>Brush, 3 colours, undo. Undo forces the model to remember the canvas from before. A natural way to explain why context length matters.</p>
+<p class="mono" style="color:var(--mute)">compare k=4 vs k=32 context</p>
+</div>
+
+<!-- 5 marble -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200">
+  <polygon points="40,40 260,30 280,170 20,180" fill="#6b4a2e" stroke="#3b2816" stroke-width="4"/>
+  <circle cx="90" cy="80" r="12" fill="#111"/><circle cx="210" cy="140" r="12" fill="#111"/><circle cx="170" cy="70" r="12" fill="#2a6b33"/>
+  <path d="M70 150 Q120 140 150 110" stroke="#cfd8ff" stroke-dasharray="3 5" fill="none"/>
+  <circle cx="155" cy="105" r="9" fill="#cfd8ff"/>
+  <text x="150" y="196" fill="#6cc3ff" font-family="Menlo" font-size="10" text-anchor="middle">input: tilt ← → ↑ ↓</text>
+</svg>
+<h3>5 · Tilting marble table</h3>
+<div class="tags"><span class="tag d2">●● easy-medium</span><span class="tag">3–5 days</span><span class="tag">2–4 GPU-h</span></div>
+<p>Tilt the board; the ball rolls, bounces, falls into holes. Momentum needs several frames of history: 1-frame model fails, 8-frame model works.</p>
+<p class="mono" style="color:var(--mute)">best "physics" story; safest backup</p>
+</div>
+
+<!-- 6 lamp -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#07080b"/>
+  <defs><radialGradient id="lg" cx="110" cy="110" r="150" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f7d98a"/><stop offset="1" stop-color="#07080b" stop-opacity="0"/></radialGradient></defs>
+  <rect width="300" height="200" fill="url(#lg)"/>
+  <polygon points="170,60 200,60 300,10 300,0 230,0" fill="#07080b"/>
+  <polygon points="170,90 200,90 300,140 300,60 200,60 170,60" fill="#07080b" opacity=".85"/>
+  <rect x="170" y="60" width="30" height="30" fill="#4a4f5c"/>
+  <rect x="60" y="150" width="60" height="14" fill="#4a4f5c"/><polygon points="60,164 120,164 140,200 30,200" fill="#07080b" opacity=".85"/>
+  <circle cx="110" cy="110" r="7" fill="#fff6d0"/>
+</svg>
+<h3>6 · Lamp &amp; shadows</h3>
+<div class="tags"><span class="tag d3">●●● medium-hard</span><span class="tag">4–6 days</span><span class="tag">3–6 GPU-h</span></div>
+<p>Carry a lamp around a room; walls cast shadows. Did it learn something like ray casting just from watching?</p>
+<p class="mono" style="color:var(--mute)">great visuals, soft gradients are VQ-friendly</p>
+</div>
+
+<!-- 7 gravity -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="10">
+  <rect x="0" y="0" width="148" height="200" fill="#151a24"/><rect x="152" y="0" width="148" height="200" fill="#241a1a"/>
+  <rect x="0" y="180" width="148" height="20" fill="#3b4a6b"/><rect x="152" y="0" width="148" height="20" fill="#6b3b3b"/>
+  <rect x="20" y="130" width="50" height="8" fill="#3b4a6b"/><rect x="172" y="62" width="50" height="8" fill="#6b3b3b"/>
+  <rect x="60" y="160" width="14" height="20" fill="#7fd18b"/><rect x="230" y="20" width="14" height="20" fill="#7fd18b"/>
+  <text x="74" y="100" fill="#9aa0aa" text-anchor="middle">↓ g</text><text x="226" y="110" fill="#9aa0aa" text-anchor="middle">↑ g</text>
+  <text x="150" y="196" fill="#6cc3ff" text-anchor="middle">[SPACE] flips</text>
+</svg>
+<h3>7 · Gravity-flip rooms</h3>
+<div class="tags"><span class="tag d2">●● easy-medium</span><span class="tag">3–5 days</span><span class="tag">2–4 GPU-h</span></div>
+<p>One button flips gravity. The model has to learn a hidden rule switch from a single action.</p>
+<p class="mono" style="color:var(--mute)">clean probe: does the flip persist?</p>
+</div>
+
+<!-- 8 maze -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="9">
+  <rect x="0" y="0" width="148" height="200" fill="#11141b"/><rect x="152" y="0" width="148" height="200" fill="#11141b"/>
+  <g fill="#3a4152"><rect x="10" y="10" width="128" height="8"/><rect x="10" y="10" width="8" height="160"/><rect x="50" y="40" width="8" height="90"/><rect x="90" y="18" width="8" height="70"/><rect x="50" y="130" width="88" height="8"/></g>
+  <g fill="#3a4152"><rect x="162" y="10" width="128" height="8"/><rect x="162" y="10" width="8" height="160"/><rect x="202" y="40" width="8" height="40"/><rect x="230" y="90" width="50" height="8"/><rect x="250" y="18" width="8" height="40" fill="#5a3a52"/></g>
+  <circle cx="72" cy="110" r="6" fill="#f2b84b"/><circle cx="224" cy="110" r="6" fill="#f2b84b"/>
+  <text x="74" y="190" fill="#7fd18b" text-anchor="middle">t = 0</text><text x="226" y="190" fill="#ff7a6b" text-anchor="middle">t = 200 (came back)</text>
+</svg>
+<h3>8 · Forgetful maze</h3>
+<div class="tags"><span class="tag d4">●●●● hard</span><span class="tag">5–8 days</span><span class="tag">4–8 GPU-h</span></div>
+<p>Walk away, turn around, come back: the corridor has rearranged. Shows honestly why world models struggle to stay consistent.</p>
+<p class="mono" style="color:var(--mute)">first-person or partial view needed</p>
+</div>
+
+<!-- 9 tennis -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#2f6e4a"/>
+  <rect x="40" y="15" width="220" height="170" fill="none" stroke="#fff" stroke-width="2"/>
+  <line x1="40" y1="100" x2="260" y2="100" stroke="#ddd" stroke-width="3"/>
+  <line x1="150" y1="45" x2="150" y2="155" stroke="#fff"/><line x1="70" y1="45" x2="230" y2="45" stroke="#fff"/><line x1="70" y1="155" x2="230" y2="155" stroke="#fff"/>
+  <rect x="130" y="168" width="30" height="7" rx="3" fill="#f2b84b"/><rect x="160" y="24" width="30" height="7" rx="3" fill="#6cc3ff"/>
+  <path d="M146 166 Q170 110 190 60" stroke="#e9ff70" stroke-dasharray="2 4" fill="none"/>
+  <circle cx="190" cy="60" r="4" fill="#e9ff70"/>
+</svg>
+<h3>9 · Top-down tennis</h3>
+<div class="tags"><span class="tag d2">●● easy-medium</span><span class="tag">3–5 days</span><span class="tag">2–4 GPU-h</span></div>
+<p>Move the paddle, hit the ball. A callback to the tennis tracking project, so the series connects.</p>
+<p class="mono" style="color:var(--mute)">small ball = good tokenizer stress test</p>
+</div>
+
+<!-- 10 sand -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="10">
+  <rect width="300" height="200" fill="#0d0f14"/>
+  <rect x="10" y="10" width="62" height="16" rx="3" fill="#e0c06a"/><text x="18" y="22" fill="#222">sand</text>
+  <rect x="78" y="10" width="62" height="16" rx="3" fill="#4d8fd6"/><text x="86" y="22" fill="#fff">water</text>
+  <rect x="146" y="10" width="62" height="16" rx="3" fill="#777"/><text x="154" y="22" fill="#fff">wall</text>
+  <rect x="214" y="10" width="62" height="16" rx="3" fill="#e2583e"/><text x="222" y="22" fill="#fff">fire</text>
+  <rect x="40" y="120" width="90" height="6" fill="#777"/>
+  <polygon points="20,200 70,150 120,200" fill="#e0c06a"/>
+  <polygon points="140,200 140,175 300,175 300,200" fill="#4d8fd6"/>
+  <polygon points="190,175 225,140 260,175" fill="#e0c06a" opacity=".9"/>
+  <g fill="#e0c06a"><rect x="224" y="40" width="3" height="3"/><rect x="226" y="58" width="3" height="3"/><rect x="223" y="80" width="3" height="3"/><rect x="225" y="104" width="3" height="3"/><rect x="224" y="122" width="3" height="3"/></g>
+  <path d="M225 34 l0 14 l4 -4 l4 7 l3 -1 l-4 -7 l5 0z" fill="#fff" stroke="#000" stroke-width=".8"/>
+</svg>
+<h3>10 · Falling-sand sandbox</h3>
+<div class="tags"><span class="tag d3">●●● medium-hard</span><span class="tag">4–6 days</span><span class="tag">3–6 GPU-h</span></div>
+<p>Pour sand, water, walls and fire onto a pixel canvas. The real engine is a cellular automaton with simple local rules. Does the network learn the rules, or just the look? Shot: put fire next to water, a combination it never saw in training.</p>
+<p class="mono" style="color:var(--mute)">pixel-perfect rules = easy to measure error</p>
+</div>
+
+<!-- 11 aquarium -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200">
+  <defs><linearGradient id="aq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e5f8a"/><stop offset="1" stop-color="#0b2236"/></linearGradient></defs>
+  <rect width="300" height="200" fill="url(#aq)"/>
+  <rect y="185" width="300" height="15" fill="#c9b27a"/>
+  <path d="M40 185 q-8 -30 4 -60 q-10 30 -4 60" fill="#3e8a4a"/><path d="M260 185 q10 -40 -4 -80 q14 40 4 80" fill="#3e8a4a"/>
+  <g fill="#f29b4b"><ellipse cx="120" cy="90" rx="16" ry="8"/><polygon points="104,90 94,82 94,98"/></g>
+  <g fill="#f2d14b"><ellipse cx="190" cy="130" rx="12" ry="6"/><polygon points="202,130 212,124 212,136"/></g>
+  <g fill="#e86b9c"><ellipse cx="80" cy="140" rx="10" ry="5"/><polygon points="70,140 62,135 62,145"/></g>
+  <g fill="#d9b48a"><circle cx="160" cy="30" r="2.5"/><circle cx="168" cy="44" r="2.5"/><circle cx="154" cy="56" r="2.5"/></g>
+  <path d="M134 86 Q150 70 158 56" stroke="#fff" stroke-dasharray="2 4" fill="none" opacity=".6"/>
+  <text x="150" y="196" fill="#0b2236" font-family="Menlo" font-size="9" text-anchor="middle">click = drop food · tap glass = scare</text>
+</svg>
+<h3>11 · Neural aquarium</h3>
+<div class="tags"><span class="tag d3">●●● medium-hard</span><span class="tag">4–6 days</span><span class="tag">3–6 GPU-h</span></div>
+<p>Fish with their own random behaviour; you drop food or tap the glass. Unlike a calculator, there is no single right next frame, so this shows why a sampling model (tokens or diffusion) is needed instead of a model that predicts the average and blurs. Shot: deterministic model vs sampling model side by side.</p>
+<p class="mono" style="color:var(--mute)">best demo of stochasticity / "mean blur"</p>
+</div>
+
+<!-- 12 sequencer -->
+<div class="card">
+<svg class="mock" viewBox="0 0 300 200" font-family="Menlo,monospace" font-size="9">
+  <rect width="300" height="200" fill="#14161c"/>
+  <g fill="#9aa0aa"><text x="10" y="44">kick</text><text x="10" y="74">snare</text><text x="10" y="104">hat</text><text x="10" y="134">bass</text></g>
+  <g id="row">
+  </g>
+  <g fill="#262a35">
+    <rect x="50" y="30" width="26" height="22" rx="3" fill="#f2b84b"/><rect x="80" y="30" width="26" height="22" rx="3"/><rect x="110" y="30" width="26" height="22" rx="3"/><rect x="140" y="30" width="26" height="22" rx="3"/><rect x="170" y="30" width="26" height="22" rx="3" fill="#f2b84b"/><rect x="200" y="30" width="26" height="22" rx="3"/><rect x="230" y="30" width="26" height="22" rx="3"/><rect x="260" y="30" width="26" height="22" rx="3"/>
+    <rect x="50" y="60" width="26" height="22" rx="3"/><rect x="80" y="60" width="26" height="22" rx="3"/><rect x="110" y="60" width="26" height="22" rx="3" fill="#6cc3ff"/><rect x="140" y="60" width="26" height="22" rx="3"/><rect x="170" y="60" width="26" height="22" rx="3"/><rect x="200" y="60" width="26" height="22" rx="3"/><rect x="230" y="60" width="26" height="22" rx="3" fill="#6cc3ff"/><rect x="260" y="60" width="26" height="22" rx="3"/>
+    <rect x="50" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="80" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="110" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="140" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="170" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="200" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="230" y="90" width="26" height="22" rx="3" fill="#7fd18b"/><rect x="260" y="90" width="26" height="22" rx="3" fill="#7fd18b"/>
+    <rect x="50" y="120" width="26" height="22" rx="3" fill="#e86b9c"/><rect x="80" y="120" width="26" height="22" rx="3"/><rect x="110" y="120" width="26" height="22" rx="3"/><rect x="140" y="120" width="26" height="22" rx="3" fill="#e86b9c"/><rect x="170" y="120" width="26" height="22" rx="3"/><rect x="200" y="120" width="26" height="22" rx="3" fill="#e86b9c"/><rect x="230" y="120" width="26" height="22" rx="3"/><rect x="260" y="120" width="26" height="22" rx="3"/>
+  </g>
+  <rect x="137" y="24" width="32" height="124" rx="4" fill="none" stroke="#fff" stroke-width="2"/>
+  <text x="10" y="176" fill="#6cc3ff">click cell = toggle · playhead loops</text>
+  <text x="10" y="190" fill="#9aa0aa">audio from predicted frames (stretch)</text>
+</svg>
+<h3>12 · Neural step-sequencer</h3>
+<div class="tags"><span class="tag d3">●●● medium-hard</span><span class="tag">5–7 days</span><span class="tag">3–6 GPU-h</span></div>
+<p>A drum-machine grid with a looping playhead; you toggle cells. The model has to keep time and remember the pattern. Stretch goal: play sound from whichever cells the <i>predicted</i> frame lights up, so you hear the dream drift out of rhythm. It also fits your music interest.</p>
+<p class="mono" style="color:var(--mute)">periodic state · audible failure mode</p>
+</div>
+
+</div>
+
+<div class="callout"><b>Recommendation:</b> open with the <b>neural calculator</b> (cheap, checkable, funny failures) and finish with the <b>dreamed desktop</b> ("I deleted the computer and replaced it with a neural network"). Backup if the desktop drifts too much: the <b>tilting marble table</b>.</div>
+</main>
+</body>
+</html>

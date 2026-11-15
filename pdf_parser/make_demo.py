@@ -1,4 +1,4 @@
-"""Build before/after images for the video.
+"""Build before/after comparison images.
 
 For each (pdf, page): [original page | detected layout | naive text dump | our markdown]
 python make_demo.py --weights runs/y11s_doclaynet/weights/best.pt

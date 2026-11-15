@@ -22,7 +22,8 @@ def load(vq_path, wm_path):
     vq = VQVAE().to(DEVICE).eval()
     vq.load_state_dict(torch.load(vq_path, map_location=DEVICE))
     ck = torch.load(wm_path, map_location=DEVICE)
-    wm = WorldModel(K=ck["args"]["K"], d=ck["args"]["d"], layers=ck["args"]["layers"]).to(DEVICE).eval()
+    wm = WorldModel(K=ck["args"]["K"], d=ck["args"]["d"], layers=ck["args"]["layers"],
+                    anchor=ck["args"].get("anchor", False)).to(DEVICE).eval()
     wm.load_state_dict(ck["model"])
     return vq, wm
 
@@ -34,12 +35,14 @@ class Dream:
         self.vq, self.wm, self.passes, self.temperature = vq, wm, passes, temperature
         x = VQVAE.to_input(torch.from_numpy(np.stack(real_frames)).to(DEVICE))
         self.ctx = vq.encode(x).flatten(1)[None]                     # (1, K, 256)
+        self.anchor = self.ctx[:, 0].clone()                         # first real frame, kept forever
         # actions[j] moved frame j -> j+1; the last slot is filled with the next action at step()
         self.act = torch.tensor([list(real_actions) + [0]], device=DEVICE)  # (1, K)
 
     def step(self, action):
         self.act[0, -1] = action
-        nxt = predict_next(self.wm, self.ctx, self.act, self.passes, self.temperature)  # (1, 256)
+        nxt = predict_next(self.wm, self.ctx, self.act, self.passes, self.temperature,
+                           anchor=self.anchor if self.wm.use_anchor else None)  # (1, 256)
         self.ctx = torch.cat([self.ctx[:, 1:], nxt[:, None]], 1)    # slide the window
         self.act = torch.cat([self.act[:, 1:], torch.zeros_like(self.act[:, :1])], 1)
         return VQVAE.to_image(self.vq.decode(nxt.view(1, 16, 16)))[0].cpu().numpy()

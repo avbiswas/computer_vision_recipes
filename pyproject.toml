@@ -1,7 +1,7 @@
 [project]
 name = "computer-vision-recipes"
 version = "0.1.0"
-description = "CV speedrun projects (world model environment used on cloud GPUs)"
+description = "Computer vision recipes (environment for the world model, used on cloud GPUs)"
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "torch>=2.9",

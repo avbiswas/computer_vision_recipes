@@ -1,6 +1,6 @@
-# CV Speedrun
+# Computer Vision Recipes
 
-Four computer-vision projects of increasing difficulty, built for a YouTube video.
+Four self-contained computer-vision projects to learn from. Each folder has its own code and instructions.
 
 | Project | Folder | What it does |
 |---|---|---|
@@ -10,7 +10,7 @@ Four computer-vision projects of increasing difficulty, built for a YouTube vide
 | World model | `world_model/lightroom/` | A playable "dream" of a 2D room: VQ-VAE tokenizer + Genie-style spatio-temporal transformer |
 
 Datasets, model weights, training runs and rendered media are not in the repo; each project's scripts regenerate or download them.
-`tennis/` expects [TennisCourtDetector](https://github.com/yastrebksv/TennisCourtDetector) cloned into `tennis/third_party/`.
+Tennis: `bash tennis/setup.sh`, then follow [`tennis/README.md`](tennis/README.md).
 
 ## World model quick start
 

@@ -7,10 +7,6 @@ Thumbs.db
 
 # ---------- internal / planning ----------
 .claude/
-*.html
-cv_speedrun_top10.md
-survey.md
-project_shortlist.md
 
 # ---------- secrets ----------
 .env

@@ -30,8 +30,9 @@ BALL, COURT, PLAYER = 0, slice(1, 15), 15
 NUM_HEATMAPS = 16
 SIZE_NORM = 32.0               # player sizes are predicted in units of 32 heatmap pixels
 
-META = json.load(open(ROOT / "data/meta.json"))
-COURT_FLIP = META["court_kp_flip"]   # left<->right index swap for a horizontal flip
+# After a horizontal flip, left court points become right ones: keypoint k becomes keypoint COURT_FLIP[k]
+# (same list as "court_kp_flip" in data/meta.json; keypoint names are listed there too)
+COURT_FLIP = [1, 0, 3, 2, 6, 7, 4, 5, 9, 8, 11, 10, 12, 13]
 
 
 # ---------------------------------------------------------------- heatmap drawing
