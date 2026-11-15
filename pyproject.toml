@@ -1,0 +1,24 @@
+[project]
+name = "computer-vision-recipes"
+version = "0.1.0"
+description = "CV speedrun projects (world model environment used on cloud GPUs)"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "torch>=2.9",
+    "numpy",
+    "pillow",
+    "matplotlib",
+    "pygame-ce",
+]
+
+[tool.uv]
+package = false
+
+# Linux (cloud GPU): CUDA 13 wheels. macOS: regular PyPI wheels (MPS).
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu130", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
