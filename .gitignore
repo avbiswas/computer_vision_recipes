@@ -72,3 +72,6 @@ third_party/
 
 # ---------- results with local paths ----------
 pdf_parser/results/eval.json
+
+# world model video deliverables (media + checkpoints)
+video_assets/

@@ -27,10 +27,12 @@ class STBlock(nn.Module):
     """Spatio-temporal block (as in Genie), built from two stock PyTorch transformer layers.
     Cheaper than one layer attending over all frames x tokens at once.
       1. spatial:  the 256 tokens of each frame attend to each other        (where things are)
-      2. temporal: each grid cell attends to the same cell in the other frames (how it changes)"""
+      2. temporal: each grid cell attends to the same cell in the other frames (how it changes)
+    With causal=True, a frame only sees itself and EARLIER frames (needed to train on all frames)."""
 
-    def __init__(self, d, heads):
+    def __init__(self, d, heads, causal=False):
         super().__init__()
+        self.causal = causal
         layer = lambda: nn.TransformerEncoderLayer(d, heads, dim_feedforward=4 * d, dropout=0.0,
                                                    activation="gelu", batch_first=True, norm_first=True)
         self.spatial, self.temporal = layer(), layer()
@@ -38,21 +40,25 @@ class STBlock(nn.Module):
     def forward(self, x):  # x: (B, F frames, N tokens, d)
         B, Fr, N, d = x.shape
         x = self.spatial(x.reshape(B * Fr, N, d)).view(B, Fr, N, d)
-        x = self.temporal(x.transpose(1, 2).reshape(B * N, Fr, d))
+        if self.causal:
+            mask = nn.Transformer.generate_square_subsequent_mask(Fr, device=x.device, dtype=x.dtype)
+            x = self.temporal(x.transpose(1, 2).reshape(B * N, Fr, d), src_mask=mask, is_causal=True)
+        else:
+            x = self.temporal(x.transpose(1, 2).reshape(B * N, Fr, d))
         return x.view(B, N, Fr, d).transpose(1, 2)
 
 
 class WorldModel(nn.Module):
-    def __init__(self, K=4, d=256, layers=6, heads=8, anchor=False):
+    def __init__(self, K=4, d=256, layers=6, heads=8, anchor=False, causal=False):
         super().__init__()
-        self.K, self.use_anchor = K, anchor
+        self.K, self.use_anchor, self.causal = K, anchor, causal
         self.tok = nn.Embedding(N_CODES + 1, d)
         self.pos = nn.Parameter(torch.randn(TOKENS, d) * 0.02)      # where in the 16x16 grid
         self.frame = nn.Parameter(torch.randn(K + 1, d) * 0.02)     # which frame in the window
         self.act = nn.Embedding(N_ACTIONS + 1, d)
         if anchor:  # an extra "reference" frame from the start of the episode (boxes never move)
             self.anchor_emb = nn.Parameter(torch.randn(1, d) * 0.02)
-        self.blocks = nn.Sequential(*[STBlock(d, heads) for _ in range(layers)])
+        self.blocks = nn.Sequential(*[STBlock(d, heads, causal) for _ in range(layers)])
         self.norm = nn.LayerNorm(d)
         self.head = nn.Linear(d, N_CODES)
 
@@ -64,9 +70,14 @@ class WorldModel(nn.Module):
         anchor:  (B, 256)     optional: code ids of an earlier real frame (if use_anchor)
         returns logits (B, 256, N_CODES) for the next frame
         """
-        B, K, _ = ctx.shape
         seq = torch.cat([ctx, target[:, None]], 1)                         # (B, K+1, 256)
-        none = torch.full((B, 1), NO_ACTION, device=ctx.device, dtype=actions.dtype)
+        return self.forward_seq(seq, actions, anchor)[:, -1]               # next frame only
+
+    def forward_seq(self, seq, actions, anchor=None):
+        """Logits for EVERY frame of a window (used for causal training on all frames).
+        seq: (B, K+1, 256) code ids with MASK where hidden; actions: (B, K) as in forward()."""
+        B = seq.shape[0]
+        none = torch.full((B, 1), NO_ACTION, device=seq.device, dtype=actions.dtype)
         frame_actions = torch.cat([none, actions], 1)                      # (B, K+1)
         frame_emb = self.frame
         if self.use_anchor:                                                # prepend the anchor frame
@@ -75,8 +86,10 @@ class WorldModel(nn.Module):
             frame_emb = torch.cat([self.anchor_emb, frame_emb], 0)
         x = (self.tok(seq) + self.pos + frame_emb[:, None]
              + self.act(frame_actions)[:, :, None])                        # (B, frames, 256, d)
-        x = self.blocks(x)                                                 # (B, K+1, 256, d)
-        return self.head(self.norm(x[:, -1]))                              # next frame only
+        x = self.blocks(x)                                                 # (B, frames, 256, d)
+        if self.use_anchor:
+            x = x[:, 1:]                                                   # no prediction for the anchor
+        return self.head(self.norm(x))                                     # (B, K+1, 256, N_CODES)
 
 
 def mask_target(target, full_mask_prob=0.5):

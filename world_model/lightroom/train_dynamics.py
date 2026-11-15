@@ -44,6 +44,12 @@ def main():
     ap.add_argument("--noise", type=float, default=0.1, help="max fraction of context tokens randomised")
     ap.add_argument("--init", default=None, help="start from these weights with a fresh LR schedule")
     ap.add_argument("--anchor", action="store_true", help="add an earlier real frame as a fixed reference")
+    ap.add_argument("--causal", action="store_true",
+                    help="causal in time + MaskGIT in every frame: loss on ALL frames of the window")
+    ap.add_argument("--clean_p", type=float, default=0.5,
+                    help="(causal) fraction of samples with clean context + only the last frame masked")
+    ap.add_argument("--lamp_w", type=float, default=0.0,
+                    help="extra loss weight on tokens around the flashlight (needs cache/lamp.npy)")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
 
@@ -51,6 +57,11 @@ def main():
     tokens = torch.from_numpy(np.load(f"{a.cache}/tokens.npy").astype(np.int64)).to(data_dev)  # (N, T+1, 256)
     actions = torch.from_numpy(np.load(f"{a.cache}/actions.npy").astype(np.int64)).to(data_dev)  # (N, T)
     N, T1, _ = tokens.shape
+    if a.lamp_w > 0:  # flashlight position per frame, to find its tokens on the 16x16 grid
+        lamp = torch.from_numpy(np.load(f"{a.cache}/lamp.npy")).to(data_dev)       # (N, T+1, 2)
+        c = (torch.arange(16, device=data_dev) + 0.5) / 16
+        gy, gx = torch.meshgrid(c, c, indexing="ij")
+        grid = torch.stack([gx.flatten(), gy.flatten()], -1)                      # (256, 2)
     n_train = int(N * 0.95)  # same held-out episodes as the VQ-VAE
     g = torch.Generator().manual_seed(0)
 
@@ -65,6 +76,12 @@ def main():
         # anchor: a random earlier real frame (at or before the window start)
         a_idx = (torch.rand(B, generator=g).to(data_dev) * (t + 1)).long()
         batch.anchor = tokens[ep, a_idx].to(DEVICE) if a.anchor else None
+        if a.lamp_w > 0:  # tokens within ~2 cells of the flashlight in the TARGET frame
+            pos = lamp[ep, t + a.K + R]                                            # (B, 2)
+            near = torch.cdist(pos[:, None].float(), grid[None])[:, 0] < 0.12      # (B, 256)
+            batch.lamp_near = near.to(DEVICE)
+            pos_all = lamp[ep[:, None], idx]                                       # (B, K+R+1, 2)
+            batch.lamp_all = ((pos_all[:, :, None] - grid).norm(dim=-1) < 0.12).to(DEVICE)
         return seq, act
 
     @torch.no_grad()
@@ -81,7 +98,7 @@ def main():
         model.train()
         return ctx, act[:, R:R + a.K], seq[:, a.K + R]
 
-    model = WorldModel(K=a.K, d=a.d, layers=a.layers, anchor=a.anchor).to(DEVICE)
+    model = WorldModel(K=a.K, d=a.d, layers=a.layers, anchor=a.anchor, causal=a.causal).to(DEVICE)
     opt = torch.optim.AdamW(model.parameters(), lr=a.lr, betas=(0.9, 0.95), weight_decay=0.05)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, a.lr, total_steps=a.steps, pct_start=0.03)
     print(f"world model params: {sum(p.numel() for p in model.parameters()) / 1e6:.1f}M  "
@@ -103,24 +120,49 @@ def main():
         progress.snapshot(model, 0)  # the untrained model's "dream" = noise
     t0 = time.time()
     for step in range(first, a.steps + 1):
-        R = int(torch.randint(1, a.self_max + 1, (1,), generator=g)) \
-            if torch.rand(1, generator=g).item() < a.self_p else 0
-        seq, act = batch(0, n_train, a.batch, R)
-        if R:
-            ctx, act, tgt = self_rollout(seq, act, R)
+        if a.causal:  # ---- Genie-style: causal in time, MaskGIT in every frame, loss on all frames
+            seq, act = batch(0, n_train, a.batch, 0)                       # (B, K+1, 256), (B, K)
+            B_, T_, _ = seq.shape
+            inp, hidden = mask_target(seq.reshape(B_ * T_, 256))
+            inp, hidden = inp.view(B_, T_, 256), hidden.view(B_, T_, 256)
+            clean = torch.rand(B_, device=seq.device) < a.clean_p          # inference-like samples:
+            hidden[clean, :-1] = False                                     # clean context, last frame masked
+            visible = corrupt_context(seq, a.noise)                        # light noise on visible tokens
+            inp = torch.where(hidden, torch.full_like(seq, 512), visible)
+            with amp():
+                logits = model.forward_seq(inp, act, batch.anchor).float()  # (B, K+1, 256, 512)
+            per_token = F.cross_entropy(logits[hidden], seq[hidden], reduction="none")
+            prev = torch.cat([seq[:, :1], seq[:, :-1]], 1)
+            weight = 1 + a.change_w * (seq != prev)[hidden].float()
+            if a.lamp_w > 0:
+                weight = weight + a.lamp_w * batch.lamp_all[hidden].float()
+            loss = (weight * per_token).sum() / weight.sum()
+            opt.zero_grad(set_to_none=True)
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            opt.step()
+            sched.step()
         else:
-            ctx, act, tgt = seq[:, :a.K], act, seq[:, a.K]
-        inp, hidden = mask_target(tgt)
-        with amp():
-            logits = model(corrupt_context(ctx, a.noise), act, inp, batch.anchor).float()
-        per_token = F.cross_entropy(logits[hidden], tgt[hidden], reduction="none")
-        weight = 1 + a.change_w * (tgt != ctx[:, -1])[hidden].float()  # moving parts count more
-        loss = (weight * per_token).sum() / weight.sum()
-        opt.zero_grad(set_to_none=True)
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-        opt.step()
-        sched.step()
+            R = int(torch.randint(1, a.self_max + 1, (1,), generator=g)) \
+                if torch.rand(1, generator=g).item() < a.self_p else 0
+            seq, act = batch(0, n_train, a.batch, R)
+            if R:
+                ctx, act, tgt = self_rollout(seq, act, R)
+            else:
+                ctx, act, tgt = seq[:, :a.K], act, seq[:, a.K]
+            inp, hidden = mask_target(tgt)
+            with amp():
+                logits = model(corrupt_context(ctx, a.noise), act, inp, batch.anchor).float()
+            per_token = F.cross_entropy(logits[hidden], tgt[hidden], reduction="none")
+            weight = 1 + a.change_w * (tgt != ctx[:, -1])[hidden].float()  # moving parts count more
+            if a.lamp_w > 0:                                                  # the flashlight counts most
+                weight = weight + a.lamp_w * batch.lamp_near[hidden].float()
+            loss = (weight * per_token).sum() / weight.sum()
+            opt.zero_grad(set_to_none=True)
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            opt.step()
+            sched.step()
         if step % 500 == 0 or step == a.steps:
             model.eval()
             with torch.no_grad():  # held-out: predict a fully hidden next frame in ONE pass

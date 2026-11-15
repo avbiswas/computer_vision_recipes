@@ -22,7 +22,14 @@ def load(vq_path, wm_path):
     vq = VQVAE().to(DEVICE).eval()
     vq.load_state_dict(torch.load(vq_path, map_location=DEVICE))
     ck = torch.load(wm_path, map_location=DEVICE)
-    wm = WorldModel(K=ck["args"]["K"], d=ck["args"]["d"], layers=ck["args"]["layers"],
+    if ck["args"].get("rope"):
+        from dynamics_rope import WorldModelRoPE
+        offs = tuple(int(x) for x in ck["args"].get("offsets", "32,16,8,4,3,2,1,0").split(","))
+        wm = WorldModelRoPE(d=ck["args"]["d"], layers=ck["args"]["layers"], offsets=offs,
+                            use_rope=ck["args"].get("use_rope", True)).to(DEVICE).eval()
+        wm.load_state_dict(ck["model"])
+        return vq, wm
+    wm = WorldModel(K=ck["args"]["K"], d=ck["args"]["d"], layers=ck["args"]["layers"], causal=ck["args"].get("causal", False),
                     anchor=ck["args"].get("anchor", False)).to(DEVICE).eval()
     wm.load_state_dict(ck["model"])
     return vq, wm
@@ -30,6 +37,11 @@ def load(vq_path, wm_path):
 
 class Dream:
     """Keeps the sliding window of the last K frames (tokens) and actions."""
+
+    def __new__(cls, vq, wm, *args, **kwargs):  # RoPE models keep a longer, strided history
+        if getattr(wm, "rope", False):
+            return DreamRoPE(vq, wm, *args, **kwargs)
+        return super().__new__(cls)
 
     def __init__(self, vq, wm, real_frames, real_actions, passes=1, temperature=1.0):
         self.vq, self.wm, self.passes, self.temperature = vq, wm, passes, temperature
@@ -45,6 +57,36 @@ class Dream:
                            anchor=self.anchor if self.wm.use_anchor else None)  # (1, 256)
         self.ctx = torch.cat([self.ctx[:, 1:], nxt[:, None]], 1)    # slide the window
         self.act = torch.cat([self.act[:, 1:], torch.zeros_like(self.act[:, :1])], 1)
+        return VQVAE.to_image(self.vq.decode(nxt.view(1, 16, 16)))[0].cpu().numpy()
+
+
+class DreamRoPE:
+    """Dream for the strided-context RoPE model: keeps the full token history (trimmed to what
+    the strided window needs) and the first frame as the anchor."""
+
+    def __init__(self, vq, wm, real_frames, real_actions, passes=1, temperature=0.0):
+        self.vq, self.wm, self.passes, self.temperature, self.offsets = vq, wm, passes, temperature, wm.offsets
+        x = VQVAE.to_input(torch.from_numpy(np.stack(real_frames)).to(DEVICE))
+        self.hist = list(vq.encode(x).flatten(1))                    # token frames, oldest first
+        self.acts = list(real_actions)                               # acts[i] moved frame i -> i+1
+        self.anchor = self.hist[0]
+        self.t0 = 0                                                  # absolute index of hist[0]... kept simple
+
+    def step(self, action):
+        from dynamics_rope import predict_next_rope
+        self.acts.append(int(action))
+        t = len(self.hist)                                           # index of the frame to predict
+        idx = [max(t - o, 0) for o in self.offsets]
+        fa = []
+        for j, i in enumerate(idx):
+            ok = j > 0 and i >= 1 and idx[j - 1] == i - 1
+            fa.append(self.acts[i - 1] if ok else 5)                 # 5 = NO_ACTION
+        ctx = torch.stack([self.hist[i] for i in idx[:-1]])[None]
+        times = torch.tensor([[i - t for i in idx]], device=DEVICE)
+        anchor_time = torch.tensor([-min(t, 250)], device=DEVICE)
+        nxt = predict_next_rope(self.wm, ctx, torch.tensor([fa], device=DEVICE), times,
+                                self.anchor[None], anchor_time, self.passes, self.temperature)[0]
+        self.hist.append(nxt)
         return VQVAE.to_image(self.vq.decode(nxt.view(1, 16, 16)))[0].cpu().numpy()
 
 

@@ -80,16 +80,24 @@ class Quantizer(nn.Module):
 
 
 class VQVAE(nn.Module):
-    def __init__(self, K=512, D=64, ch=128):
+    """grid=16: 64x64 -> 16x16 tokens (4x4 px each).  grid=8: 64x64 -> 8x8 tokens (8x8 px each)."""
+
+    def __init__(self, K=512, D=64, ch=128, grid=16):
         super().__init__()
-        self.enc = nn.Sequential(
-            nn.Conv2d(3, ch // 2, 3, padding=1), ResBlock(ch // 2),
-            nn.Conv2d(ch // 2, ch, 4, stride=2, padding=1), ResBlock(ch),       # 32x32
-            nn.Conv2d(ch, ch, 4, stride=2, padding=1), ResBlock(ch), ResBlock(ch),  # 16x16
-            nn.GroupNorm(8, ch), nn.SiLU(), nn.Conv2d(ch, D, 1))
+        self.grid = grid
+        enc = [nn.Conv2d(3, ch // 2, 3, padding=1), ResBlock(ch // 2),
+               nn.Conv2d(ch // 2, ch, 4, stride=2, padding=1), ResBlock(ch),            # 32x32
+               nn.Conv2d(ch, ch, 4, stride=2, padding=1), ResBlock(ch), ResBlock(ch)]   # 16x16
+        dec_in = [nn.Conv2d(D, ch, 3, padding=1), ResBlock(ch), ResBlock(ch)]
+        if grid == 8:  # one more stage, wider, so each token can hold an 8x8 patch
+            enc += [nn.Conv2d(ch, 2 * ch, 4, stride=2, padding=1), ResBlock(2 * ch), ResBlock(2 * ch)]  # 8x8
+            dec_in = [nn.Conv2d(D, 2 * ch, 3, padding=1), ResBlock(2 * ch), ResBlock(2 * ch),
+                      nn.ConvTranspose2d(2 * ch, ch, 4, stride=2, padding=1), ResBlock(ch)]        # 16x16
+        top = 2 * ch if grid == 8 else ch
+        self.enc = nn.Sequential(*enc, nn.GroupNorm(8, top), nn.SiLU(), nn.Conv2d(top, D, 1))
         self.vq = Quantizer(K, D)
         self.dec = nn.Sequential(
-            nn.Conv2d(D, ch, 3, padding=1), ResBlock(ch), ResBlock(ch),
+            *dec_in,
             nn.ConvTranspose2d(ch, ch, 4, stride=2, padding=1), ResBlock(ch),     # 32x32
             nn.ConvTranspose2d(ch, ch // 2, 4, stride=2, padding=1), ResBlock(ch // 2),  # 64x64
             nn.GroupNorm(8, ch // 2), nn.SiLU(), nn.Conv2d(ch // 2, 3, 3, padding=1))
@@ -149,6 +157,9 @@ def main():
     ap.add_argument("--lr", type=float, default=3e-4)
     ap.add_argument("--fly_w", type=float, default=0.0, help="extra loss weight on firefly pixels")
     ap.add_argument("--init", default=None, help="start from these weights (fine-tuning)")
+    ap.add_argument("--grid", type=int, default=16, choices=[8, 16], help="tokens per side")
+    ap.add_argument("--K", type=int, default=512, help="codebook size")
+    ap.add_argument("--D", type=int, default=64, help="code vector size")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
 
@@ -172,7 +183,9 @@ def main():
         batch.weight = weight
         return VQVAE.to_input(x)
 
-    model, critic = VQVAE().to(DEVICE), PatchCritic().to(DEVICE)
+    model, critic = VQVAE(K=a.K, D=a.D, grid=a.grid).to(DEVICE), PatchCritic().to(DEVICE)
+    import json
+    json.dump({"K": a.K, "D": a.D, "grid": a.grid}, open(f"{a.out}/config.json", "w"))
     if a.init:
         model.load_state_dict(torch.load(a.init, map_location=DEVICE))
     opt = torch.optim.AdamW(model.parameters(), lr=a.lr, betas=(0.5, 0.9), weight_decay=0.0)
@@ -219,7 +232,7 @@ def main():
                 used = len(torch.unique(idv))
             model.train()
             print(f"step {step:6d}  rec {rec.item():.4f}  gan {g_adv.item():+.3f}  val PSNR {psnr:.2f} dB  "
-                  f"codes used {used}/512  {time.time() - t0:.0f}s", flush=True)
+                  f"codes used {used}/{a.K}  {time.time() - t0:.0f}s", flush=True)
         if step % 500 == 0 or step == a.steps:
             torch.save(model.state_dict(), f"{a.out}/vqvae.pt")
             os.makedirs(f"{a.out}/ckpts", exist_ok=True)       # keep every checkpoint, pick the best later

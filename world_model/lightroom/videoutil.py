@@ -7,7 +7,7 @@ AMBER, IDLE, EDGE, BG = (242, 184, 75), (40, 44, 56), (90, 96, 110), (12, 13, 17
 
 
 def font(size):
-    for f in ["/System/Library/Fonts/SFNSMono.ttf", "/System/Library/Fonts/Menlo.ttc",
+    for f in ["/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", "/System/Library/Fonts/SFNSMono.ttf", "/System/Library/Fonts/Menlo.ttc",
               "/System/Library/Fonts/Supplemental/Arial.ttf"]:
         try:
             return ImageFont.truetype(f, size)
