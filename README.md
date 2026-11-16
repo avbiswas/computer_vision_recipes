@@ -17,27 +17,17 @@ Detect page layout with a fine-tuned YOLO, then turn each region into structured
 ### Tennis tracking — [`tennis/`](tennis/)
 Track the ball, players and court lines from broadcast video with a tiny distilled model.
 
-![Tennis tracking](images/tennis.png)
+https://github.com/user-attachments/assets/3b071be0-e0c0-4747-877c-ffd5e5f2cef6
 
 ### World model — [`world_model/lightroom/`](world_model/lightroom/)
 A playable "dream" of a 2D room: a VQ-VAE tokenizer plus a Genie-style transformer that predicts the next frame from your actions.
 
-![World model](images/world.png)
+https://github.com/user-attachments/assets/e05f140f-9753-4b4f-8452-d41ca88a3fd5
 
 ## Notes
 
 Datasets, model weights, training runs and rendered media are not in the repo; each project's scripts regenerate or download them.
 Tennis: `bash tennis/setup.sh`, then follow [`tennis/README.md`](tennis/README.md).
-
-## World model quick start
-
-```bash
-cd world_model/lightroom
-./record_all.sh && python pack.py      # record + pack episodes
-./train_vq_ft.sh                       # tokenizer (see vqvae.py for the v2 losses)
-./train_wm.sh                          # tokenize + world model
-python play_dream.py --wm runs/dyn_k4/best.pt   # play: real room vs. dream
-```
 
 ## Support
 

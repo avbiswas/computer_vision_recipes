@@ -2,6 +2,7 @@
 
   cache/frames.npy   uint8 (N_episodes, T+1, 64, 64, 3)
   cache/actions.npy  int8  (N_episodes, T)
+  cache/lamp.npy     float32 (N_episodes, T+1, 2)   flashlight position (loss weighting)
 
 usage: python pack.py --data data --out cache
 """
@@ -21,10 +22,13 @@ os.makedirs(a.out, exist_ok=True)
 frames = np.lib.format.open_memmap(f"{a.out}/frames.npy", "w+", np.uint8,
                                    (len(files),) + first["frames"].shape)
 actions = np.zeros((len(files),) + first["actions"].shape, np.int8)
+lamp = np.zeros((len(files),) + first["lamp"].shape, np.float32)
 for i, f in enumerate(files):
     ep = np.load(f)
     frames[i] = ep["frames"]
     actions[i] = ep["actions"]
+    lamp[i] = ep["lamp"]
 frames.flush()
 np.save(f"{a.out}/actions.npy", actions)
+np.save(f"{a.out}/lamp.npy", lamp)
 print(f"packed {len(files)} episodes -> {a.out}  frames {frames.shape}")
