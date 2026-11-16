@@ -1,13 +1,30 @@
 # Computer Vision Recipes
 
+From the YouTube channel **[Neural Breakdown with AVB](https://www.youtube.com/@avb_fj)**.
+
 Four self-contained computer-vision projects to learn from. Each folder has its own code and instructions.
 
-| Project | Folder | What it does |
-|---|---|---|
-| Meme search | `meme_search/` | CLIP baseline for searching memes by meaning |
-| PDF parser | `pdf_parser/` | Layout detection (YOLO11) + small VLM -> structured markdown/JSON |
-| Tennis tracking | `tennis/` | Ball / player / court tracking with a tiny distilled model (`tennis/lite/`) |
-| World model | `world_model/lightroom/` | A playable "dream" of a 2D room: VQ-VAE tokenizer + Genie-style spatio-temporal transformer |
+### Meme search — [`meme_search/`](meme_search/)
+Describe a situation, get back a blank meme template with its text boxes pre-filled (CLIP fine-tuned on text-free memes).
+
+![Meme search](images/meme.png)
+
+### PDF parser — [`pdf_parser/`](pdf_parser/)
+Detect page layout with a fine-tuned YOLO, then turn each region into structured markdown/JSON with a small VLM.
+
+![PDF parser](images/pdf.png)
+
+### Tennis tracking — [`tennis/`](tennis/)
+Track the ball, players and court lines from broadcast video with a tiny distilled model.
+
+![Tennis tracking](images/tennis.png)
+
+### World model — [`world_model/lightroom/`](world_model/lightroom/)
+A playable "dream" of a 2D room: a VQ-VAE tokenizer plus a Genie-style transformer that predicts the next frame from your actions.
+
+![World model](images/world.png)
+
+## Notes
 
 Datasets, model weights, training runs and rendered media are not in the repo; each project's scripts regenerate or download them.
 Tennis: `bash tennis/setup.sh`, then follow [`tennis/README.md`](tennis/README.md).
@@ -21,3 +38,9 @@ cd world_model/lightroom
 ./train_wm.sh                          # tokenize + world model
 python play_dream.py --wm runs/dyn_k4/best.pt   # play: real room vs. dream
 ```
+
+## Support
+
+If you find this helpful, consider supporting on Patreon — it hosts all code, projects, slides, and write-ups from the YouTube channel.
+
+[<img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron!" width="200">](https://www.patreon.com/NeuralBreakdownwithAVB)

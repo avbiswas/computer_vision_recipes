@@ -10,6 +10,7 @@ Thumbs.db
 
 # ---------- secrets ----------
 .env
+.envrc
 .env.*
 *.pem
 *.key
@@ -75,3 +76,7 @@ pdf_parser/results/eval.json
 
 # world model video deliverables (media + checkpoints)
 video_assets/
+pdf_parser/voxel51_export_*/
+pdf_parser/voxel51_upload_*/
+
+meme_search/voxel51_*/
