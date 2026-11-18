@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meme search · CV Recipes</title>
+<title>Meme search · CV Projects</title>
 <meta name="description" content="Describe a situation and get a meme template with the text filled in. A fine-tuned CLIP runs in your browser.">
 <link rel="icon" href="/favicon.svg">
 <link rel="stylesheet" href="/site.css">
@@ -29,14 +29,14 @@
 </head>
 <body>
 <nav class="top"><div class="top-in">
-  <a class="home" href="/">CV Recipes</a><span class="sp"></span>
-  <a href="#demo">Demo</a><a href="#architecture">Architecture</a><a href="#training">Training</a><a class="hide-sm" href="#papers">Papers</a>
+  <a class="home" href="/">CV Projects</a><span class="sp"></span>
+  <a href="#demo">Demo</a><a href="#how">How it works</a><a class="hide-sm" href="#papers">Papers</a>
+  <span class="nav-sep"></span><a class="ext" href="https://github.com/avbiswas/computer_vision_recipes" target="_blank" rel="noopener">GitHub</a><a class="ext" href="https://www.youtube.com/@avb_fj" target="_blank" rel="noopener">YouTube</a>
 </div></nav>
 
 <main class="wrap">
 <article>
 <header class="hero prose">
-  <span class="draft">Draft</span>
   <h1>Meme search</h1>
   <p class="lede">Describe a situation in words. The search finds a blank meme template that fits it and puts your words into the text boxes.</p>
   <p class="status-line">Model: CLIP ViT-B/16, fine-tuned · Data: MemeCap (6,416 memes; 2,000 templates in this demo) · Runs in your browser</p>
@@ -49,25 +49,12 @@
     <input id="q" placeholder="my code finally compiled after 6 hours of debugging" autocomplete="off">
     <button id="go" disabled>Search</button>
   </form>
-  <div id="status">Loading model…</div>
+  <div class="loader" id="loader"><div class="spin"></div><div class="lt"><div id="status">Loading model…</div><div class="bar"><i id="bar"></i></div></div></div>
   <div id="results"></div>
 </section>
 
-<div class="prose">
-<h2>What the project does</h2>
-<p>Most meme search tools read the text that is printed on the meme. A blank template has no text, so we must find it from the picture only.
-This project teaches CLIP to connect a situation ("my code compiled after 6 hours") with the picture of the right template.</p>
-<ol class="steps">
-  <li>Remove the text from every meme. This gives a blank template and the positions of the text boxes.</li>
-  <li>Fine-tune CLIP on pairs of (blank template, description of the meme).</li>
-  <li>Compute one vector for each template, one time, and save the vectors.</li>
-  <li>For a search: compute one vector for your text and find the nearest template vectors.</li>
-  <li>Write your text into the text boxes of the template.</li>
-</ol>
-
-<h2 id="architecture">Architecture</h2>
-</div>
-
+<div class="prose"><h2 id="how">How it works</h2></div>
+<div class="prose"><p>Most meme search tools read the text printed on the meme. A blank template has no text, so the search must work from the picture only. This project teaches CLIP to connect a situation, for example "my code compiled after 6 hours", with the picture of the right template.</p></div>
 <figure class="wide">
 <svg class="diagram" viewBox="0 0 980 380" role="img" aria-label="Offline: memes to OCR and inpainting to blank templates, CLIP image encoder to an index. Online: query to CLIP text encoder, dot product with index, top 6, fill text boxes.">
   <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
@@ -92,87 +79,31 @@ This project teaches CLIP to connect a situation ("my code compiled after 6 hour
 </svg>
 <figcaption>Only the text encoder runs in the browser. The template vectors are computed one time and downloaded as a file.</figcaption>
 </figure>
-
-<div class="prose">
-<h3>CLIP in one paragraph</h3>
-<p>CLIP has two encoders: one for images and one for text. Each encoder gives a vector with 512 numbers.
-During training, CLIP learns to make the vector of an image and the vector of its caption point in the same direction.
-After training, you can compare any text with any image: a large dot product means a good match.
-We use the ViT-B/16 version from OpenAI.</p>
-
-<h3>The search index is a flat file</h3>
-<p>There is no vector database. The index is one file with one row of 512 numbers for each template.
-The browser computes the dot product of your text vector with every row. That takes a few milliseconds.
-A vector database becomes useful at about 100,000 rows or more.</p>
-<p><b>The web demo uses 2,000 of the 6,416 templates.</b> First we remove near-duplicate reposts. Then we group the
-remaining templates into 2,000 clusters with k-means on their CLIP vectors, and we keep the template nearest to the center of each cluster.
-This keeps every kind of meme, with fewer files to download. The code is in <code>web/make_web_subset.py</code>.</p>
-<p>Some templates are almost the same image (reposts). If two results have a cosine similarity above 0.95, we show only one.</p>
-
-<h3>Filling the text boxes</h3>
-<p>The OCR step saved the position of each text box, its line height and its text color. The page uses this data to draw your text in the correct place.</p>
-<ul>
-  <li><b>One text box.</b> If your full text fits, we use it. If not, we remove short common words ("the", "a", "my"). Then we remove the least important words until the text fits.</li>
-  <li><b>Word importance.</b> We remove one word at a time and compute the match score again. If the score drops a lot, the word is important. This is a "leave-one-out" test. The chips under each result show the most important words.</li>
-  <li><b>Two or more text boxes.</b> Your text goes into the largest box. The most important keywords go into the other boxes. You can edit every box.</li>
-</ul>
-
-<h2 id="training">Training</h2>
-<h3>Step 1: make blank templates</h3>
+<div class="prose"><h3>Data preparation (offline, one time)</h3>
 <ol class="steps">
-  <li><b>Find the text.</b> Florence-2 (a small vision-language model) reads the text and gives a box for each line.</li>
-  <li><b>Make a mask.</b> The text boxes become a black-and-white mask.</li>
-  <li><b>Paint over the text.</b> LaMa (an inpainting model) fills the masked area with a background that matches the picture.</li>
+  <li><b>Find the text.</b> Florence-2 reads the text on each MemeCap meme and gives a box for each line.</li>
+  <li><b>Make a mask.</b> The text boxes become a black-and-white mask: white where the text is.</li>
+  <li><b>Remove the text.</b> An inpainting model (LaMa) fills the masked area with a background that matches the rest of the picture. The result is a blank template.</li>
 </ol>
-<p>This step takes about 30 minutes on one A100 GPU for all 6,416 memes (6 processes in parallel).</p>
-
-<h3>Step 2: fine-tune CLIP</h3>
-<p>MemeCap gives three captions for each meme:</p>
-<table>
-  <tr><th>Caption type</th><th>Example</th></tr>
-  <tr><td><b>meaning</b></td><td>"The poster feels happy because the code works."</td></tr>
-  <tr><td><b>title</b></td><td>The title of the Reddit post.</td></tr>
-  <tr><td><b>literal</b></td><td>"A man is smiling and holding a cup."</td></tr>
-</table>
-<p>Each training example is one blank template and one random caption of the three types. The loss is the standard CLIP contrastive loss: in a batch of 128 pairs, each template must match its own caption and not the other 127.</p>
-<table>
-  <tr><th>Setting</th><th>Value</th></tr>
-  <tr><td>Start weights</td><td>OpenAI CLIP ViT-B/16 (<code>open_clip</code>)</td></tr>
-  <tr><td>Trained parts</td><td>All weights, image and text encoders</td></tr>
-  <tr><td>Optimizer</td><td>AdamW, learning rate 1e-5, weight decay 0.1, 5% warm-up</td></tr>
-  <tr><td>Batch / epochs</td><td>128 pairs, up to 10 epochs</td></tr>
-  <tr><td>Split</td><td>5,323 train, 500 validation (picks the checkpoint), 559 test</td></tr>
-</table>
-<pre class="code">python remove_text.py --n 0 --shard 0/6      # x6 shards, blank templates + text boxes
-python train_clip.py --epochs 10 --out runs/clip_b16
-python web/export_web.py                       # text encoder -> ONNX, template vectors, thumbnails</pre>
-
-<h3>Results</h3>
-<p>Text-to-image Recall@10 on the 559 test memes: how often the correct template is in the top 10.</p>
-<table>
-  <tr><th></th><th class="num">meaning</th><th class="num">title</th><th class="num">literal</th></tr>
-  <tr><td>Zero-shot CLIP, original memes (text visible)</td><td class="num">80.3</td><td class="num">36.9</td><td class="num">62.9</td></tr>
-  <tr><td>Zero-shot CLIP, text removed</td><td class="num">25.2</td><td class="num">17.0</td><td class="num">80.5</td></tr>
-  <tr><td>Fine-tuned CLIP, text removed</td><td class="num"><b>34.8</b></td><td class="num">17.5</td><td class="num"><b>93.2</b></td></tr>
-</table>
-<ul>
-  <li><b>CLIP reads text.</b> Most of the zero-shot "meaning" score comes from the printed text. Without the text, the score drops from 80 to 25.</li>
-  <li><b>Removing text helps visual search.</b> For "literal" captions, the score goes up from 63 to 80. The text was noise for these queries.</li>
-  <li><b>Fine-tuning helps.</b> "meaning" goes from 25 to 35, and "literal" goes to 93. The best checkpoint is at epoch 3. After that, the model overfits (there are only about 5,300 training images).</li>
-  <li><b>There is a limit.</b> Many "meaning" captions describe the joke in the text. That joke is gone from the blank template, so no model can find it from pixels only.</li>
-</ul>
-
-<h3>Running it in the browser</h3>
-<ul>
-  <li>We export only the text encoder to ONNX. The image encoder is not necessary in the browser.</li>
-  <li>We convert the weights to fp16 (127 MB). On our test queries, the fp16 vectors have a cosine similarity of 1.0000 with fp32 and give the same top 6 templates.</li>
-  <li>int8 (64 MB) changes the vectors too much (cosine about 0.96), so we do not use it.</li>
-  <li><a href="https://huggingface.co/docs/transformers.js">transformers.js</a> runs the tokenizer and the model.</li>
-</ul>
-
-<div class="note warn"><b>About the images.</b> The templates come from Reddit posts collected in the MemeCap dataset.
-We show them for research and teaching. If you own an image and want us to remove it, contact us on the YouTube channel.</div>
-
+</div>
+<figure class="wide"><img class="shot" src="/r2/meme-search/media/text_removal.webp" alt="A meme before and after text removal" loading="lazy"><figcaption>OCR finds the caption, and the inpainting model paints over it. The template keeps the picture, and we keep the box position for the new text.</figcaption></figure>
+<div class="prose">
+<ol class="steps" start="4">
+  <li><b>Save the text boxes.</b> We keep the position, line height and color of each box, so new text can go back in the same place.</li>
+  <li><b>Fine-tune CLIP.</b> We train CLIP ViT-B/16 on pairs of (blank template, caption), so it learns to match situations with pictures that have no text.</li>
+  <li><b>Build the index.</b> We save one 512-number vector for each template in one flat file.</li>
+  <li><b>Pick the web subset.</b> We keep 2,000 of the 6,416 templates: k-means picks them so that every kind of meme stays in.</li>
+</ol>
+<h3>Inferencing (online, in your browser)</h3>
+<ol class="steps">
+  <li>The CLIP text encoder turns your words into a 512-number vector.</li>
+  <li>The page computes the dot product with every row of the index. This takes a few milliseconds, so no vector database is necessary.</li>
+  <li>The page shows the 6 best templates and hides near-duplicates.</li>
+  <li>Your words go into the text boxes of each template.</li>
+  <li>If the words do not fit, the page removes the least important words. A word is important if the match score drops a lot without it.</li>
+</ol>
+</div>
+<div class="prose">
 <h2 id="papers">Papers and links</h2>
 <ul class="papers">
   <li><a href="https://arxiv.org/abs/2103.00020">Learning Transferable Visual Models From Natural Language Supervision (CLIP)</a> (Radford et al., 2021). <span class="why">The model and the contrastive loss.</span></li>
@@ -185,8 +116,10 @@ We show them for research and teaching. If you own an image and want us to remov
 </article>
 </main>
 <footer><div class="wrap">
-  <a href="/">All projects</a> · From <a href="https://www.youtube.com/@avb_fj">Neural Breakdown with AVB</a>
+  <a href="/">All projects</a> · From <a href="https://www.youtube.com/@avb_fj">Neural Breakdown with AVB</a> ·
+  Templates come from Reddit posts in the MemeCap dataset, shown for research and teaching. To remove an image, contact us on the YouTube channel.
 </div></footer>
 <script type="module" src="app.js"></script>
+<script src="/glossary.js" defer></script>
 </body>
 </html>

@@ -22,24 +22,60 @@ let wm, dec, rooms, backend;
 let hist = [], acts = [], dropped = 0, running = false, frames = 0;
 const held = new Set();
 
+// ------------------------------------------------------------------ loading UI (spinner + progress bar, see site.css .loader)
+const progress = (frac) => {  // frac in 0..1, or null for "busy, size unknown"
+  const i = document.getElementById("bar");
+  if (frac == null) { i.classList.remove("det"); i.style.width = ""; } else { i.classList.add("det"); i.style.width = `${(Math.min(1, frac) * 100).toFixed(1)}%`; }
+};
+const loaded = () => document.getElementById("loader").classList.add("done");
+// fetch a file as bytes, reporting progress as (bytes so far, total bytes or 0)
+async function fetchBytes(url, onProgress) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+  const total = +r.headers.get("content-length") || 0, reader = r.body.getReader(), chunks = [];
+  let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value); got += value.length; onProgress(got, total);
+  }
+  const out = new Uint8Array(got); let o = 0;
+  for (const c of chunks) { out.set(c, o); o += c.length; }
+  return out;
+}
+const mb = (n) => (n / 1e6).toFixed(0);
+
 async function load() {
   rooms = await fetch("rooms.json").then((r) => r.json());
+  // download both files first (with progress), then start the sessions
+  const sizes = [39.3e6, 5.9e6], files = {};  // approximate, for a smooth bar across the two files
+  let done = 0;
+  for (const [i, f] of ["world_model.onnx", "decoder.onnx"].entries()) {
+    files[f] = await fetchBytes(R2 + f, (got) => {
+      const all = sizes[0] + sizes[1];
+      status(`Downloading the model: ${mb(done + got)} / ${mb(all)} MB (only the first visit)`);
+      progress((done + got) / all);
+    });
+    done += sizes[i];
+  }
+  status("Starting the model…"); progress(null);
   const forceWasm = new URLSearchParams(location.search).has("wasm");
   for (const ep of navigator.gpu && !forceWasm ? ["webgpu", "wasm"] : ["wasm"]) {
     try {
       const t0 = performance.now();
-      status(`Downloading the model (45 MB, once)…`);
       // one at a time: onnxruntime-web can't create two WebGPU sessions in parallel
-      wm = await ort.InferenceSession.create(R2 + "world_model.onnx", { executionProviders: [ep] });
-      dec = await ort.InferenceSession.create(R2 + "decoder.onnx", { executionProviders: [ep] });
+      wm = await ort.InferenceSession.create(files["world_model.onnx"], { executionProviders: [ep] });
+      dec = await ort.InferenceSession.create(files["decoder.onnx"], { executionProviders: [ep] });
       backend = ep;
       newRoom(0);
       await step(0);  // warm-up run (compiles shaders on WebGPU)
+      loaded();
       status(`Ready (${ep}, loaded in ${((performance.now() - t0) / 1000).toFixed(1)} s). Click the picture, then use the arrow keys.`);
       $("wm-play").disabled = $("wm-new").disabled = false;
       return;
     } catch (e) { console.warn(`${ep} failed`, e); }
   }
+  loaded();
   status("Could not run the model in this browser.");
 }
 
@@ -124,4 +160,4 @@ document.querySelectorAll("[data-key]").forEach((b) => {
   b.addEventListener("pointerdown", down); b.addEventListener("pointerup", up); b.addEventListener("pointerleave", up); b.addEventListener("pointercancel", up);
 });
 
-load().catch((e) => { status("Failed to load: " + e.message); console.error(e); });
+load().catch((e) => { loaded(); status("Failed to load: " + e.message); console.error(e); });

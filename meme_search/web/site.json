@@ -23,6 +23,7 @@
     "meme-clip/onnx/text_model_fp16.onnx": "models/meme-clip/onnx/text_model_fp16.onnx",
     "data/templates.json": "data_web/templates.json",
     "data/embeddings.bin": "data_web/embeddings.bin",
-    "data/templates/": "data_web/templates/"
+    "data/templates/": "data_web/templates/",
+    "media/": "media/"
   }
 }

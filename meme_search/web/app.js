@@ -16,17 +16,44 @@ const status = (t) => ($("status").textContent = t);
 
 let tok, model, emb, meta, D = 512;
 
+// ------------------------------------------------------------------ loading UI (spinner + progress bar, see site.css .loader)
+const progress = (frac) => {  // frac in 0..1, or null for "busy, size unknown"
+  const i = document.getElementById("bar");
+  if (frac == null) { i.classList.remove("det"); i.style.width = ""; } else { i.classList.add("det"); i.style.width = `${(Math.min(1, frac) * 100).toFixed(1)}%`; }
+};
+const loaded = () => document.getElementById("loader").classList.add("done");
+// fetch a file as bytes, reporting progress as (bytes so far, total bytes or 0)
+async function fetchBytes(url, onProgress) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+  const total = +r.headers.get("content-length") || 0, reader = r.body.getReader(), chunks = [];
+  let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value); got += value.length; onProgress(got, total);
+  }
+  const out = new Uint8Array(got); let o = 0;
+  for (const c of chunks) { out.set(c, o); o += c.length; }
+  return out;
+}
+const mb = (n) => (n / 1e6).toFixed(0);
+
 async function load() {
   const t0 = performance.now();
   [tok, model, meta, emb] = await Promise.all([
     AutoTokenizer.from_pretrained("meme-clip"),
     CLIPTextModelWithProjection.from_pretrained("meme-clip", { dtype: "fp16", progress_callback: (p) => {
-      if (p.status === "progress" && p.file.endsWith(".onnx")) status(`Downloading the text encoder (127 MB, once): ${p.progress.toFixed(0)}%`);
+      if (p.status === "progress" && p.file.endsWith(".onnx")) {
+        status(`Downloading the text encoder: ${mb(p.loaded)} / ${mb(p.total)} MB (only the first visit)`);
+        progress(p.loaded / p.total);
+      } else if (p.status === "done" && p.file.endsWith(".onnx")) { status("Starting the text encoder…"); progress(null); }
     } }),
     fetch("/r2/meme-search/data/templates.json").then((r) => r.json()),
     fetch("/r2/meme-search/data/embeddings.bin").then((r) => r.arrayBuffer()).then((b) => new Float32Array(b)),
   ]);
   D = emb.length / meta.length;
+  loaded();
   status(`Ready: ${meta.length} templates, loaded in ${((performance.now() - t0) / 1000).toFixed(1)}s.`);
   $("go").disabled = false;
 }
@@ -180,4 +207,4 @@ $("f").onsubmit = async (e) => {
   $("go").disabled = false;
 };
 
-load().catch((err) => { status("Failed to load: " + err.message); console.error(err); });
+load().catch((err) => { loaded(); status("Failed to load: " + err.message); console.error(err); });

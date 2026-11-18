@@ -73,7 +73,7 @@ def card_html(c):
 
 def build():
     projects = find_projects()
-    srcs = [SITE / n for n in ("index.html", "site.css", "404.html", "favicon.svg")]
+    srcs = [SITE / n for n in ("index.html", "site.css", "404.html", "favicon.svg", "glossary.js")]
     srcs += [c["_web"] / f for c in projects for f in c.get("files", [])]
     ignored = git_ignored(srcs)
     if ignored:
@@ -82,7 +82,7 @@ def build():
     if DIST.exists():
         shutil.rmtree(DIST)
     DIST.mkdir()
-    for name in ("site.css", "404.html", "favicon.svg"):
+    for name in ("site.css", "404.html", "favicon.svg", "glossary.js"):
         copy(SITE / name, DIST / name)
     for c in projects:
         for f in c.get("files", []):

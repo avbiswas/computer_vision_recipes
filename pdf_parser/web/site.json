@@ -16,6 +16,7 @@
   "r2": {
     "models/classes.json": "models/classes.json",
     "models/layout_fp16.onnx": "models/layout_fp16.onnx",
-    "samples/sample.pdf": "samples/sample.pdf"
+    "samples/sample.pdf": "samples/sample.pdf",
+    "media/": "media/"
   }
 }

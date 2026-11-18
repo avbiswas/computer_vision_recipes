@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PDF layout parser · CV Recipes</title>
+<title>PDF layout parser · CV Projects</title>
 <meta name="description" content="Find the layout of a PDF page with a 3.7M-parameter detector, then turn the page into markdown. Runs in your browser.">
 <link rel="icon" href="/favicon.svg">
 <link rel="stylesheet" href="/site.css">
@@ -27,14 +27,14 @@
 </head>
 <body>
 <nav class="top"><div class="top-in">
-  <a class="home" href="/">CV Recipes</a><span class="sp"></span>
-  <a href="#demo">Demo</a><a href="#architecture">Architecture</a><a href="#training">Training</a><a class="hide-sm" href="#papers">Papers</a>
+  <a class="home" href="/">CV Projects</a><span class="sp"></span>
+  <a href="#demo">Demo</a><a href="#how">How it works</a><a class="hide-sm" href="#papers">Papers</a>
+  <span class="nav-sep"></span><a class="ext" href="https://github.com/avbiswas/computer_vision_recipes" target="_blank" rel="noopener">GitHub</a><a class="ext" href="https://www.youtube.com/@avb_fj" target="_blank" rel="noopener">YouTube</a>
 </div></nav>
 
 <main class="wrap">
 <article>
 <header class="hero prose">
-  <span class="draft">Draft</span>
   <h1>PDF layout parser</h1>
   <p class="lede">A small detector finds the parts of a PDF page: titles, text, tables, pictures and more.
   Then a short program reads the page text in the correct order and writes markdown.</p>
@@ -53,30 +53,15 @@
     <span class="thr">confidence <input type="range" id="thr" min="0.2" max="0.9" step="0.05" value="0.5"> <b id="thrv">0.50</b></span>
     <button class="ghost" id="copy" disabled>Copy markdown</button>
   </div>
-  <div id="status">Loading model…</div>
+  <div class="loader" id="loader"><div class="spin"></div><div class="lt"><div id="status">Loading model…</div><div class="bar"><i id="bar"></i></div></div></div>
   <div class="cols">
     <div class="pane"><canvas id="page"></canvas><div class="legend" id="legend"></div></div>
     <div class="pane"><pre id="md"></pre></div>
   </div>
 </section>
 
-<div class="prose">
-<h2>What the project does</h2>
-<p>A PDF stores characters and their positions. It does not store the structure of the page.
-The PDF does not tell you which line is a heading, where a table starts, or which column to read first.
-This project adds that structure.</p>
-<ol class="steps">
-  <li>Draw the page as an image.</li>
-  <li>Find the layout regions with an object detector. There are 11 region types (classes).</li>
-  <li>Put each word from the PDF text layer into its region.</li>
-  <li>Sort the regions into reading order.</li>
-  <li>Write each region as markdown. The region type sets the format: <code>#</code> for a title, <code>-</code> for a list item, and so on.</li>
-</ol>
-<p>Only step 2 uses a neural network. The other steps are short rules.</p>
-
-<h2 id="architecture">Architecture</h2>
-</div>
-
+<div class="prose"><h2 id="how">How it works</h2>
+<p>A PDF stores characters and their positions, but not the structure of the page. It does not tell you which line is a heading, where a table starts, or which column to read first. This project adds that structure and writes the page as markdown.</p></div>
 <figure class="wide">
 <svg class="diagram" viewBox="0 0 980 300" role="img" aria-label="Pipeline: PDF to page image and text layer, page image to D-FINE detector, boxes and words to reading order and markdown">
   <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
@@ -98,72 +83,94 @@ This project adds that structure.</p>
 </svg>
 <figcaption>The neural network only finds boxes. The text comes from the PDF itself, so no OCR is necessary for normal (not scanned) PDFs.</figcaption>
 </figure>
+<div class="prose">
+<h3>The pipeline</h3>
+<ol class="steps">
+  <li>pdf.js draws the page as an image and reads the PDF text layer (characters and their positions).</li>
+  <li>The detector finds the regions of the page: 11 classes such as Title, Text, Table, Picture and Caption.</li>
+  <li>Rules remove duplicate boxes (two boxes on the same region: keep the higher score).</li>
+  <li>Rules sort the regions into reading order: full-width blocks cut the page into bands, then the left column comes before the right column.</li>
+  <li>Each piece of text goes to the box that contains it. The class sets the markdown: Title → <code>#</code>, Section-header → <code>##</code>, List-item → <code>-</code>.</li>
+</ol>
+<p>Only step 2 uses a neural network. The text comes from the PDF, so normal PDFs need no OCR.</p>
+<h3>The detector: D-FINE nano</h3>
+</div>
+<figure class="wide">
+<svg class="diagram" viewBox="0 0 980 400" role="img" aria-label="D-FINE nano: page image to HGNetv2 backbone, two feature maps to hybrid encoder, query selection of 300 queries, 3 decoder layers with self-attention, deformable cross-attention and FFN, then class and box heads">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
+  <g text-anchor="middle">
+  <rect class="box data" x="16" y="150" width="96" height="96" rx="6"/><text x="64" y="194">Page</text><text class="sm" x="64" y="212">1024 × 1024</text>
+  <rect class="grp" x="132" y="40" width="150" height="300" rx="12"/><text class="sm" x="207" y="58">① Backbone: HGNetv2</text>
+  <rect class="box model" x="148" y="72" width="118" height="34" rx="6"/><text x="207" y="94">stem + stage 1–2</text>
+  <rect class="box model" x="148" y="128" width="118" height="44" rx="6"/><text x="207" y="148">stage 3</text><text class="sm" x="207" y="163">1/16 → 64×64</text>
+  <rect class="box model" x="148" y="194" width="118" height="44" rx="6"/><text x="207" y="214">stage 4</text><text class="sm" x="207" y="229">1/32 → 32×32</text>
+  <path class="arr" d="M207,106 L207,126"/><path class="arr" d="M207,172 L207,192"/><path class="arr" d="M112,198 L146,90"/>
+  <text class="sm" x="207" y="270">a small CNN:</text><text class="sm" x="207" y="285">feature maps at</text><text class="sm" x="207" y="300">2 scales</text>
+  <rect class="grp" x="300" y="40" width="190" height="300" rx="12"/><text class="sm" x="395" y="58">② Hybrid encoder</text>
+  <rect class="box model" x="316" y="180" width="158" height="58" rx="6"/><text x="395" y="204">AIFI</text><text class="sm" x="395" y="222">self-attention on 32×32 only</text>
+  <rect class="box model" x="316" y="100" width="158" height="58" rx="6"/><text x="395" y="124">CCFF</text><text class="sm" x="395" y="142">CNN mixes the 2 scales</text>
+  <path class="arr" d="M266,150 L314,130"/><path class="arr" d="M266,216 L314,210"/><path class="arr" d="M395,180 L395,160"/>
+  <text class="sm" x="395" y="270">attention where it is cheap</text><text class="sm" x="395" y="285">(1,024 positions), CNN</text><text class="sm" x="395" y="300">for the larger map</text>
+  <rect class="grp" x="508" y="40" width="130" height="300" rx="12"/><text class="sm" x="573" y="58">③ Query selection</text>
+  <rect class="box" x="522" y="110" width="102" height="110" rx="6"/><text x="573" y="146">top 300</text><text class="sm" x="573" y="164">positions with</text><text class="sm" x="573" y="179">the best scores</text><text class="sm" x="573" y="194">→ first boxes</text>
+  <path class="arr" d="M474,130 L520,150"/>
+  <g><circle cx="536" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="551" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="566" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="581" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="596" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="611" cy="248" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="536" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="551" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="566" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="581" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="596" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><circle cx="611" cy="262" r="4" fill="#2a2416" stroke="#f2b84b"/><text class="sm" x="573" y="300" text-anchor="middle">300 queries</text></g>
+  <rect class="grp" x="656" y="40" width="190" height="300" rx="12"/><text class="sm" x="751" y="58">④ Decoder × 3 layers</text>
+  <rect class="box model" x="672" y="76" width="158" height="44" rx="6"/><text x="751" y="96">self-attention</text><text class="sm" x="751" y="111">queries look at each other</text>
+  <rect class="box model" x="672" y="134" width="158" height="58" rx="6"/><text x="751" y="155">deformable</text><text x="751" y="170">cross-attention</text><text class="sm" x="751" y="185">6 points per scale</text>
+  <rect class="box model" x="672" y="206" width="158" height="34" rx="6"/><text x="751" y="228">FFN</text>
+  <rect class="box" x="672" y="254" width="158" height="44" rx="6"/><text x="751" y="274">refine boxes (FDR)</text><text class="sm" x="751" y="289">after every layer</text>
+  <path class="arr" d="M751,120 L751,132"/><path class="arr" d="M751,192 L751,204"/><path class="arr" d="M751,240 L751,252"/>
+  <path class="arr" d="M624,165 L670,98"/>
+  <path d="M420,238 L420,358 L664,358 L664,163 L670,163" fill="none" stroke="#2f6f94" stroke-dasharray="4 3" marker-end="url(#ah)"/><text class="sm" x="540" y="376">encoder features (keys and values)</text>
+  <rect class="box out" x="858" y="110" width="114" height="52" rx="6"/><text x="915" y="132">class</text><text class="sm" x="915" y="149">11 classes + score</text>
+  <rect class="box out" x="858" y="186" width="114" height="52" rx="6"/><text x="915" y="208">box</text><text class="sm" x="915" y="225">4 edges (FDR)</text>
+  <path class="arr" d="M846,180 L856,140"/><path class="arr" d="M846,200 L856,210"/>
+  </g>
+</svg>
+<figcaption>D-FINE nano (3.7M parameters, width 128). 300 queries go through 3 decoder layers. Each query becomes one box with one class.</figcaption>
+</figure>
+<div class="prose">
+<ol class="steps">
+  <li><b>Backbone.</b> A small CNN (HGNetv2) turns the 1024 × 1024 page into feature maps at two scales: 64 × 64 and 32 × 32.</li>
+  <li><b>Hybrid encoder.</b> Self-attention runs only on the small 32 × 32 map, where it is cheap. A CNN then mixes the two scales.</li>
+  <li><b>Query selection.</b> The 300 positions with the best scores become the first boxes and the 300 queries. This is a DETR-style detector: no anchor boxes and no non-maximum suppression.</li>
+  <li><b>Decoder (3 layers).</b> The queries look at each other (self-attention), then each query samples 6 points per scale from the feature maps (deformable cross-attention).</li>
+  <li><b>Heads.</b> Each query outputs a class (11 classes) and a box. The page keeps the boxes above the confidence slider.</li>
+</ol>
+</div>
+<figure class="wide">
+<svg class="diagram" viewBox="0 0 980 250" role="img" aria-label="Fine-grained distribution refinement: each box edge is a probability over bins, which gets sharper in each decoder layer">
+  <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
+  <rect x="40" y="60" width="200" height="120" fill="none" stroke="#3a3f4b" stroke-dasharray="4 3"/>
+  <rect x="60" y="78" width="150" height="86" fill="none" stroke="#6cc3ff" stroke-width="2"/>
+  <path d="M210,121 L268,121" stroke="#f2b84b" stroke-width="2" marker-end="url(#ah2)"/><text class="sm" x="140" y="200" text-anchor="middle">box from the last layer (dashed)</text>
+  <text class="sm" x="140" y="216" text-anchor="middle">and the right edge we refine</text>
+  <text x="140" y="44" text-anchor="middle">one box, 4 edges</text>
+  <text x="410" y="40" text-anchor="middle">layer 1</text><rect x="330.0" y="135.0" width="8.5" height="1.0" fill="#f2b84b" opacity="0.36"/><rect x="340.0" y="133.6" width="8.5" height="2.4" fill="#f2b84b" opacity="0.37"/><rect x="350.0" y="130.8" width="8.5" height="5.2" fill="#f2b84b" opacity="0.39"/><rect x="360.0" y="125.7" width="8.5" height="10.3" fill="#f2b84b" opacity="0.43"/><rect x="370.0" y="117.5" width="8.5" height="18.5" fill="#f2b84b" opacity="0.50"/><rect x="380.0" y="105.9" width="8.5" height="30.1" fill="#f2b84b" opacity="0.59"/><rect x="390.0" y="91.5" width="8.5" height="44.5" fill="#f2b84b" opacity="0.71"/><rect x="400.0" y="76.3" width="8.5" height="59.7" fill="#f2b84b" opacity="0.83"/><rect x="410.0" y="63.4" width="8.5" height="72.6" fill="#f2b84b" opacity="0.94"/><rect x="420.0" y="56.0" width="8.5" height="80.0" fill="#f2b84b" opacity="1.00"/><rect x="430.0" y="56.0" width="8.5" height="80.0" fill="#f2b84b" opacity="1.00"/><rect x="440.0" y="63.4" width="8.5" height="72.6" fill="#f2b84b" opacity="0.94"/><rect x="450.0" y="76.3" width="8.5" height="59.7" fill="#f2b84b" opacity="0.83"/><rect x="460.0" y="91.5" width="8.5" height="44.5" fill="#f2b84b" opacity="0.71"/><rect x="470.0" y="105.9" width="8.5" height="30.1" fill="#f2b84b" opacity="0.59"/><rect x="480.0" y="117.5" width="8.5" height="18.5" fill="#f2b84b" opacity="0.50"/><line x1="330" y1="136" x2="490" y2="136" stroke="#3a3f4b"/><text class="sm" x="410" y="156" text-anchor="middle">wide: not sure yet</text><text x="610" y="40" text-anchor="middle">layer 2</text><rect x="530.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="540.0" y="135.9" width="8.5" height="0.1" fill="#f2b84b" opacity="0.35"/><rect x="550.0" y="135.6" width="8.5" height="0.4" fill="#f2b84b" opacity="0.35"/><rect x="560.0" y="134.1" width="8.5" height="1.9" fill="#f2b84b" opacity="0.37"/><rect x="570.0" y="129.0" width="8.5" height="7.0" fill="#f2b84b" opacity="0.41"/><rect x="580.0" y="116.5" width="8.5" height="19.5" fill="#f2b84b" opacity="0.51"/><rect x="590.0" y="94.9" width="8.5" height="41.1" fill="#f2b84b" opacity="0.68"/><rect x="600.0" y="70.1" width="8.5" height="65.9" fill="#f2b84b" opacity="0.89"/><rect x="610.0" y="56.0" width="8.5" height="80.0" fill="#f2b84b" opacity="1.00"/><rect x="620.0" y="62.4" width="8.5" height="73.6" fill="#f2b84b" opacity="0.95"/><rect x="630.0" y="84.6" width="8.5" height="51.4" fill="#f2b84b" opacity="0.77"/><rect x="640.0" y="108.8" width="8.5" height="27.2" fill="#f2b84b" opacity="0.57"/><rect x="650.0" y="125.1" width="8.5" height="10.9" fill="#f2b84b" opacity="0.44"/><rect x="660.0" y="132.7" width="8.5" height="3.3" fill="#f2b84b" opacity="0.38"/><rect x="670.0" y="135.2" width="8.5" height="0.8" fill="#f2b84b" opacity="0.36"/><rect x="680.0" y="135.9" width="8.5" height="0.1" fill="#f2b84b" opacity="0.35"/><line x1="530" y1="136" x2="690" y2="136" stroke="#3a3f4b"/><text class="sm" x="610" y="156" text-anchor="middle">narrower</text><text x="810" y="40" text-anchor="middle">layer 3</text><rect x="730.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="740.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="750.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="760.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="770.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="780.0" y="134.6" width="8.5" height="1.4" fill="#f2b84b" opacity="0.36"/><rect x="790.0" y="117.8" width="8.5" height="18.2" fill="#f2b84b" opacity="0.50"/><rect x="800.0" y="65.3" width="8.5" height="70.7" fill="#f2b84b" opacity="0.92"/><rect x="810.0" y="56.0" width="8.5" height="80.0" fill="#f2b84b" opacity="1.00"/><rect x="820.0" y="109.7" width="8.5" height="26.3" fill="#f2b84b" opacity="0.56"/><rect x="830.0" y="133.5" width="8.5" height="2.5" fill="#f2b84b" opacity="0.37"/><rect x="840.0" y="135.9" width="8.5" height="0.1" fill="#f2b84b" opacity="0.35"/><rect x="850.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="860.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="870.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><rect x="880.0" y="136.0" width="8.5" height="0.0" fill="#f2b84b" opacity="0.35"/><line x1="730" y1="136" x2="890" y2="136" stroke="#3a3f4b"/><text class="sm" x="810" y="156" text-anchor="middle">sharp: edge found</text>
+  <path d="M500,96 L526,96" stroke="#8d929c" stroke-width="1.5" marker-end="url(#ah2)"/><path d="M700,96 L726,96" stroke="#8d929c" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <text class="sm" x="630" y="196" text-anchor="middle">probability of the edge position over small bins (32 bins in the model)</text>
+  <path d="M810,214 C700,240 520,240 410,214" fill="none" stroke="#7fd18b" stroke-dasharray="5 4" marker-end="url(#ah2)"/>
+  <text class="sm" x="610" y="244" text-anchor="middle" style="fill:#7fd18b">training only: the last layer teaches the earlier layers (GO-LSD)</text>
+</svg>
+<figcaption>Fine-grained Distribution Refinement (FDR). The model does not predict one number for an edge. It predicts how likely each small offset is, and each decoder layer makes this sharper.</figcaption>
+</figure>
+<div class="prose">
+<ol class="steps">
+  <li>Each box edge is a probability over 32 small offsets, not one number.</li>
+  <li>Each decoder layer makes the distribution sharper, so the edges become accurate layer by layer. This is important for thin regions such as page footers.</li>
+  <li>During training, the last layer teaches the earlier layers its distributions (self-distillation, GO-LSD). This costs nothing at run time.</li>
+</ol>
+<p>We fine-tuned the COCO weights on DocLayNet (about 80,000 labelled pages). In fp16 the model is 8 MB, and onnxruntime-web runs it on WebGPU (about 40–130 ms per page) or on the CPU.</p>
+<h3>Examples</h3>
+</div>
+<figure class="wide"><img class="shot" src="/r2/pdf-parser/media/two_column.webp" alt="Two-column paper: the page is read left column first, then right. The title, authors and section headers become markdown headings." loading="lazy"><figcaption>Two-column paper: the page is read left column first, then right. The title, authors and section headers become markdown headings.</figcaption></figure>
+
+<figure class="wide"><img class="shot" src="/r2/pdf-parser/media/table.webp" alt="A page with a table: the table and its caption are separate regions. The table comes out as plain text (no cell structure yet)." loading="lazy"><figcaption>A page with a table: the table and its caption are separate regions. The table comes out as plain text (no cell structure yet).</figcaption></figure>
+
+<figure class="wide"><img class="shot" src="/r2/pdf-parser/media/figure.webp" alt="A page with a figure: the figure becomes a [figure] placeholder and its caption stays next to it." loading="lazy"><figcaption>A page with a figure: the figure becomes a [figure] placeholder and its caption stays next to it.</figcaption></figure>
 
 <div class="prose">
-<h3>The detector: D-FINE</h3>
-<p>D-FINE is a DETR-style detector. DETR-style detectors do not use anchor boxes or non-maximum suppression (NMS).
-The model has a fixed set of learned <em>queries</em>. Each query outputs one box and one class score.</p>
-<ul>
-  <li><b>Backbone (HGNetv2).</b> A small CNN. It makes feature maps of the page at three scales.</li>
-  <li><b>Hybrid encoder.</b> Attention inside the smallest feature map, then a CNN that mixes the three scales. This design comes from RT-DETR. It keeps the model fast.</li>
-  <li><b>Decoder.</b> The queries look at the features with cross-attention. Each decoder layer makes the boxes more accurate.</li>
-  <li><b>Fine-grained Distribution Refinement.</b> This is the new idea in D-FINE. The model does not predict one number for each box edge. It predicts a probability distribution for the position of each edge, and each layer refines that distribution. This gives accurate edges, which is important for thin regions like a page footer.</li>
-</ul>
-<p>We use the <b>nano</b> size: 3.7M parameters. In fp16 the file is 8 MB, small enough to download on a web page.</p>
-
-<h3>The rules after the detector</h3>
-<ul>
-  <li><b>Remove duplicates.</b> Sometimes two boxes cover the same region (IoU above 0.6). We keep the box with the higher score.</li>
-  <li><b>Reading order.</b> A full-width region (for example a title or a wide figure) cuts the page into horizontal bands. In each band, we read the left column from top to bottom, then the right column. A one-column page is one long left column.</li>
-  <li><b>Assign text.</b> Each piece of text from the text layer goes to the box that contains its center. Words broken with a hyphen at a line end are joined again.</li>
-  <li><b>Format.</b> The class sets the markdown: Title → <code>#</code>, Section-header → <code>##</code>, List-item → <code>-</code>, Caption → italic, Picture → <code>*[figure]*</code>. Page headers and footers are removed.</li>
-</ul>
-
-<h2 id="training">Training</h2>
-<h3>Data: DocLayNet</h3>
-<p>DocLayNet has about 80,000 human-labelled pages from six types of documents: financial reports, manuals, science papers, laws, patents and tenders.
-Each page has boxes for 11 classes:</p>
-<p><code>Caption</code> <code>Footnote</code> <code>Formula</code> <code>List-item</code> <code>Page-footer</code> <code>Page-header</code>
-<code>Picture</code> <code>Section-header</code> <code>Table</code> <code>Text</code> <code>Title</code></p>
-<p>Some classes are rare: Footnote, Formula and Title. We repeat the training pages that have these classes three times.</p>
-
-<h3>Recipe</h3>
-<table>
-  <tr><th>Setting</th><th>Value</th></tr>
-  <tr><td>Start weights</td><td>D-FINE nano trained on COCO (<code>ustc-community/dfine-nano-coco</code>)</td></tr>
-  <tr><td>Input size</td><td>1024 × 1024 (the page is resized, not cropped)</td></tr>
-  <tr><td>Epochs / batch</td><td>12 epochs, batch 16, one A100 GPU</td></tr>
-  <tr><td>Learning rate</td><td>2e-4 for the new layers, 2e-4 / 10 for the backbone</td></tr>
-  <tr><td>Augmentation</td><td>Small brightness and contrast changes only. Documents do not need flips or mosaics.</td></tr>
-  <tr><td>Weight averaging</td><td>EMA (exponential moving average) of the weights. We evaluate the EMA weights.</td></tr>
-</table>
-<p>The code is in <code>pdf_parser/layout/train_dfine.py</code>. Run it as follows:</p>
-<pre class="code">python prepare_data.py --full                          # DocLayNet -> labels, and the oversampled list
-python layout/train_dfine.py --epochs 12 --batch 16 --imgsz 1024
-python layout/train_dfine.py --eval runs_dfine/best --split test
-python web/export_onnx.py --weights models/layout_dfine2_ep9   # -> web/models/layout_fp16.onnx</pre>
-
-<h3>Results</h3>
-<p>COCO mAP on the 2,500 DocLayNet test pages:</p>
-<table>
-  <tr><th>Metric</th><th class="num">Value</th></tr>
-  <tr><td>mAP50-95 (all classes)</td><td class="num"><b>0.652</b></td></tr>
-  <tr><td>mAP50</td><td class="num">0.828</td></tr>
-  <tr><td>Best class: Text</td><td class="num">0.793</td></tr>
-  <tr><td>Worst class: Footnote</td><td class="num">0.454</td></tr>
-</table>
-
-<h3>Running it in the browser</h3>
-<ul>
-  <li>We export the model to ONNX and convert it to fp16. The fp16 model gives the same boxes as PyTorch on our check pages.</li>
-  <li>The page uses <a href="https://onnxruntime.ai/docs/tutorials/web/">onnxruntime-web</a>. It tries WebGPU first. If WebGPU is not available, it uses WebAssembly on the CPU.</li>
-  <li>On an M2 Max laptop: about 37 ms per page with WebGPU and about 560 ms with WebAssembly.</li>
-  <li>int8 quantization changed the detections, so we do not use it.</li>
-</ul>
-
-<div class="note warn"><b>Limits.</b> A scanned PDF has no text layer. You get boxes but no text.
-Tables and formulas come out as plain text, without table structure or LaTeX. That needs a reader model, for example a small vision-language model.</div>
-
 <h2 id="papers">Papers and links</h2>
 <ul class="papers">
   <li><a href="https://arxiv.org/abs/2410.13842">D-FINE: Redefine Regression Task in DETRs as Fine-grained Distribution Refinement</a> (Peng et al., 2024). <span class="why">The detector.</span></li>
@@ -180,5 +187,6 @@ Tables and formulas come out as plain text, without table structure or LaTeX. Th
   Model: D-FINE (Apache-2.0), data: DocLayNet (CDLA-Permissive-1.0).
 </div></footer>
 <script type="module" src="app.js"></script>
+<script src="/glossary.js" defer></script>
 </body>
 </html>

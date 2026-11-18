@@ -17,19 +17,49 @@ const $ = (id) => document.getElementById(id);
 const status = (t) => ($("status").textContent = t);
 let session, classes, backend, doc, pageNo = 1, last = null;
 
+// ------------------------------------------------------------------ loading UI (spinner + progress bar, see site.css .loader)
+const progress = (frac) => {  // frac in 0..1, or null for "busy, size unknown"
+  const i = document.getElementById("bar");
+  if (frac == null) { i.classList.remove("det"); i.style.width = ""; } else { i.classList.add("det"); i.style.width = `${(Math.min(1, frac) * 100).toFixed(1)}%`; }
+};
+const loaded = () => document.getElementById("loader").classList.add("done");
+// fetch a file as bytes, reporting progress as (bytes so far, total bytes or 0)
+async function fetchBytes(url, onProgress) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+  const total = +r.headers.get("content-length") || 0, reader = r.body.getReader(), chunks = [];
+  let got = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value); got += value.length; onProgress(got, total);
+  }
+  const out = new Uint8Array(got); let o = 0;
+  for (const c of chunks) { out.set(c, o); o += c.length; }
+  return out;
+}
+const mb = (n) => (n / 1e6).toFixed(0);
+
 // ------------------------------------------------------------------ model
 async function loadModel() {
   classes = await fetch("/r2/pdf-parser/models/classes.json").then((r) => r.json());
+  const bytes = await fetchBytes("/r2/pdf-parser/models/layout_fp16.onnx", (got, total) => {
+    status(`Downloading the layout model: ${mb(got)}${total ? ` / ${mb(total)}` : ""} MB`);
+    progress(total ? got / total : null);
+  });
+  status("Starting the model…"); progress(null);
   const forceWasm = new URLSearchParams(location.search).has("wasm");  // ?wasm to test the CPU path
   for (const ep of (navigator.gpu && !forceWasm ? ["webgpu", "wasm"] : ["wasm"])) {
     try {
       const t0 = performance.now();
-      session = await ort.InferenceSession.create("/r2/pdf-parser/models/layout_fp16.onnx", { executionProviders: [ep] });
+      session = await ort.InferenceSession.create(bytes, { executionProviders: [ep] });
       backend = ep;
+      loaded();
       status(`Model ready (${ep}, ${((performance.now() - t0) / 1000).toFixed(1)}s). Open a PDF or try a sample.`);
       return;
     } catch (e) { console.warn(`${ep} failed`, e); }
   }
+  loaded();
   status("Could not load the model in this browser.");
 }
 
@@ -173,4 +203,4 @@ $("prev").onclick = () => showPage(pageNo - 1);
 $("next").onclick = () => showPage(pageNo + 1);
 $("thr").oninput = () => { $("thrv").textContent = (+$("thr").value).toFixed(2); if (last) render(); };
 $("copy").onclick = () => navigator.clipboard.writeText($("md").textContent);
-loadModel();
+loadModel().catch((e) => { loaded(); status("Failed to load: " + e.message); console.error(e); });

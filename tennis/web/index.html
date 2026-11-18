@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tennis tracker · CV Recipes</title>
+<title>Tennis tracker · CV Projects</title>
 <meta name="description" content="One 3.45M-parameter network tracks the ball, both players and the court in broadcast tennis video at about 200 frames per second.">
 <link rel="icon" href="/favicon.svg">
 <link rel="stylesheet" href="/site.css">
 </head>
 <body>
 <nav class="top"><div class="top-in">
-  <a class="home" href="/">CV Recipes</a><span class="sp"></span>
-  <a href="#video">Video</a><a href="#architecture">Architecture</a><a href="#training">Training</a><a class="hide-sm" href="#papers">Papers</a>
+  <a class="home" href="/">CV Projects</a><span class="sp"></span>
+  <a href="#video">Video</a><a href="#how">How it works</a><a class="hide-sm" href="#papers">Papers</a>
+  <span class="nav-sep"></span><a class="ext" href="https://github.com/avbiswas/computer_vision_recipes" target="_blank" rel="noopener">GitHub</a><a class="ext" href="https://www.youtube.com/@avb_fj" target="_blank" rel="noopener">YouTube</a>
 </div></nav>
 
 <main class="wrap">
 <article>
 <header class="hero prose">
-  <span class="draft">Draft</span>
   <h1>Tennis tracker</h1>
   <p class="lede">Broadcast tennis video goes in. The ball, both players and the 14 court keypoints come out, plus a top-down minimap and markers for racket hits.
   One small network does all three tasks.</p>
@@ -30,15 +30,15 @@
   <video src="/r2/tennis-tracker/demo.mp4" controls muted playsinline preload="metadata" poster="/r2/tennis-tracker/card.png"></video>
 </section>
 
-<div class="prose">
-<h2>What the project does</h2>
-<p>The interesting part is <b>how we got the training data</b>. The public dataset (TrackNet) labels only the ball.
-We made the player and court labels automatically, on a laptop, with two large models. Then a small, fast model learns all three tasks from these labels.</p>
-<p>This is a form of distillation: large, slow models make the labels one time. A small, fast model learns to copy them.</p>
-
-<h2 id="architecture">Architecture</h2>
-</div>
-
+<div class="prose"><h2 id="how">How it works</h2></div>
+<div class="prose"><p>Broadcast tennis video goes in. The ball, both players and the 14 court keypoints come out, plus a top-down minimap. One small network does all three tasks at about 200 frames per second.</p>
+<h3>The model</h3>
+<ol class="steps">
+  <li><b>Input.</b> 3 consecutive grayscale frames are stacked as channels, so the moving ball is visible in one input.</li>
+  <li><b>Encoder.</b> A ResNet-18 without its last stage (that stage has most of the weights, and heatmaps need fine detail).</li>
+  <li><b>Decoder.</b> A U-Net decoder brings the features back to half the input size.</li>
+  <li><b>Output.</b> 16 heatmaps (1 ball, 14 court points, 1 player center) plus the width and height of each player box.</li>
+</ol></div>
 <figure class="wide">
 <svg class="diagram" viewBox="0 0 980 330" role="img" aria-label="Three grayscale frames stacked as channels go into a cut ResNet-18 encoder and a U-Net decoder. Heads output a ball heatmap, 14 court heatmaps and a player heatmap with box sizes. Decoding gives the ball position, court points with a homography to a minimap, and player boxes.">
   <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
@@ -63,21 +63,14 @@ We made the player and court labels automatically, on a laptop, with two large m
   </g>
 </svg>
 </figure>
-
-<div class="prose">
-<h3>Key ideas</h3>
-<ul>
-  <li><b>Heatmaps, not boxes, for small objects.</b> The ball is only a few pixels. The model does not predict coordinates. It draws a heatmap with a bright spot on the ball. Finding the peak of a heatmap is much easier to learn than direct regression of the numbers. Players are also heatmaps: a peak at the box center, plus the box width and height at that peak (as in CenterNet).</li>
-  <li><b>Time as channels.</b> In one frame, the ball looks like any white dot. In three frames, the ball moves and the dots do not. So we put 3 grayscale frames into the 3 input channels of a normal image network.</li>
-  <li><b>A smaller ResNet-18.</b> Layer 4 of ResNet-18 has 8M of its 11M weights. Heatmaps need fine detail, not the deepest features, so we remove layer 4. A U-Net decoder brings the features back to half the input size.</li>
-  <li><b>Homography for the minimap.</b> The 14 court points match the 14 points of a standard court diagram. These pairs give a 3 × 3 matrix that maps any ground pixel onto the minimap. We map each player by the bottom of the box (the feet), because only points on the ground map correctly.</li>
-  <li><b>Racket hit.</b> A hit is a frame where the vertical direction of the ball changes while the ball is near a player.</li>
-</ul>
-
-<h2 id="training">Training</h2>
-<h3>Step 1: make labels with large models</h3>
-</div>
-
+<div class="prose"><h3>From heatmaps to the minimap</h3>
+<ol class="steps">
+  <li>The brightest peak of each heatmap gives a point: the ball, a court point or a player center.</li>
+  <li>The 14 court points give a homography: a 3 × 3 matrix from the camera view to a top-down court.</li>
+  <li>The homography maps the players' feet (the bottom of each box) onto the minimap.</li>
+  <li>A racket hit is a frame where the ball changes vertical direction near a player.</li>
+</ol>
+<h3>Labels (offline, one time)</h3></div>
 <figure class="wide">
 <svg class="diagram" viewBox="0 0 980 230" role="img" aria-label="Ball labels from TrackNet. Player labels from Grounding DINO plus filtering. Court labels from TennisCourtDetector plus one RANSAC homography per clip. All merge into one dataset that trains TennisNet-lite.">
   <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
@@ -99,52 +92,17 @@ We made the player and court labels automatically, on a laptop, with two large m
 </svg>
 <figcaption>The large models run one time to make labels. Only the small model runs on video.</figcaption>
 </figure>
-
-<div class="prose">
-<ol class="steps">
-  <li><b>Players.</b> Grounding DINO finds every person in every frame. A filter keeps the two players: it removes boxes that never move (line judges, crowd), boxes at the edge of the image and boxes with low scores.</li>
-  <li><b>Court.</b> A pretrained court detector finds 14 keypoints per frame. The camera does not move inside a clip, so we fit <em>one</em> homography for each clip with RANSAC. RANSAC ignores the frames where the detector is wrong.</li>
-  <li><b>Difficult camera.</b> One match (<code>game4</code>) has a low camera, and the court detector fails on it. We warp each frame to look like a normal broadcast view, detect the points, and warp them back.</li>
-  <li><b>Merge.</b> Ball, player and court labels go into one file. We split by match, never by frame: <code>game9</code> is validation, <code>game10</code> is test.</li>
-</ol>
-
-<h3>Step 2: train the small model</h3>
-<table>
-  <tr><th>Setting</th><th>Value</th></tr>
-  <tr><td>Input</td><td>3 consecutive grayscale frames, 512 × 288</td></tr>
-  <tr><td>Targets</td><td>Gaussian heatmaps: 1 ball, 14 court points, 1 player center; plus player width and height</td></tr>
-  <tr><td>Loss</td><td>CenterNet focal loss on every heatmap, L1 on player sizes. Court loss only where the court label is reliable.</td></tr>
-  <tr><td>Augmentation</td><td>Flip, rotate, scale, brightness, blur</td></tr>
-  <tr><td>Hard frames</td><td>Frames near a racket hit, or with a ball that is hard to see, are shown 3 times more often</td></tr>
-  <tr><td>Optimizer</td><td>AdamW, learning rate 1e-3, one-cycle schedule, batch 16</td></tr>
-  <tr><td>Length</td><td>Planned for 20 epochs. We stopped at epoch 10 because the test score stopped improving. About 6 minutes per epoch on an M2 Max.</td></tr>
-</table>
-<pre class="code">bash tennis/setup.sh                          # dataset + court detector
-bash label_all.sh                             # auto-label players + court (1-2 h)
-.venv/bin/python lite/train.py                # train
-.venv/bin/python lite/evaluate.py             # results table
-.venv/bin/python lite/demo.py --clip game10/Clip1</pre>
-
-<h3>Results on the test match (<code>game10</code>)</h3>
-<table>
-  <tr><th>Ball</th><th class="num">Value</th></tr>
-  <tr><td>Precision / recall / F1</td><td class="num">0.997 / 0.876 / <b>0.932</b></td></tr>
-  <tr><td>Median position error</td><td class="num">1.6 px (in 1280 × 720)</td></tr>
-  <tr><td>Clearly visible ball found</td><td class="num">91%</td></tr>
-  <tr><td>Faint or blurred ball found</td><td class="num">57%</td></tr>
-  <tr><td>Ball at a racket hit found</td><td class="num">56%</td></tr>
-  <tr><td>Far half / near half of the court</td><td class="num">84% / 93%</td></tr>
-</table>
-<p>On the validation match: court keypoints have a median error of about 1.3 px, and more than 99% of players are found (IoU above 0.5).
-Racket-hit markers have about 90% precision and 54% recall, and they come 4 frames late.</p>
-<div class="note"><b>What fails.</b> The model almost never sees a ball that is not there. It fails when it <em>misses</em> a small, faint ball: far from the camera or at the racket.
-Showing hard frames more often helped a little at hits (48% → 56%), but not for faint and far balls. A far ball is about 2 pixels on the 256 × 144 heatmap, so higher input resolution is the next step to try.</div>
-
-<figure style="margin-top:28px">
+<div class="prose"><ol class="steps">
+  <li>The public dataset (TrackNet) labels only the ball.</li>
+  <li>Grounding DINO finds every person. A filter keeps the 2 players (it drops boxes that never move: judges and crowd).</li>
+  <li>A pretrained court detector finds the 14 court keypoints. One homography per clip removes its mistakes.</li>
+  <li>The small model learns all three tasks from these labels. This is distillation: slow models make the labels, and a fast model learns to copy them.</li>
+</ol></div>
+<figure style="max-width:740px;margin:28px auto">
   <video src="/r2/tennis-tracker/clip.mp4" controls muted loop playsinline preload="metadata"></video>
   <figcaption>A short clip from the test match.</figcaption>
 </figure>
-
+<div class="prose">
 <h2 id="papers">Papers and links</h2>
 <ul class="papers">
   <li><a href="https://arxiv.org/abs/1907.03698">TrackNet: A Deep Learning Network for Tracking High-speed and Tiny Objects in Sports Applications</a> (Huang et al., 2019). <span class="why">The ball dataset, and the idea of heatmaps from stacked frames.</span></li>
@@ -160,5 +118,6 @@ Showing hard frames more often helped a little at hits (48% → 56%), but not fo
 <footer><div class="wrap">
   <a href="/">All projects</a> · From <a href="https://www.youtube.com/@avb_fj">Neural Breakdown with AVB</a>
 </div></footer>
+<script src="/glossary.js" defer></script>
 </body>
 </html>
