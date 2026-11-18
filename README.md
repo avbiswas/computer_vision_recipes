@@ -24,6 +24,25 @@ A playable "dream" of a 2D room: a VQ-VAE tokenizer plus a Genie-style transform
 
 https://github.com/user-attachments/assets/e05f140f-9753-4b4f-8452-d41ca88a3fd5
 
+## Website: [cv.neuralavb.com](https://cv.neuralavb.com)
+
+Every project with a page keeps it in its own `web/` folder: `index.html`, scripts, and a `site.json` that lists
+the files to publish. `site/build.py` collects them into `dist/` and makes the landing page from the `site.json` files.
+Everything runs in the browser: no API keys, no server code.
+
+- **Text** (HTML, JS, small JSON) is in git. Cloudflare Workers Builds runs `python3 site/build.py` and
+  `npx wrangler deploy` on every push to `main`, so page edits go live by themselves.
+- **Binaries** (models, data, images, videos) are git-ignored. They live in the R2 bucket `cv-speedrun-assets` and
+  pages load them from `/r2/<slug>/...`. Upload by hand after you change them; only new or changed files are sent:
+
+```bash
+python site/build.py --upload-r2           # needs `npx wrangler login`
+python site/build.py --upload-r2 --local   # local preview: then `python site/build.py && npx wrangler dev`
+```
+
+To add a project: create `<project>/web/index.html` + `site.json` (format in the docstring of `site/build.py`),
+upload its binaries, then push.
+
 ## Notes
 
 Datasets, model weights, training runs and rendered media are not in the repo; each project's scripts regenerate or download them.

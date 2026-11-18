@@ -80,3 +80,10 @@ pdf_parser/voxel51_export_*/
 pdf_parser/voxel51_upload_*/
 
 meme_search/voxel51_*/
+pdf_parser/voxel51_fiftyone_export/
+
+# ---------- website build ----------
+dist/
+.wrangler/
+site/.r2_*.json
+meme_search/web/data_web/

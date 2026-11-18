@@ -1,0 +1,33 @@
+{
+	// cv.neuralavb.com: static pages from dist/ (built by site/build.py) + large model files from R2 under /r2/*.
+	// Separate Worker from neural-avb-site and mechinterp-book, so each deploys independently.
+	"$schema": "https://unpkg.com/wrangler/config-schema.json",
+	"name": "cv-speedrun",
+	"main": "site/worker.js",
+	"compatibility_date": "2026-11-01",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "404-page",
+		"run_worker_first": [
+			"/r2/*"
+		]
+	},
+	"r2_buckets": [
+		{
+			"binding": "BUCKET",
+			"bucket_name": "cv-speedrun-assets"
+		},
+		{
+			"bucket_name": "cv-speedrun-assets",
+			"binding": "cv_speedrun_assets",
+			"remote": true
+		}
+	],
+	"routes": [
+		{
+			"pattern": "cv.neuralavb.com",
+			"custom_domain": true
+		}
+	]
+}

@@ -1,0 +1,86 @@
+/* Shared style for cv.neuralavb.com: landing page + every project page. */
+:root {
+  --bg: #0e0f12; --panel: #17191e; --panel2: #1e2128; --line: #2a2e37;
+  --fg: #e9e7e2; --text: #cfccc5; --dim: #8d929c; --acc: #f2b84b; --acc2: #6cc3ff; --good: #7fd18b;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; }
+a { color: var(--acc2); text-underline-offset: 3px; }
+code { font-family: var(--mono); font-size: .86em; background: var(--panel2); padding: 1px 6px; border-radius: 4px; }
+pre.code { font-family: var(--mono); font-size: 13.5px; line-height: 1.55; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; color: var(--text); }
+
+/* top bar */
+.top { border-bottom: 1px solid var(--line); }
+.top-in { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; gap: 18px; align-items: center; font-size: 15px; }
+.top a { color: var(--dim); text-decoration: none; }
+.top a:hover { color: var(--fg); }
+.top .home { color: var(--fg); font-weight: 650; letter-spacing: -.01em; }
+.top .sp { flex: 1; }
+
+/* article */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.prose { max-width: 740px; margin: 0 auto; }
+header.hero { padding: 48px 0 18px; }
+header.hero h1 { font-size: 2.5rem; line-height: 1.12; letter-spacing: -.025em; margin: 0 0 12px; }
+header.hero .lede { font-size: 1.15rem; color: var(--text); margin: 0 0 14px; }
+.status-line { color: var(--dim); font-size: 14px; }
+.draft { display: inline-block; font-size: 12px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--acc); border: 1px solid #5a4620; border-radius: 99px; padding: 1px 10px; margin-bottom: 14px; }
+article h2 { font-size: 1.55rem; letter-spacing: -.015em; margin: 56px 0 10px; padding-top: 22px; border-top: 1px solid var(--line); }
+article h3 { font-size: 1.12rem; margin: 30px 0 6px; }
+article p, article li { color: var(--text); }
+article li { margin: 4px 0; }
+article ol.steps { padding-left: 1.3em; }
+article ol.steps li::marker { color: var(--acc); font-weight: 650; }
+table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 15px; }
+th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+th { color: var(--dim); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.note { background: var(--panel); border-left: 3px solid var(--acc2); border-radius: 6px; padding: 12px 16px; margin: 18px 0; color: var(--text); }
+.note.warn { border-left-color: var(--acc); }
+.papers li { margin: 8px 0; }
+.papers .why { color: var(--dim); }
+
+/* figures and diagrams */
+figure { margin: 22px 0; }
+figure.wide { max-width: 980px; margin-left: auto; margin-right: auto; }
+figcaption { color: var(--dim); font-size: 14px; margin-top: 8px; text-align: center; }
+svg.diagram { width: 100%; height: auto; display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+svg.diagram text { font: 13px -apple-system, BlinkMacSystemFont, "Inter", sans-serif; fill: var(--fg); }
+svg.diagram .sm { font-size: 11px; fill: var(--dim); }
+svg.diagram .box { fill: var(--panel2); stroke: #3a3f4b; stroke-width: 1.2; }
+svg.diagram .box.model { fill: #2a2416; stroke: var(--acc); }
+svg.diagram .box.data { fill: #14222d; stroke: #2f6f94; }
+svg.diagram .box.out { fill: #172619; stroke: #3f8a4c; }
+svg.diagram .arr { stroke: var(--dim); stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+svg.diagram .grp { fill: none; stroke: var(--line); stroke-dasharray: 5 4; }
+video { width: 100%; display: block; border-radius: 12px; background: #000; }
+
+/* demo area */
+section.demo { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin: 26px 0 8px; }
+section.demo h2.demo-title { margin: 0 0 4px; padding: 0; border: 0; font-size: 1.2rem; }
+section.demo .sub { color: var(--dim); font-size: 14px; margin: 0 0 14px; }
+
+/* landing */
+.intro { padding: 56px 0 26px; max-width: 760px; }
+.intro h1 { font-size: 2.8rem; letter-spacing: -.03em; line-height: 1.08; margin: 0 0 14px; }
+.intro p { color: var(--text); font-size: 1.12rem; margin: 0 0 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding-bottom: 40px; }
+a.proj { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; color: inherit; text-decoration: none; transition: border-color .15s, transform .15s; }
+a.proj:hover { border-color: #4a5060; transform: translateY(-2px); }
+a.proj img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #000; border-bottom: 1px solid var(--line); }
+.proj-body { padding: 16px 18px 18px; }
+.proj-body h2 { margin: 0 0 6px; font-size: 1.25rem; letter-spacing: -.01em; }
+.proj-body p { margin: 0 0 12px; color: var(--text); font-size: 15px; line-height: 1.5; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags span { font-size: 12px; padding: 2px 9px; border-radius: 99px; background: var(--panel2); color: var(--dim); }
+footer { border-top: 1px solid var(--line); margin-top: 64px; }
+footer .wrap { padding-top: 22px; padding-bottom: 40px; color: var(--dim); font-size: 14px; }
+footer a { color: var(--dim); }
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  header.hero h1, .intro h1 { font-size: 2rem; }
+  .top-in .hide-sm { display: none; }
+}

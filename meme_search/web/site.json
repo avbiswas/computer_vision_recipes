@@ -1,0 +1,28 @@
+{
+  "slug": "meme-search",
+  "title": "Meme search",
+  "blurb": "Describe a situation and get a blank meme template with your words in it. A fine-tuned CLIP finds templates without reading their text.",
+  "tags": [
+    "CLIP",
+    "MemeCap",
+    "browser demo"
+  ],
+  "order": 1,
+  "card": "../../images/meme.png",
+  "files": [
+    "index.html",
+    "app.js"
+  ],
+  "r2": {
+    "meme-clip/config.json": "models/meme-clip/config.json",
+    "meme-clip/tokenizer.json": "models/meme-clip/tokenizer.json",
+    "meme-clip/tokenizer_config.json": "models/meme-clip/tokenizer_config.json",
+    "meme-clip/special_tokens_map.json": "models/meme-clip/special_tokens_map.json",
+    "meme-clip/vocab.json": "models/meme-clip/vocab.json",
+    "meme-clip/merges.txt": "models/meme-clip/merges.txt",
+    "meme-clip/onnx/text_model_fp16.onnx": "models/meme-clip/onnx/text_model_fp16.onnx",
+    "data/templates.json": "data_web/templates.json",
+    "data/embeddings.bin": "data_web/embeddings.bin",
+    "data/templates/": "data_web/templates/"
+  }
+}

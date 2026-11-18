@@ -1,9 +1,10 @@
 // Meme search in the browser: fine-tuned CLIP text encoder (transformers.js) vs precomputed template embeddings.
+// Everything runs in the tab: no server calls except fetching static files.
 import { AutoTokenizer, CLIPTextModelWithProjection, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3";
 
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
-env.localModelPath = "./models/";
+env.localModelPath = "/r2/meme-search/";  // model files are in R2 (over the 25 MiB static-asset limit)
 
 const K = 6;          // results shown
 const DUP_COS = 0.95; // hide near-identical templates (reposts)
@@ -19,9 +20,11 @@ async function load() {
   const t0 = performance.now();
   [tok, model, meta, emb] = await Promise.all([
     AutoTokenizer.from_pretrained("meme-clip"),
-    CLIPTextModelWithProjection.from_pretrained("meme-clip", { dtype: "fp32" }),
-    fetch("data/templates.json").then((r) => r.json()),
-    fetch("data/embeddings.bin").then((r) => r.arrayBuffer()).then((b) => new Float32Array(b)),
+    CLIPTextModelWithProjection.from_pretrained("meme-clip", { dtype: "fp16", progress_callback: (p) => {
+      if (p.status === "progress" && p.file.endsWith(".onnx")) status(`Downloading the text encoder (127 MB, once): ${p.progress.toFixed(0)}%`);
+    } }),
+    fetch("/r2/meme-search/data/templates.json").then((r) => r.json()),
+    fetch("/r2/meme-search/data/embeddings.bin").then((r) => r.arrayBuffer()).then((b) => new Float32Array(b)),
   ]);
   D = emb.length / meta.length;
   status(`Ready: ${meta.length} templates, loaded in ${((performance.now() - t0) / 1000).toFixed(1)}s.`);
@@ -93,7 +96,7 @@ function shortenToFit(query, slot, imp) {
   return query;
 }
 
-// Placeholder for multi-box templates until the LLM answers: main box = query, others = top keywords.
+// Multi-box templates: main (largest) box = query, other boxes = the most important keywords.
 function keywordFill(query, slots, imp) {
   const area = (s) => (s.bbox[2] - s.bbox[0]) * (s.bbox[3] - s.bbox[1]);
   const main = slots.reduce((m, s, i) => (area(s) > area(slots[m]) ? i : m), 0);
@@ -129,15 +132,6 @@ function draw(canvas, img, slots, texts) {
   });
 }
 
-// Multi-box text from the LLM, via the local server (keeps the API key off the page).
-async function llmFill(query, file, slots) {
-  const r = await fetch("api/fill", { method: "POST", headers: { "Content-Type": "application/json" },
-                                      body: JSON.stringify({ query, file, slots }) });
-  const j = await r.json();
-  if (!r.ok) throw new Error(j.error || r.status);
-  return j;
-}
-
 function card({ j, score }, query, imp) {
   const m = meta[j];
   // no detected text: one caption box across the top
@@ -146,13 +140,13 @@ function card({ j, score }, query, imp) {
   const texts = multi ? keywordFill(query, slots, imp) : [shortenToFit(query, slots[0], imp)];
   const el = document.createElement("div"); el.className = "card";
   const canvas = document.createElement("canvas"); canvas.width = m.w; canvas.height = m.h;
-  const img = new Image(); img.src = `data/templates/${m.file}`;
+  const img = new Image(); img.src = `/r2/meme-search/data/templates/${m.file}`;
   const redraw = () => img.complete && draw(canvas, img, slots, texts);
   img.onload = redraw;
   el.append(canvas);
   const top = [...imp].filter((x) => x.d > 0 && !STOP.has(x.w.toLowerCase().replace(/\W/g, ""))).sort((a, b) => b.d - a.d).slice(0, 4);
   el.insertAdjacentHTML("beforeend", `<div class="meta">match ${score.toFixed(3)} · ${slots.length} text box(es) ·
-    <span class="how">${multi ? "LLM writing…" : texts[0] === query ? "full query" : "shortened to fit"}</span></div>
+    <span class="how">${multi ? "keywords in the small boxes" : texts[0] === query ? "full query" : "shortened to fit"}</span></div>
     <div class="chips">${top.map((x) => `<span>${x.w} +${x.d.toFixed(3)}</span>`).join("")}</div>`);
   const inputs = slots.map((_, i) => {
     const row = document.createElement("div"); row.className = "slot";
@@ -162,13 +156,6 @@ function card({ j, score }, query, imp) {
     row.append(inp); el.append(row);
     return inp;
   });
-  if (multi) {
-    const how = el.querySelector(".how");
-    llmFill(query, m.file, slots).then(({ texts: t, model }) => {
-      t.forEach((v, i) => { if (v && !inputs[i].dataset.edited) { texts[i] = v; inputs[i].value = v; } });
-      how.textContent = `written by ${model}`; redraw();
-    }).catch((err) => { how.textContent = `LLM unavailable (${err.message}), keywords shown`; });
-  }
   const row = document.createElement("div"); row.className = "row";
   const dl = document.createElement("button"); dl.textContent = "Download PNG";
   dl.onclick = () => { const a = document.createElement("a"); a.download = `meme_${m.file.replace(".webp", "")}.png`; a.href = canvas.toDataURL("image/png"); a.click(); };

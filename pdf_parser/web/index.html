@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF layout parser · CV Recipes</title>
+<meta name="description" content="Find the layout of a PDF page with a 3.7M-parameter detector, then turn the page into markdown. Runs in your browser.">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/site.css">
+<style>
+  /* demo */
+  .bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .bar button, .bar label.btn { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--acc2); color: #000; font: 600 14px system-ui, sans-serif; cursor: pointer; }
+  .bar button.ghost { background: #2c303a; color: var(--fg); }
+  .bar button:disabled { opacity: .5; cursor: default; }
+  input[type=file] { display: none; }
+  #status { color: var(--dim); min-height: 1.4em; margin: 4px 0 14px; font-size: 14px; }
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  .pane { background: #101216; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  #page { width: 100%; height: auto; display: block; background: #fff; border-radius: 6px; }
+  #md { white-space: pre-wrap; word-wrap: break-word; margin: 0; font: 13px/1.5 var(--mono); max-height: 80vh; overflow: auto; color: var(--text); }
+  .legend span { display: inline-block; margin: 6px 10px 0 0; font-size: 12px; color: var(--dim); }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 4px; border-radius: 2px; vertical-align: -1px; }
+  .thr { color: var(--dim); font-size: 13px; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav class="top"><div class="top-in">
+  <a class="home" href="/">CV Recipes</a><span class="sp"></span>
+  <a href="#demo">Demo</a><a href="#architecture">Architecture</a><a href="#training">Training</a><a class="hide-sm" href="#papers">Papers</a>
+</div></nav>
+
+<main class="wrap">
+<article>
+<header class="hero prose">
+  <span class="draft">Draft</span>
+  <h1>PDF layout parser</h1>
+  <p class="lede">A small detector finds the parts of a PDF page: titles, text, tables, pictures and more.
+  Then a short program reads the page text in the correct order and writes markdown.</p>
+  <p class="status-line">Model: D-FINE nano, 3.7M parameters, 8 MB · Data: DocLayNet · Runs in your browser</p>
+</header>
+
+<section class="demo" id="demo">
+  <h2 class="demo-title">Try it</h2>
+  <p class="sub">Open a PDF or use the sample. The model downloads once (8 MB). The PDF stays on your computer.</p>
+  <div class="bar">
+    <label class="btn" for="file">Open PDF</label><input type="file" id="file" accept="application/pdf">
+    <button class="ghost" id="sample">Try a sample</button>
+    <button class="ghost" id="prev" disabled>◀</button>
+    <span id="pageinfo" class="thr"></span>
+    <button class="ghost" id="next" disabled>▶</button>
+    <span class="thr">confidence <input type="range" id="thr" min="0.2" max="0.9" step="0.05" value="0.5"> <b id="thrv">0.50</b></span>
+    <button class="ghost" id="copy" disabled>Copy markdown</button>
+  </div>
+  <div id="status">Loading model…</div>
+  <div class="cols">
+    <div class="pane"><canvas id="page"></canvas><div class="legend" id="legend"></div></div>
+    <div class="pane"><pre id="md"></pre></div>
+  </div>
+</section>
+
+<div class="prose">
+<h2>What the project does</h2>
+<p>A PDF stores characters and their positions. It does not store the structure of the page.
+The PDF does not tell you which line is a heading, where a table starts, or which column to read first.
+This project adds that structure.</p>
+<ol class="steps">
+  <li>Draw the page as an image.</li>
+  <li>Find the layout regions with an object detector. There are 11 region types (classes).</li>
+  <li>Put each word from the PDF text layer into its region.</li>
+  <li>Sort the regions into reading order.</li>
+  <li>Write each region as markdown. The region type sets the format: <code>#</code> for a title, <code>-</code> for a list item, and so on.</li>
+</ol>
+<p>Only step 2 uses a neural network. The other steps are short rules.</p>
+
+<h2 id="architecture">Architecture</h2>
+</div>
+
+<figure class="wide">
+<svg class="diagram" viewBox="0 0 980 300" role="img" aria-label="Pipeline: PDF to page image and text layer, page image to D-FINE detector, boxes and words to reading order and markdown">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
+  <rect class="box data" x="20" y="120" width="100" height="56" rx="8"/><text x="70" y="153" text-anchor="middle">PDF</text>
+  <rect class="box" x="170" y="60" width="140" height="56" rx="8"/><text x="240" y="84" text-anchor="middle">pdf.js render</text><text class="sm" x="240" y="102" text-anchor="middle">page image, 144 DPI</text>
+  <rect class="box" x="170" y="190" width="140" height="56" rx="8"/><text x="240" y="214" text-anchor="middle">pdf.js text layer</text><text class="sm" x="240" y="232" text-anchor="middle">words + positions</text>
+  <path class="arr" d="M120,140 L168,92"/><path class="arr" d="M120,156 L168,214"/>
+  <rect class="grp" x="345" y="22" width="330" height="140" rx="12"/><text class="sm" x="360" y="40">D-FINE nano (3.7M params)</text>
+  <rect class="box model" x="360" y="56" width="92" height="88" rx="8"/><text x="406" y="94" text-anchor="middle">HGNetv2</text><text class="sm" x="406" y="112" text-anchor="middle">backbone</text>
+  <rect class="box model" x="466" y="56" width="92" height="88" rx="8"/><text x="512" y="94" text-anchor="middle">Hybrid</text><text class="sm" x="512" y="112" text-anchor="middle">encoder</text>
+  <rect class="box model" x="572" y="56" width="92" height="88" rx="8"/><text x="618" y="94" text-anchor="middle">Decoder</text><text class="sm" x="618" y="112" text-anchor="middle">queries → boxes</text>
+  <path class="arr" d="M310,90 L358,98"/><path class="arr" d="M452,100 L464,100"/><path class="arr" d="M558,100 L570,100"/>
+  <rect class="box out" x="710" y="70" width="110" height="56" rx="8"/><text x="765" y="94" text-anchor="middle">Boxes</text><text class="sm" x="765" y="112" text-anchor="middle">class + score</text>
+  <path class="arr" d="M664,100 L708,98"/>
+  <rect class="box" x="710" y="190" width="110" height="56" rx="8"/><text x="765" y="214" text-anchor="middle">Rules</text><text class="sm" x="765" y="232" text-anchor="middle">dedupe, order</text>
+  <path class="arr" d="M765,126 L765,188"/><path class="arr" d="M310,218 L708,218"/>
+  <rect class="box out" x="860" y="190" width="100" height="56" rx="8"/><text x="910" y="223" text-anchor="middle">Markdown</text>
+  <path class="arr" d="M820,218 L858,218"/>
+</svg>
+<figcaption>The neural network only finds boxes. The text comes from the PDF itself, so no OCR is necessary for normal (not scanned) PDFs.</figcaption>
+</figure>
+
+<div class="prose">
+<h3>The detector: D-FINE</h3>
+<p>D-FINE is a DETR-style detector. DETR-style detectors do not use anchor boxes or non-maximum suppression (NMS).
+The model has a fixed set of learned <em>queries</em>. Each query outputs one box and one class score.</p>
+<ul>
+  <li><b>Backbone (HGNetv2).</b> A small CNN. It makes feature maps of the page at three scales.</li>
+  <li><b>Hybrid encoder.</b> Attention inside the smallest feature map, then a CNN that mixes the three scales. This design comes from RT-DETR. It keeps the model fast.</li>
+  <li><b>Decoder.</b> The queries look at the features with cross-attention. Each decoder layer makes the boxes more accurate.</li>
+  <li><b>Fine-grained Distribution Refinement.</b> This is the new idea in D-FINE. The model does not predict one number for each box edge. It predicts a probability distribution for the position of each edge, and each layer refines that distribution. This gives accurate edges, which is important for thin regions like a page footer.</li>
+</ul>
+<p>We use the <b>nano</b> size: 3.7M parameters. In fp16 the file is 8 MB, small enough to download on a web page.</p>
+
+<h3>The rules after the detector</h3>
+<ul>
+  <li><b>Remove duplicates.</b> Sometimes two boxes cover the same region (IoU above 0.6). We keep the box with the higher score.</li>
+  <li><b>Reading order.</b> A full-width region (for example a title or a wide figure) cuts the page into horizontal bands. In each band, we read the left column from top to bottom, then the right column. A one-column page is one long left column.</li>
+  <li><b>Assign text.</b> Each piece of text from the text layer goes to the box that contains its center. Words broken with a hyphen at a line end are joined again.</li>
+  <li><b>Format.</b> The class sets the markdown: Title → <code>#</code>, Section-header → <code>##</code>, List-item → <code>-</code>, Caption → italic, Picture → <code>*[figure]*</code>. Page headers and footers are removed.</li>
+</ul>
+
+<h2 id="training">Training</h2>
+<h3>Data: DocLayNet</h3>
+<p>DocLayNet has about 80,000 human-labelled pages from six types of documents: financial reports, manuals, science papers, laws, patents and tenders.
+Each page has boxes for 11 classes:</p>
+<p><code>Caption</code> <code>Footnote</code> <code>Formula</code> <code>List-item</code> <code>Page-footer</code> <code>Page-header</code>
+<code>Picture</code> <code>Section-header</code> <code>Table</code> <code>Text</code> <code>Title</code></p>
+<p>Some classes are rare: Footnote, Formula and Title. We repeat the training pages that have these classes three times.</p>
+
+<h3>Recipe</h3>
+<table>
+  <tr><th>Setting</th><th>Value</th></tr>
+  <tr><td>Start weights</td><td>D-FINE nano trained on COCO (<code>ustc-community/dfine-nano-coco</code>)</td></tr>
+  <tr><td>Input size</td><td>1024 × 1024 (the page is resized, not cropped)</td></tr>
+  <tr><td>Epochs / batch</td><td>12 epochs, batch 16, one A100 GPU</td></tr>
+  <tr><td>Learning rate</td><td>2e-4 for the new layers, 2e-4 / 10 for the backbone</td></tr>
+  <tr><td>Augmentation</td><td>Small brightness and contrast changes only. Documents do not need flips or mosaics.</td></tr>
+  <tr><td>Weight averaging</td><td>EMA (exponential moving average) of the weights. We evaluate the EMA weights.</td></tr>
+</table>
+<p>The code is in <code>pdf_parser/layout/train_dfine.py</code>. Run it as follows:</p>
+<pre class="code">python prepare_data.py --full                          # DocLayNet -> labels, and the oversampled list
+python layout/train_dfine.py --epochs 12 --batch 16 --imgsz 1024
+python layout/train_dfine.py --eval runs_dfine/best --split test
+python web/export_onnx.py --weights models/layout_dfine2_ep9   # -> web/models/layout_fp16.onnx</pre>
+
+<h3>Results</h3>
+<p>COCO mAP on the 2,500 DocLayNet test pages:</p>
+<table>
+  <tr><th>Metric</th><th class="num">Value</th></tr>
+  <tr><td>mAP50-95 (all classes)</td><td class="num"><b>0.652</b></td></tr>
+  <tr><td>mAP50</td><td class="num">0.828</td></tr>
+  <tr><td>Best class: Text</td><td class="num">0.793</td></tr>
+  <tr><td>Worst class: Footnote</td><td class="num">0.454</td></tr>
+</table>
+
+<h3>Running it in the browser</h3>
+<ul>
+  <li>We export the model to ONNX and convert it to fp16. The fp16 model gives the same boxes as PyTorch on our check pages.</li>
+  <li>The page uses <a href="https://onnxruntime.ai/docs/tutorials/web/">onnxruntime-web</a>. It tries WebGPU first. If WebGPU is not available, it uses WebAssembly on the CPU.</li>
+  <li>On an M2 Max laptop: about 37 ms per page with WebGPU and about 560 ms with WebAssembly.</li>
+  <li>int8 quantization changed the detections, so we do not use it.</li>
+</ul>
+
+<div class="note warn"><b>Limits.</b> A scanned PDF has no text layer. You get boxes but no text.
+Tables and formulas come out as plain text, without table structure or LaTeX. That needs a reader model, for example a small vision-language model.</div>
+
+<h2 id="papers">Papers and links</h2>
+<ul class="papers">
+  <li><a href="https://arxiv.org/abs/2410.13842">D-FINE: Redefine Regression Task in DETRs as Fine-grained Distribution Refinement</a> (Peng et al., 2024). <span class="why">The detector.</span></li>
+  <li><a href="https://arxiv.org/abs/2304.08069">DETRs Beat YOLOs on Real-time Object Detection (RT-DETR)</a> (Zhao et al., 2023). <span class="why">The hybrid encoder and the real-time DETR design.</span></li>
+  <li><a href="https://arxiv.org/abs/2005.12872">End-to-End Object Detection with Transformers (DETR)</a> (Carion et al., 2020). <span class="why">Queries and set prediction, no NMS.</span></li>
+  <li><a href="https://arxiv.org/abs/2206.01062">DocLayNet: A Large Human-Annotated Dataset for Document-Layout Analysis</a> (Pfitzmann et al., 2022). <span class="why">The training data.</span></li>
+  <li><a href="https://mozilla.github.io/pdf.js/">pdf.js</a> and <a href="https://onnxruntime.ai/">ONNX Runtime</a>. <span class="why">Page rendering and model inference in the browser.</span></li>
+</ul>
+</div>
+</article>
+</main>
+<footer><div class="wrap">
+  <a href="/">All projects</a> · From <a href="https://www.youtube.com/@avb_fj">Neural Breakdown with AVB</a> ·
+  Model: D-FINE (Apache-2.0), data: DocLayNet (CDLA-Permissive-1.0).
+</div></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

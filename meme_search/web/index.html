@@ -3,43 +3,190 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meme search</title>
+<title>Meme search · CV Recipes</title>
+<meta name="description" content="Describe a situation and get a meme template with the text filled in. A fine-tuned CLIP runs in your browser.">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/site.css">
 <style>
-  :root { --bg: #111; --card: #1c1c1c; --fg: #eee; --dim: #999; --acc: #ffd23f; }
-  * { box-sizing: border-box; }
-  body { margin: 0; font: 15px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); }
-  main { max-width: 1200px; margin: 0 auto; padding: 24px; }
-  h1 { margin: 0 0 4px; font-size: 26px; }
-  .sub { color: var(--dim); margin: 0 0 20px; }
-  form { display: flex; gap: 8px; }
-  #q { flex: 1; padding: 12px 14px; font-size: 17px; border-radius: 8px; border: 1px solid #333; background: #000; color: var(--fg); }
-  button { padding: 0 18px; border: 0; border-radius: 8px; background: var(--acc); color: #000; font-weight: 600; cursor: pointer; }
-  button:disabled { opacity: .5; cursor: wait; }
-  #status { color: var(--dim); margin: 10px 0 18px; min-height: 1.4em; }
-  #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
-  .card { background: var(--card); border-radius: 10px; padding: 12px; }
-  canvas { width: 100%; height: auto; border-radius: 6px; display: block; background: #000; }
-  .meta { color: var(--dim); font-size: 13px; margin: 8px 0; }
-  .chips span { display: inline-block; padding: 1px 7px; margin: 0 4px 4px 0; border-radius: 10px; background: #333; font-size: 12px; }
+  /* demo */
+  form#f { display: flex; gap: 8px; }
+  #q { flex: 1; min-width: 0; padding: 12px 14px; font-size: 16px; border-radius: 8px; border: 1px solid var(--line); background: #0b0c0f; color: var(--fg); }
+  #f button { padding: 0 18px; border: 0; border-radius: 8px; background: var(--acc); color: #000; font: 600 15px system-ui, sans-serif; cursor: pointer; }
+  #f button:disabled { opacity: .5; cursor: wait; }
+  #status { color: var(--dim); margin: 10px 0 16px; min-height: 1.4em; font-size: 14px; }
+  #results { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  #results .card { background: #101216; border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  #results canvas { width: 100%; height: auto; border-radius: 6px; display: block; background: #000; }
+  #results .meta { color: var(--dim); font-size: 13px; margin: 8px 0; }
+  .chips span { display: inline-block; padding: 1px 7px; margin: 0 4px 4px 0; border-radius: 10px; background: #2c303a; font-size: 12px; }
   .slot { display: flex; gap: 6px; margin-top: 6px; align-items: center; }
   .slot label { color: var(--dim); font-size: 12px; width: 44px; }
-  .slot input { flex: 1; padding: 6px 8px; border-radius: 6px; border: 1px solid #333; background: #000; color: var(--fg); }
-  .row { display: flex; gap: 6px; margin-top: 8px; }
-  .row button { padding: 6px 12px; font-size: 13px; }
-  .row .ghost { background: #333; color: var(--fg); }
+  .slot input { flex: 1; min-width: 0; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--line); background: #0b0c0f; color: var(--fg); }
+  #results .row { display: flex; gap: 6px; margin-top: 8px; }
+  #results .row button { padding: 6px 12px; font: 600 13px system-ui, sans-serif; border: 0; border-radius: 8px; background: var(--acc); color: #000; cursor: pointer; }
+  #results .row .ghost { background: #2c303a; color: var(--fg); }
 </style>
 </head>
 <body>
-<main>
+<nav class="top"><div class="top-in">
+  <a class="home" href="/">CV Recipes</a><span class="sp"></span>
+  <a href="#demo">Demo</a><a href="#architecture">Architecture</a><a href="#training">Training</a><a class="hide-sm" href="#papers">Papers</a>
+</div></nav>
+
+<main class="wrap">
+<article>
+<header class="hero prose">
+  <span class="draft">Draft</span>
   <h1>Meme search</h1>
-  <p class="sub">Describe a situation. CLIP finds a meme template; edit the text and download.</p>
+  <p class="lede">Describe a situation in words. The search finds a blank meme template that fits it and puts your words into the text boxes.</p>
+  <p class="status-line">Model: CLIP ViT-B/16, fine-tuned · Data: MemeCap (6,416 memes; 2,000 templates in this demo) · Runs in your browser</p>
+</header>
+
+<section class="demo" id="demo">
+  <h2 class="demo-title">Try it</h2>
+  <p class="sub">The first visit downloads the text encoder (127 MB) and the template index (5 MB). Your browser keeps them for the next visit. Your text stays on your computer.</p>
   <form id="f">
-    <input id="q" placeholder="my code finally compiled after 6 hours of debugging" autocomplete="off" autofocus>
+    <input id="q" placeholder="my code finally compiled after 6 hours of debugging" autocomplete="off">
     <button id="go" disabled>Search</button>
   </form>
   <div id="status">Loading model…</div>
   <div id="results"></div>
+</section>
+
+<div class="prose">
+<h2>What the project does</h2>
+<p>Most meme search tools read the text that is printed on the meme. A blank template has no text, so we must find it from the picture only.
+This project teaches CLIP to connect a situation ("my code compiled after 6 hours") with the picture of the right template.</p>
+<ol class="steps">
+  <li>Remove the text from every meme. This gives a blank template and the positions of the text boxes.</li>
+  <li>Fine-tune CLIP on pairs of (blank template, description of the meme).</li>
+  <li>Compute one vector for each template, one time, and save the vectors.</li>
+  <li>For a search: compute one vector for your text and find the nearest template vectors.</li>
+  <li>Write your text into the text boxes of the template.</li>
+</ol>
+
+<h2 id="architecture">Architecture</h2>
+</div>
+
+<figure class="wide">
+<svg class="diagram" viewBox="0 0 980 380" role="img" aria-label="Offline: memes to OCR and inpainting to blank templates, CLIP image encoder to an index. Online: query to CLIP text encoder, dot product with index, top 6, fill text boxes.">
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d929c"/></marker></defs>
+  <rect class="grp" x="14" y="14" width="952" height="160" rx="12"/><text class="sm" x="28" y="34">OFFLINE · one time, on a GPU (Python)</text>
+  <rect class="box data" x="30" y="60" width="110" height="60" rx="8"/><text x="85" y="86" text-anchor="middle">MemeCap</text><text class="sm" x="85" y="104" text-anchor="middle">6,416 memes</text>
+  <rect class="box model" x="180" y="60" width="140" height="60" rx="8"/><text x="250" y="86" text-anchor="middle">Florence-2 OCR</text><text class="sm" x="250" y="104" text-anchor="middle">text + boxes</text>
+  <rect class="box model" x="360" y="60" width="130" height="60" rx="8"/><text x="425" y="86" text-anchor="middle">LaMa inpaint</text><text class="sm" x="425" y="104" text-anchor="middle">remove the text</text>
+  <rect class="box model" x="530" y="60" width="150" height="60" rx="8"/><text x="605" y="86" text-anchor="middle">CLIP image encoder</text><text class="sm" x="605" y="104" text-anchor="middle">fine-tuned ViT-B/16</text>
+  <rect class="box out" x="720" y="40" width="230" height="44" rx="8"/><text x="835" y="67" text-anchor="middle">templates (.webp) + text boxes</text>
+  <rect class="box out" x="720" y="100" width="230" height="44" rx="8"/><text x="835" y="127" text-anchor="middle">embeddings.bin · 2,000 × 512</text>
+  <path class="arr" d="M140,90 L178,90"/><path class="arr" d="M320,90 L358,90"/><path class="arr" d="M490,90 L528,90"/><path class="arr" d="M680,100 L718,118"/>
+  <path class="arr" d="M425,60 L425,50 L700,50 L718,58"/>
+  <rect class="grp" x="14" y="194" width="952" height="172" rx="12"/><text class="sm" x="28" y="214">ONLINE · every search, in your browser (transformers.js)</text>
+  <rect class="box data" x="30" y="250" width="120" height="60" rx="8"/><text x="90" y="276" text-anchor="middle">Your text</text><text class="sm" x="90" y="294" text-anchor="middle">"monday morning"</text>
+  <rect class="box model" x="190" y="250" width="150" height="60" rx="8"/><text x="265" y="276" text-anchor="middle">CLIP text encoder</text><text class="sm" x="265" y="294" text-anchor="middle">fp16 ONNX, 127 MB</text>
+  <rect class="box" x="380" y="250" width="150" height="60" rx="8"/><text x="455" y="276" text-anchor="middle">Dot product</text><text class="sm" x="455" y="294" text-anchor="middle">with all 2,000 rows</text>
+  <rect class="box" x="570" y="250" width="150" height="60" rx="8"/><text x="645" y="276" text-anchor="middle">Top 6</text><text class="sm" x="645" y="294" text-anchor="middle">drop near-duplicates</text>
+  <rect class="box out" x="760" y="250" width="190" height="60" rx="8"/><text x="855" y="276" text-anchor="middle">Fill the text boxes</text><text class="sm" x="855" y="294" text-anchor="middle">canvas, editable</text>
+  <path class="arr" d="M150,280 L188,280"/><path class="arr" d="M340,280 L378,280"/><path class="arr" d="M530,280 L568,280"/><path class="arr" d="M720,280 L758,280"/>
+  <path class="arr" d="M760,144 L760,172 L470,172 L458,248"/>
+  <path class="arr" d="M950,62 L958,62 L958,236 L930,248"/>
+</svg>
+<figcaption>Only the text encoder runs in the browser. The template vectors are computed one time and downloaded as a file.</figcaption>
+</figure>
+
+<div class="prose">
+<h3>CLIP in one paragraph</h3>
+<p>CLIP has two encoders: one for images and one for text. Each encoder gives a vector with 512 numbers.
+During training, CLIP learns to make the vector of an image and the vector of its caption point in the same direction.
+After training, you can compare any text with any image: a large dot product means a good match.
+We use the ViT-B/16 version from OpenAI.</p>
+
+<h3>The search index is a flat file</h3>
+<p>There is no vector database. The index is one file with one row of 512 numbers for each template.
+The browser computes the dot product of your text vector with every row. That takes a few milliseconds.
+A vector database becomes useful at about 100,000 rows or more.</p>
+<p><b>The web demo uses 2,000 of the 6,416 templates.</b> First we remove near-duplicate reposts. Then we group the
+remaining templates into 2,000 clusters with k-means on their CLIP vectors, and we keep the template nearest to the center of each cluster.
+This keeps every kind of meme, with fewer files to download. The code is in <code>web/make_web_subset.py</code>.</p>
+<p>Some templates are almost the same image (reposts). If two results have a cosine similarity above 0.95, we show only one.</p>
+
+<h3>Filling the text boxes</h3>
+<p>The OCR step saved the position of each text box, its line height and its text color. The page uses this data to draw your text in the correct place.</p>
+<ul>
+  <li><b>One text box.</b> If your full text fits, we use it. If not, we remove short common words ("the", "a", "my"). Then we remove the least important words until the text fits.</li>
+  <li><b>Word importance.</b> We remove one word at a time and compute the match score again. If the score drops a lot, the word is important. This is a "leave-one-out" test. The chips under each result show the most important words.</li>
+  <li><b>Two or more text boxes.</b> Your text goes into the largest box. The most important keywords go into the other boxes. You can edit every box.</li>
+</ul>
+
+<h2 id="training">Training</h2>
+<h3>Step 1: make blank templates</h3>
+<ol class="steps">
+  <li><b>Find the text.</b> Florence-2 (a small vision-language model) reads the text and gives a box for each line.</li>
+  <li><b>Make a mask.</b> The text boxes become a black-and-white mask.</li>
+  <li><b>Paint over the text.</b> LaMa (an inpainting model) fills the masked area with a background that matches the picture.</li>
+</ol>
+<p>This step takes about 30 minutes on one A100 GPU for all 6,416 memes (6 processes in parallel).</p>
+
+<h3>Step 2: fine-tune CLIP</h3>
+<p>MemeCap gives three captions for each meme:</p>
+<table>
+  <tr><th>Caption type</th><th>Example</th></tr>
+  <tr><td><b>meaning</b></td><td>"The poster feels happy because the code works."</td></tr>
+  <tr><td><b>title</b></td><td>The title of the Reddit post.</td></tr>
+  <tr><td><b>literal</b></td><td>"A man is smiling and holding a cup."</td></tr>
+</table>
+<p>Each training example is one blank template and one random caption of the three types. The loss is the standard CLIP contrastive loss: in a batch of 128 pairs, each template must match its own caption and not the other 127.</p>
+<table>
+  <tr><th>Setting</th><th>Value</th></tr>
+  <tr><td>Start weights</td><td>OpenAI CLIP ViT-B/16 (<code>open_clip</code>)</td></tr>
+  <tr><td>Trained parts</td><td>All weights, image and text encoders</td></tr>
+  <tr><td>Optimizer</td><td>AdamW, learning rate 1e-5, weight decay 0.1, 5% warm-up</td></tr>
+  <tr><td>Batch / epochs</td><td>128 pairs, up to 10 epochs</td></tr>
+  <tr><td>Split</td><td>5,323 train, 500 validation (picks the checkpoint), 559 test</td></tr>
+</table>
+<pre class="code">python remove_text.py --n 0 --shard 0/6      # x6 shards, blank templates + text boxes
+python train_clip.py --epochs 10 --out runs/clip_b16
+python web/export_web.py                       # text encoder -> ONNX, template vectors, thumbnails</pre>
+
+<h3>Results</h3>
+<p>Text-to-image Recall@10 on the 559 test memes: how often the correct template is in the top 10.</p>
+<table>
+  <tr><th></th><th class="num">meaning</th><th class="num">title</th><th class="num">literal</th></tr>
+  <tr><td>Zero-shot CLIP, original memes (text visible)</td><td class="num">80.3</td><td class="num">36.9</td><td class="num">62.9</td></tr>
+  <tr><td>Zero-shot CLIP, text removed</td><td class="num">25.2</td><td class="num">17.0</td><td class="num">80.5</td></tr>
+  <tr><td>Fine-tuned CLIP, text removed</td><td class="num"><b>34.8</b></td><td class="num">17.5</td><td class="num"><b>93.2</b></td></tr>
+</table>
+<ul>
+  <li><b>CLIP reads text.</b> Most of the zero-shot "meaning" score comes from the printed text. Without the text, the score drops from 80 to 25.</li>
+  <li><b>Removing text helps visual search.</b> For "literal" captions, the score goes up from 63 to 80. The text was noise for these queries.</li>
+  <li><b>Fine-tuning helps.</b> "meaning" goes from 25 to 35, and "literal" goes to 93. The best checkpoint is at epoch 3. After that, the model overfits (there are only about 5,300 training images).</li>
+  <li><b>There is a limit.</b> Many "meaning" captions describe the joke in the text. That joke is gone from the blank template, so no model can find it from pixels only.</li>
+</ul>
+
+<h3>Running it in the browser</h3>
+<ul>
+  <li>We export only the text encoder to ONNX. The image encoder is not necessary in the browser.</li>
+  <li>We convert the weights to fp16 (127 MB). On our test queries, the fp16 vectors have a cosine similarity of 1.0000 with fp32 and give the same top 6 templates.</li>
+  <li>int8 (64 MB) changes the vectors too much (cosine about 0.96), so we do not use it.</li>
+  <li><a href="https://huggingface.co/docs/transformers.js">transformers.js</a> runs the tokenizer and the model.</li>
+</ul>
+
+<div class="note warn"><b>About the images.</b> The templates come from Reddit posts collected in the MemeCap dataset.
+We show them for research and teaching. If you own an image and want us to remove it, contact us on the YouTube channel.</div>
+
+<h2 id="papers">Papers and links</h2>
+<ul class="papers">
+  <li><a href="https://arxiv.org/abs/2103.00020">Learning Transferable Visual Models From Natural Language Supervision (CLIP)</a> (Radford et al., 2021). <span class="why">The model and the contrastive loss.</span></li>
+  <li><a href="https://arxiv.org/abs/2305.13703">MemeCap: A Dataset for Captioning and Interpreting Memes</a> (Hwang and Shwartz, 2023). <span class="why">The memes and the three caption types.</span></li>
+  <li><a href="https://arxiv.org/abs/2311.06242">Florence-2: Advancing a Unified Representation for a Variety of Vision Tasks</a> (Xiao et al., 2023). <span class="why">OCR with boxes.</span></li>
+  <li><a href="https://arxiv.org/abs/2109.07161">Resolution-robust Large Mask Inpainting with Fourier Convolutions (LaMa)</a> (Suvorov et al., 2021). <span class="why">Removes the text.</span></li>
+  <li><a href="https://github.com/mlfoundations/open_clip">OpenCLIP</a>. <span class="why">The training code for CLIP.</span></li>
+</ul>
+</div>
+</article>
 </main>
+<footer><div class="wrap">
+  <a href="/">All projects</a> · From <a href="https://www.youtube.com/@avb_fj">Neural Breakdown with AVB</a>
+</div></footer>
 <script type="module" src="app.js"></script>
 </body>
 </html>

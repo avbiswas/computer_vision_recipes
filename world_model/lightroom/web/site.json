@@ -1,0 +1,24 @@
+{
+  "slug": "world-model",
+  "title": "World model: a playable dream",
+  "blurb": "A 9.8M-parameter transformer learns a small 2D room from recordings. Then you drive a flashlight inside its dream, frame by frame.",
+  "tags": [
+    "VQ-VAE",
+    "Genie-style transformer",
+    "browser demo"
+  ],
+  "order": 3,
+  "card": "../../../images/world.png",
+  "files": [
+    "index.html",
+    "app.js",
+    "rooms.json"
+  ],
+  "r2": {
+    "world_model.onnx": "world_model.onnx",
+    "decoder.onnx": "decoder.onnx",
+    "watch_it_learn.mp4": "../video_assets/05_final_rope_model/rope1_FINAL/watch_it_learn.mp4",
+    "showcase.mp4": "../video_assets/07_showcase_and_tweet/tweet/showcase_seed7.mp4",
+    "environment.mp4": "../video_assets/01_environment/preview_episode.mp4"
+  }
+}

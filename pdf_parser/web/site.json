@@ -1,0 +1,21 @@
+{
+  "slug": "pdf-parser",
+  "title": "PDF layout parser",
+  "blurb": "A 3.7M-parameter detector finds titles, text, tables and figures on a PDF page, then the page becomes markdown.",
+  "tags": [
+    "D-FINE",
+    "DocLayNet",
+    "browser demo"
+  ],
+  "order": 2,
+  "card": "../../images/pdf.png",
+  "files": [
+    "index.html",
+    "app.js"
+  ],
+  "r2": {
+    "models/classes.json": "models/classes.json",
+    "models/layout_fp16.onnx": "models/layout_fp16.onnx",
+    "samples/sample.pdf": "samples/sample.pdf"
+  }
+}

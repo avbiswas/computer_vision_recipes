@@ -1,0 +1,19 @@
+{
+  "slug": "tennis-tracker",
+  "title": "Tennis tracker",
+  "blurb": "One 3.45M-parameter network tracks the ball, both players and the court lines in broadcast video at about 200 frames per second.",
+  "tags": [
+    "Heatmaps",
+    "Distillation",
+    "video"
+  ],
+  "order": 4,
+  "card": "../../images/tennis.png",
+  "files": [
+    "index.html"
+  ],
+  "r2": {
+    "demo.mp4": "../runs/demo_v2_game10_both.mp4",
+    "clip.mp4": "../runs/demo_v2_game10_Clip1_both.mp4"
+  }
+}
